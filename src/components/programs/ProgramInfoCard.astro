@@ -1,0 +1,45 @@
+---
+import { Icon } from 'astro-icon/components'
+
+interface Props {
+  icon: string
+  title: string
+  gradientColors: {
+    bgColor: string
+    iconBgColor: string
+    startColor: string
+    endColor: string
+  }
+  text: string
+}
+
+const { icon, title, gradientColors, text } = Astro.props
+---
+
+<div
+  class:list={[
+    'flex flex-col items-center justify-center rounded-2xl px-4 py-6 sm:p-8 sm:py-10',
+    gradientColors.bgColor,
+  ]}
+>
+  <span
+    class:list={[
+      'flex h-14 w-14 items-center justify-center rounded-2xl shadow-md',
+      gradientColors.iconBgColor,
+    ]}
+  >
+    <Icon name={icon} class="h-8 w-8 text-purple-700" />
+  </span>
+  <h4 class="mt-4 text-center text-xl font-semibold text-purple-900">
+    {title}
+  </h4>
+  <div
+    class:list={[
+      'my-2 h-1.5 w-8 rounded-2xl bg-gradient-to-r',
+      gradientColors.startColor,
+      gradientColors.endColor,
+    ]}
+  >
+  </div>
+  <p class="text-center text-lg text-purple-800">{text}</p>
+</div>

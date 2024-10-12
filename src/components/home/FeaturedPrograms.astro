@@ -1,0 +1,105 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import Button from '@components/shared/Button.astro'
+import curvedDottedLine from '@images/illustrations/curved-dotted-line.svg'
+import loopedDottedLine from '@images/illustrations/looped-dotted-line.svg'
+import { getCollection } from 'astro:content'
+
+const featuredPrograms = await getCollection(
+  'programs',
+  (program) => program.data.featured
+)
+---
+
+<section
+  class="overflow-hidden px-4 pb-24 pt-16 sm:px-6 sm:pb-28 sm:pt-24 md:pb-0 lg:px-8"
+>
+  {/* Container */}
+  <div class="mx-auto max-w-xl md:max-w-screen-xl">
+    {/* Section header title and subtext  */}
+    <div>
+      <div class="w-100 text-center flex justify-center items-center flex-col">
+        <h2 class="h2 max-w-4xl text-purple-900">
+          BagelEdu Service
+        </h2>
+        <h3 class="h3 text-purple mt-2">Tutor - Offline/Online</h3>
+      </div>
+    </div>
+    {/* School programs */}
+    <div class="mt-16 md:mt-52 md:grid md:grid-cols-2 md:gap-8 lg:gap-16">
+      {
+        featuredPrograms.map((program, index) => (
+          <div
+            class:list={[
+              'relative',
+              {
+                'mt-12 w-full rounded-3xl bg-yellow-200 px-8 py-10 sm:p-12 md:mt-0 md:px-8 md:py-10 lg:p-12':
+                  index == 1 || index == 3,
+                'mt-12 w-full rounded-3xl bg-blue-50 px-8 py-10 sm:p-12 md:mt-0 md:px-8 md:py-10 lg:p-12':
+                  index == 2,
+              },
+            ]}
+          >
+            {index == 0 && (
+              <Image
+                src={curvedDottedLine}
+                class="absolute left-1/2 top-0 hidden -translate-y-1/2 md:block"
+                style={{ width: 'calc(50% + 4rem)' }}
+                alt=""
+              />
+            )}
+            <div
+              class:list={[
+                {
+                  'relative z-10 w-full rounded-3xl bg-purple-25 px-8 py-10 sm:p-12 md:px-8 md:py-10 lg:p-12':
+                    index == 0,
+                },
+              ]}
+            >
+              <div
+                class="flex flex-col justify-between"
+                transition:name={program.slug}
+              >
+                <div class="flex-1">
+                  <h3 class="h3 text-purple-900">{program.data.name}</h3>
+                  <p class="mt-3 max-w-2xl text-lg leading-loose text-purple-800">
+                    {program.data.hero.text}
+                  </p>
+                  <div class="aspect-h-2 aspect-w-3 relative mt-8">
+                    <Image
+                      class="absolute inset-0 rounded-2xl object-cover"
+                      src={program.data.hero.image.src}
+                      alt={program.data.hero.image.alt}
+                    />
+                  </div>
+                </div>
+                <div class="mt-8">
+                  <Button
+                    href={`/programs/${program.slug}`}
+                    variant="accent"
+                    size="sm"
+                  >
+                    Learn more
+                    <Icon
+                      name="tabler:arrow-narrow-right"
+                      class="ml-3 h-5 w-5 group-hover:animate-horizontal-bounce"
+                    />
+                  </Button>
+                </div>
+              </div>
+            </div>
+            {index == 0 && (
+              <Image
+                src={loopedDottedLine}
+                class="absolute bottom-0 left-1/2 hidden translate-y-[90%] md:block"
+                style={{ width: 'calc(50% + 4rem)' }}
+                alt=""
+              />
+            )}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

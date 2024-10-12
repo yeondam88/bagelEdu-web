@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import Button from '@components/shared/Button.astro'
+import type { Program } from '@types'
+
+interface Props {
+  program: Program
+}
+
+const {
+  program,
+  program: {
+    data: { hero },
+  },
+} = Astro.props
+---
+
+<section
+  class="relative bg-gradient-to-b from-purple-25 to-purple-50 px-4 pt-16 sm:px-6 lg:px-8"
+>
+  <div class="mx-auto max-w-screen-xl">
+    {/* Header */}
+    <div class="relative">
+      <div class="flex justify-center">
+        <span
+          class="inline-block -rotate-1 rounded-full bg-purple-200 px-4 py-2 font-medium text-purple-700 shadow-md"
+        >
+          {hero.tagline}
+        </span>
+      </div>
+      <h2 class="h1 mx-auto mt-4 max-w-3xl text-center text-purple-900">
+        {hero.headline}
+      </h2>
+      <p
+        class="mx-auto mt-4 max-w-2xl text-center text-xl leading-relaxed text-purple-800 sm:mt-5"
+      >
+        {hero.text}
+      </p>
+      {/* CTA button */}
+      <div class="mt-8 flex justify-center">
+        <Button href={hero.action.href}>
+          {hero.action.label}
+          {
+            hero.action.icon && (
+              <Icon
+                name="tabler:arrow-narrow-right"
+                class="ml-3 h-6 w-6 group-hover:animate-horizontal-bounce"
+              />
+            )
+          }
+        </Button>
+      </div>
+    </div>
+    {/* Hero image */}
+    <div class="relative z-10 mt-14 sm:mt-16" transition:name={program.slug}>
+      <div class="aspect-h-2 aspect-w-3 relative sm:aspect-h-9 sm:aspect-w-16">
+        <Image
+          class="absolute inset-0 h-full w-full rounded-3xl object-cover shadow-xl"
+          src={hero.image.src}
+          alt={hero.image.alt}
+        />
+      </div>
+    </div>
+  </div>
+  {/* Background overlay effect */}
+  <div
+    class="absolute inset-x-0 bottom-0 top-auto z-0 hidden h-64 bg-white sm:block"
+  >
+  </div>
+</section>

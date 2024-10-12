@@ -1,0 +1,220 @@
+---
+import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
+import { SOCIALS, CONTACT } from '@config'
+import logo from '@images/bright-logo.png'
+import { Icon } from 'astro-icon/components'
+import type { Program } from '@types'
+
+const siteLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'About us', href: '/about' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'Parents', href: '/gallery' },
+  { label: 'Contact us', href: '/contact' },
+]
+
+const programs: Program[] = await getCollection('programs')
+---
+
+<footer
+  class="space-y-8 divide-y divide-purple-400/20 bg-yellow-100 px-4 pt-16 sm:px-6 sm:pt-20 lg:px-8"
+>
+  {/* Top section: blocks */}
+  <div
+    class="mx-auto grid max-w-md gap-y-8 sm:max-w-none sm:grid-cols-2 sm:gap-x-8 sm:gap-y-12 md:gap-x-12 lg:max-w-screen-2xl lg:grid-cols-11 lg:gap-8 xl:gap-12"
+  >
+    {/* Block 1 */}
+    <div class="flex flex-col lg:col-span-4 lg:mx-auto">
+      {/* Logo */}
+      <div class="flex items-center">
+        <div class="w-60 flex-shrink-0 flex-grow-0">
+          <a href="/">
+            <Image src={logo} alt="Bright" class="h-auto" />
+          </a>
+        </div>
+      </div>
+      {/* Mission statement */}
+      <div class="mt-6 text-lg text-purple-800">
+        Sed porttitor lectus nibh. Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit. Diam sit amet quam vehicula elementum sed sit.
+      </div>
+      {/* Social links */}
+      <div class="mt-5 w-full lg:mt-6">
+        <div class="flex justify-start space-x-4">
+          {
+            SOCIALS.map((social) => (
+              <a
+                class="flex h-10 w-10 items-center justify-center rounded-full bg-purple-500 duration-300 ease-in-out hover:bg-purple-600"
+                href={social.href}
+              >
+                <Icon
+                  name={social.name}
+                  class="h-5 w-5 text-white"
+                  stroke-width="1.75"
+                />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+    {/* Block 2 */}
+    <div class="flex-shrink sm:order-3 lg:order-none lg:col-span-2">
+      <h6 class="relative text-xl font-bold tracking-wide text-purple-900">
+        <span class="relative z-20">Programs</span>
+        <span
+          class="absolute -bottom-1 left-0 z-10 h-1 w-12 rounded-lg bg-gradient-to-r from-yellow-400 to-yellow-500"
+        ></span>
+      </h6>
+      {/* Program links */}
+      <ul class="mt-6 divide-y divide-purple-400/20 text-lg">
+        {
+          programs.map((program, index) => (
+            <li
+              class:list={[
+                'font-medium text-purple-700 duration-300 ease-in-out hover:text-purple-600',
+                {
+                  'pb-2': index == 0,
+                  'pt-2': index == programs.length,
+                  'py-2': index > 0 && index < programs.length,
+                },
+              ]}
+            >
+              <a href={`/programs/${program.slug}`}>{program.data.name}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    {/* Block 3 */}
+    <div class="flex-shrink sm:order-4 lg:order-none lg:col-span-2">
+      <h6 class="relative text-xl font-bold tracking-wide text-purple-900">
+        <span class="relative z-20">Site Links</span>
+        <span
+          class="absolute -bottom-1 left-0 z-10 h-1 w-12 rounded-lg bg-gradient-to-r from-yellow-400 to-yellow-500"
+        ></span>
+      </h6>
+      {/* Site links */}
+      <ul class="mt-6 divide-y divide-purple-400/20 text-lg">
+        {
+          siteLinks.map((link, index) => (
+            <li
+              class:list={[
+                'font-medium text-purple-700 duration-300 ease-in-out hover:text-purple-600',
+                {
+                  'pb-2': index == 0,
+                  'pt-2': index == siteLinks.length,
+                  'py-2': index > 0 && index < siteLinks.length,
+                },
+              ]}
+            >
+              <a href={link.href}>{link.label}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    {/* Block 4 */}
+    <div class="sm:order-2 lg:order-none lg:col-span-3 lg:mx-auto">
+      <h6 class="relative text-xl font-bold tracking-wide text-purple-900">
+        <span class="relative z-20">Contact us</span>
+        <span
+          class="absolute -bottom-1 left-0 z-10 h-1 w-12 rounded-lg bg-gradient-to-r from-yellow-400 to-yellow-500"
+        ></span>
+      </h6>
+      {/* Contact information */}
+      <ul class="mt-6 flex flex-col space-y-5">
+        {/* Address */}
+        <li class="flex max-w-xs flex-shrink">
+          <div>
+            <span
+              class="flex h-11 w-11 items-center justify-center rounded-2xl bg-yellow-400"
+            >
+              <Icon name="map-pin" class="h-6 w-6 text-purple-700" />
+            </span>
+          </div>
+          <div class="ml-3 mt-0 flex-1 xl:ml-4">
+            <h5
+              class="flex items-center text-base font-semibold text-purple-900"
+            >
+              Address
+            </h5>
+            <p
+              class="mt-0.5 text-sm leading-relaxed text-purple-800 text-opacity-90"
+            >
+              {CONTACT.address}
+            </p>
+          </div>
+        </li>
+        {/* Email */}
+        <li class="flex flex-shrink-0">
+          <div>
+            <span
+              class="flex h-11 w-11 items-center justify-center rounded-2xl bg-purple-200"
+            >
+              <Icon name="mail" class="h-6 w-6 text-purple-700" />
+            </span>
+          </div>
+          <div class="ml-3 flex-1 xl:ml-4">
+            <h5
+              class="flex items-center text-base font-semibold text-purple-900"
+            >
+              Email
+            </h5>
+            <p
+              class="mt-0.5 text-sm leading-relaxed text-purple-800 text-opacity-90"
+            >
+              {CONTACT.email}
+            </p>
+          </div>
+        </li>
+        {/* Phone number */}
+        <li class="flex flex-shrink-0">
+          <div>
+            <span
+              class="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-200"
+            >
+              <Icon name="phone" class="h-6 w-6 text-purple-700" />
+            </span>
+          </div>
+          <div class="ml-3 flex-1 xl:ml-4">
+            <h5
+              class="flex items-center text-base font-semibold text-purple-900"
+            >
+              Phone
+            </h5>
+            <p
+              class="mt-0.5 text-sm leading-relaxed text-purple-800 text-opacity-90"
+            >
+              {CONTACT.phone}
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  {/* Bottom section */}
+  <div
+    class="mx-auto flex max-w-md flex-col justify-between py-8 sm:max-w-none sm:flex-row lg:max-w-screen-2xl"
+  >
+    {/* Copyright note */}
+    <span class="text-base text-purple-800/90">
+      © {new Date().getFullYear()} Bright School. All rights reserved.
+    </span>
+    <p class="mt-0.5 flex items-center text-purple-800/90">
+      Made with
+      <Icon name="coffee" class="mx-1 h-5 w-5" />
+      <span>
+        by{' '}
+        <a
+          class="text-purple-700 hover:text-purple-900 hover:underline"
+          href="https://www.tailwindawesome.com/"
+          target="_blank"
+        >
+          Tailwind Awesome
+        </a>
+      </span>
+    </p>
+  </div>
+</footer>

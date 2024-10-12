@@ -1,0 +1,67 @@
+---
+import '@styles/tailwind.css'
+import '@fontsource-variable/roboto-flex'
+import Header from '@components/shared/Header.astro'
+import CallToAction from '@components/shared/CallToAction.astro'
+import Footer from '@components/shared/Footer.astro'
+import { ViewTransitions } from 'astro:transitions'
+import { SITE } from '@config'
+
+interface Props {
+  title?: string
+  author?: string
+  description?: string
+  ogImage?: string
+  canonicalURL?: string
+}
+
+const {
+  title = SITE.title,
+  author = SITE.author,
+  description = SITE.description,
+  ogImage = SITE.ogImage,
+  canonicalURL = new URL(Astro.url.pathname.replace(/\/$/, ''), Astro.site)
+    .href,
+} = Astro.props
+
+const socialImageURL = new URL(ogImage ?? SITE.ogImage, Astro.url.origin).href
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="canonical" href={canonicalURL} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <!-- General Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content={author} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={socialImageURL} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={socialImageURL} />
+
+    <ViewTransitions />
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <CallToAction />
+    <Footer />
+  </body>
+</html>

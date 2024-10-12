@@ -1,0 +1,93 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import logo from '@images/bagelEdu-logo.png'
+import { CONTACT } from '@config'
+---
+
+<div class="hidden px-4 sm:px-6 lg:block">
+  {/* Container */}
+  <div
+    class="relative mx-auto max-w-screen-xl border-b border-purple-200/30 py-5"
+  >
+    <div class="flex items-center justify-between">
+      {/* Site branding */}
+      <div class="w-24 flex-shrink-0 flex-grow-0">
+        <a href="/">
+          <Image src={logo} alt="Bright" class="h-auto" />
+        </a>
+      </div>
+      {/* Contact information */}
+      <ul class="ml-8 flex lg:space-x-6 xl:space-x-16">
+        {/* Address */}
+        <li class="flex max-w-xs flex-shrink">
+          <div>
+            <span
+              class="flex h-11 w-11 items-center justify-center rounded-2xl bg-yellow-400"
+            >
+              <Icon name="map-pin" class="h-6 w-6 text-purple-700" />
+            </span>
+          </div>
+          <div class="ml-3 mt-0 flex-1 xl:ml-4">
+            <h5
+              class="flex items-center text-base font-semibold text-purple-900"
+            >
+              Address
+            </h5>
+            <p
+              class="mt-0.5 text-sm leading-relaxed text-purple-800 text-opacity-90"
+            >
+              {CONTACT.address}
+            </p>
+          </div>
+        </li>
+
+        {/* Email */}
+        <li class="flex flex-shrink-0">
+          <div>
+            <span
+              class="flex h-11 w-11 items-center justify-center rounded-2xl bg-purple-200"
+            >
+              <Icon name="mail" class="h-6 w-6 text-purple-700" />
+            </span>
+          </div>
+          <div class="ml-3 flex-1 xl:ml-4">
+            <h5
+              class="flex items-center text-base font-semibold text-purple-900"
+            >
+              Email
+            </h5>
+            <p
+              class="mt-0.5 text-sm leading-relaxed text-purple-800 text-opacity-90"
+            >
+              {CONTACT.email}
+            </p>
+          </div>
+        </li>
+
+        {/* Phone number */}
+        <li class="flex flex-shrink-0">
+          <div>
+            <span
+              class="flex h-11 w-11 items-center justify-center rounded-2xl bg-rose-200"
+            >
+              <Icon name="phone" class="h-6 w-6 text-purple-700" />
+            </span>
+          </div>
+          <div class="ml-3 flex-1 xl:ml-4">
+            <h5
+              class="flex items-center text-base font-semibold text-purple-900"
+            >
+              Phone
+            </h5>
+            <p
+              class="mt-0.5 text-sm leading-relaxed text-purple-800 text-opacity-90"
+            >
+              {CONTACT.phone}
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

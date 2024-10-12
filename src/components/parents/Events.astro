@@ -1,0 +1,83 @@
+---
+import { Image } from 'astro:assets'
+import { getCollection } from 'astro:content'
+
+const eventColors = [
+  'bg-yellow-200',
+  'bg-purple-25',
+  'bg-rose-50',
+  'bg-teal-50',
+]
+
+const events = await getCollection('events')
+---
+
+<section class="relative w-full px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+  {/* Container */}
+  <div class="mx-auto max-w-2xl lg:max-w-screen-xl">
+    {/* Section header title and subtext  */}
+    <div>
+      <h2 class="h2 text-purple-900 lg:text-center">Upcoming events</h2>
+      <p
+        class="mx-auto mt-3 max-w-2xl text-xl leading-relaxed text-purple-800 lg:mt-4 lg:text-center"
+      >
+        Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.
+      </p>
+    </div>
+    {/* Events */}
+    <div class="mt-12 sm:mt-16 lg:grid lg:grid-cols-2 lg:gap-6 xl:gap-8">
+      {
+        events.map((event, index) => (
+          <div
+            class:list={[
+              'grid w-full rounded-2xl sm:grid-cols-12',
+              eventColors[index % 4],
+              { 'mt-8 lg:mt-0': index > 0 },
+            ]}
+          >
+            {/* Event image */}
+            <div
+              class:list={[
+                'relative h-48 rounded-t-2xl sm:col-span-4 sm:h-full',
+                index % 2 == 0
+                  ? 'sm:rounded-l-2xl sm:rounded-tr-none'
+                  : 'sm:order-2 sm:rounded-r-2xl sm:rounded-tl-none',
+              ]}
+            >
+              <Image
+                src={event.data.image.src}
+                class:list={[
+                  'absolute inset-0 h-full w-full rounded-t-2xl object-cover object-center',
+                  index % 2 == 0
+                    ? 'sm:rounded-l-2xl sm:rounded-tr-none'
+                    : 'sm:rounded-r-2xl sm:rounded-tl-none',
+                ]}
+                alt={event.data.image.alt}
+              />
+            </div>
+            {/* Event info */}
+            <div
+              class:list={[
+                'flex h-full flex-col justify-center px-6 py-8 sm:col-span-8 sm:px-8 sm:py-10 lg:px-6 xl:px-8',
+                { 'order-2 sm:order-1': index % 2 == 1 },
+              ]}
+            >
+              <div>
+                <div class="inline-flex -rotate-1 items-center justify-center rounded-xl bg-purple-200 px-3.5 py-0.5 align-top text-sm font-medium leading-6 text-purple-700">
+                  {event.data.dates}
+                </div>
+              </div>
+              <h4 class="mt-4 text-2xl font-bold text-purple-900 sm:text-3xl lg:text-2xl lg:leading-tight xl:text-3xl xl:leading-tight">
+                {event.data.name}
+              </h4>
+              <p class="mt-1 text-purple-800 lg:mt-2">
+                {event.data.description}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

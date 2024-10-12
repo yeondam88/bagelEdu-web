@@ -1,0 +1,58 @@
+---
+import Layout from './Layout.astro'
+import GalleryHero from '@components/gallery/GalleryHero.astro'
+import Gallery from '@components/gallery/Gallery.astro'
+import { getCollection } from 'astro:content'
+import { getGalleryCategories } from '@utils/gallery'
+import { SITE } from '@config'
+import type { GalleryEntry } from '@types'
+import 'lightgallery/css/lightgallery.css'
+
+interface Props {
+  galleryEntries?: GalleryEntry[]
+  currentCategory?: string
+  categories?: { name: string; slug: string }[]
+  title?: string
+  description?: string
+}
+
+const {
+  galleryEntries = await getCollection('gallery'),
+  currentCategory = 'all',
+  categories = await getGalleryCategories(),
+  title = `Gallery | ${SITE.title}`,
+  description = "Step inside Bright Preschool & Elementary's vibrant learning environment with our photo gallery.",
+} = Astro.props
+---
+
+<Layout title={title} description={description}>
+  <GalleryHero />
+  <Gallery
+    galleryEntries={galleryEntries}
+    currentCategory={currentCategory}
+    categories={categories}
+  />
+</Layout>
+
+<script>
+  import lightGallery from 'lightgallery'
+
+  document.addEventListener('astro:page-load', () => {
+    const galleryGrid = document.getElementById('gallery-grid')
+    const heroGallery = document.getElementById('hero-gallery')
+
+    if (galleryGrid) {
+      lightGallery(galleryGrid, {
+        selector: 'li',
+        speed: 500,
+      })
+    }
+
+    if (heroGallery) {
+      lightGallery(heroGallery, {
+        selector: 'figure',
+        speed: 500,
+      })
+    }
+  })
+</script>

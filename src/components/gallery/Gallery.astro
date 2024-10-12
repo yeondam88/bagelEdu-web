@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets'
+import { Icon } from 'astro-icon/components'
+import type { GalleryEntry } from '@types'
+
+interface Props {
+  galleryEntries: GalleryEntry[]
+  currentCategory: string
+  categories: { name: string; slug: string }[]
+}
+
+const { galleryEntries, currentCategory, categories } = Astro.props
+---
+
+<section id="gallery">
+  <div class="bg-purple-25 px-4 pt-20 sm:px-6 sm:pt-28 lg:px-8 lg:pt-36">
+    <div class="mx-auto max-w-screen-xl">
+      <h3
+        class="h2 mx-auto mb-10 max-w-2xl text-center text-purple-900 sm:mb-12 md:mb-20"
+      >
+        See what it's like to be part of our school
+      </h3>
+      <ul
+        class="-my-2 flex flex-wrap items-center justify-center space-x-2 text-sm font-medium sm:space-x-4 lg:space-x-6"
+      >
+        <li class="my-2">
+          <a
+            class:list={[
+              'inline-flex items-center justify-center rounded-full px-4 py-1.5 duration-300 ease-in-out sm:text-lg',
+              currentCategory === 'all'
+                ? 'bg-purple-600 text-purple-25 hover:bg-purple-500'
+                : 'bg-white text-purple-700 shadow-sm hover:bg-purple-100',
+            ]}
+            href="/gallery#gallery"
+          >
+            All images
+          </a>
+        </li>
+        {
+          categories.map((category) => (
+            <li class="my-2">
+              <a
+                class:list={[
+                  'inline-flex items-center justify-center rounded-full px-4 py-1.5 duration-300 ease-in-out sm:text-lg',
+                  category.name === currentCategory
+                    ? 'bg-purple-600 text-purple-25 hover:bg-purple-500'
+                    : 'bg-white text-purple-700 shadow-sm hover:bg-purple-100',
+                ]}
+                href={`/gallery/${category.slug}#gallery`}
+              >
+                {category.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  {/* Background for overlay effect */}
+  <div class="h-56 w-full bg-purple-25"></div>
+
+  {/* Gallery */}
+  <div
+    class="-mb-48 mt-12 -translate-y-56 px-4 sm:mt-16 sm:px-6 lg:mt-20 lg:px-8"
+  >
+    <div class="mx-auto max-w-3xl lg:max-w-screen-xl">
+      <ul
+        id="gallery-grid"
+        class="grid gap-y-8 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 lg:gap-4 2xl:gap-5"
+      >
+        {
+          galleryEntries.map((galleryEntry) => (
+            <li
+              class="group relative cursor-pointer"
+              data-src={galleryEntry.data.image.src.src}
+            >
+              <div class="aspect-h-1 aspect-w-1 bg-purple-50">
+                <Image
+                  src={galleryEntry.data.image.src}
+                  class="rounded-2xl object-cover"
+                  alt={galleryEntry.data.image.alt}
+                />
+                <div class="absolute inset-0 rounded-2xl bg-gray-900 opacity-0 transition duration-300 group-hover:opacity-60" />
+                <div class="absolute inset-0 flex items-center justify-center opacity-0 transition duration-300 group-hover:opacity-100">
+                  <div class="flex h-24 w-24 items-center justify-center rounded-full bg-purple-600 opacity-80">
+                    <Icon name="tabler:plus" class="h-12 w-12 text-white" />
+                  </div>
+                </div>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

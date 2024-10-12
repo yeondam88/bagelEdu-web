@@ -1,0 +1,27 @@
+---
+import Layout from '@layouts/Layout.astro'
+import AboutHero from '@components/about/AboutHero.astro'
+import AlternatingFeatures from '@components/about/AlternatingFeatures.astro'
+import Stats from '@components/about/Stats.astro'
+import Staff from '@components/about/Staff.astro'
+import Values from '@components/about/Values.astro'
+import { SITE } from '@config'
+---
+
+<Layout
+  title={`About us - ${SITE.title}`}
+  description="Learn about Bright Preschool & Elementary's mission, philosophy, and dedicated team. Explore our commitment to nurturing young minds, fostering creativity, and empowering children for a bright future."
+>
+  <AboutHero />
+
+  {/* Gradient background transition */}
+  <div
+    class="h-32 w-full bg-gradient-to-b from-purple-25 to-white sm:h-40 lg:h-44"
+  >
+  </div>
+
+  <AlternatingFeatures />
+  <Stats />
+  <Staff />
+  <Values />
+</Layout>

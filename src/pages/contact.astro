@@ -1,0 +1,14 @@
+---
+import Layout from '@layouts/Layout.astro'
+import ContactHero from '@components/contact/ContactHero.astro'
+import ContactInformation from '@components/contact/ContactInformation.astro'
+import { SITE } from '@config'
+---
+
+<Layout
+  title={`Contact us - ${SITE.title}`}
+  description="Get in touch with Bright Preschool & Elementary - we're here to help! Find our contact information, location, and hours, or submit an inquiry."
+>
+  <ContactHero />
+  <ContactInformation />
+</Layout>

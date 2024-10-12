@@ -1,0 +1,11 @@
+---
+import ContactHeader from './ContactHeader.astro'
+import Navbar from './Navbar.astro'
+
+const pathname = Astro.url.pathname.replace(/(?<=.)\/$/, '')
+---
+
+<header class:list={[pathname === '/parents' ? 'bg-white' : 'bg-purple-25']}>
+  <ContactHeader />
+  <Navbar />
+</header>

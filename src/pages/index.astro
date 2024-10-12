@@ -1,0 +1,24 @@
+---
+import Layout from '@layouts/Layout.astro'
+import HomeHero from '@components/home/HomeHero.astro'
+import HomeFeatureBlocks from '@components/home/HomeFeatureBlocks.astro'
+import StaffAssurances from '@components/home/StaffAssurances.astro'
+import FeaturedPrograms from '@components/home/FeaturedPrograms.astro'
+import Testimonials from '@components/home/Testimonials.astro'
+import Faqs from '@components/home/Faqs.astro'
+import { SITE } from '@config'
+---
+
+<Layout title={`${SITE.title} - Creating a brighter future for your child`}>
+  <HomeHero />
+  {/* Gradient background transition */}
+  <div
+    class="h-40 w-full bg-gradient-to-b from-purple-50 to-yellow-100 sm:h-48 xl:h-52"
+  >
+  </div>
+  <HomeFeatureBlocks />
+  <StaffAssurances />
+  <FeaturedPrograms />
+  <Testimonials />
+  <Faqs />
+</Layout>
