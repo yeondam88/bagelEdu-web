@@ -2,17 +2,17 @@ import type { Site, Contact, SocialObjects } from './types'
 
 export const SITE: Site = {
   website: 'https://bright-astro.tailwindawesome.com', // replace this with your deployed domain
-  author: 'Rodrigo Aguilar',
+  author: 'Yeondam Park',
   description:
     'At Bright School, we believe every child deserves a brighter future. and strive to give every student a personalized education that will promote their individual strengths and creativity.',
-  title: 'Bright School',
+  title: 'BagelEdu',
   ogImage: 'bright-og.png',
 }
 
 export const CONTACT: Contact = {
-  address: '958 McKinley Avenue Littleton, CO 80120',
-  phone: '+1-202-555-0132',
-  email: 'hello@bright.com',
+  address: '36, Banpo-daero 18-gil, Seocho-gu, Seoul',
+  phone: '(US)+1-818-732-0180 / (KR)+8210-3360-6558',
+  email: 'bageledu@gmail.com',
 }
 
 export const SOCIALS: SocialObjects = [
