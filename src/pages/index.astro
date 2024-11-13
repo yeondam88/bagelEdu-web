@@ -3,9 +3,11 @@ import Layout from '@layouts/Layout.astro'
 import HomeHero from '@components/home/HomeHero.astro'
 import HomeFeatureBlocks from '@components/home/HomeFeatureBlocks.astro'
 import StaffAssurances from '@components/home/StaffAssurances.astro'
+import Stats from '@components/about/Stats.astro'
 import FeaturedPrograms from '@components/home/FeaturedPrograms.astro'
 import Testimonials from '@components/home/Testimonials.astro'
 import Faqs from '@components/home/Faqs.astro'
+import Timeline from '@components/shared/Timeline.astro'
 import { SITE } from '@config'
 ---
 
@@ -20,4 +22,6 @@ import { SITE } from '@config'
   <FeaturedPrograms />
   <Testimonials />
   <Faqs />
+  <Stats />
+  <!-- <Timeline /> -->
 </Layout>

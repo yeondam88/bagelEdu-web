@@ -1,0 +1,124 @@
+---
+/* Astro Component: TimelineComponent.astro */
+---
+<style>
+    .timeline-container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      font-family: Arial, sans-serif;
+      color: #333;
+      border: 1px solid #ccc;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+  
+    /* Header months */
+    .timeline-header {
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr;
+      font-weight: bold;
+      text-align: center;
+      padding: 5px 0;
+      border-bottom: 2px solid #000;
+    }
+  
+    .timeline-header div {
+      padding: 5px;
+    }
+  
+    /* Timeline rows */
+    .timeline-row {
+      display: grid;
+      grid-template-columns: 3fr 1fr 1fr 1fr 1fr 1fr;
+      align-items: center;
+      position: relative;
+      padding: 8px 0;
+      border-bottom: 1px dashed #ccc;
+    }
+  
+    /* Bars for each task */
+    .bar {
+      height: 30px;
+      background-color: #81C4EB;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+    }
+  
+    /* Task-specific spans across columns */
+    .gmat-bar { grid-column: 2 / 4; }
+    .goals-bar { grid-column: 2 / 5; background-color: #c76b6b; border: 2px dashed #c76b6b; }
+    .schools-bar { grid-column: 4 / 6; }
+    .recommenders-bar { grid-column: 4 / 7; }
+    .resume-bar { grid-column: 5 / 7; }
+    .docs-bar { grid-column: 5 / 7; }
+    .interview-bar { grid-column: 6 / 7; }
+    .offer-bar { grid-column: 6 / 7; background-color: #FFCC80; }
+  
+    /* Section labels */
+    .section-label {
+      grid-column: 1 / 7;
+      text-align: left;
+      font-weight: bold;
+      padding: 10px 0;
+      border-top: 2px solid #000;
+    }
+  
+  </style>
+  
+  <div class="timeline-container">
+    <!-- Timeline Header -->
+    <div class="timeline-header">
+      <div>Mar-Jun</div>
+      <div>Jul</div>
+      <div>Aug</div>
+      <div>Sep</div>
+      <div>Oct</div>
+      <div>Nov</div>
+      <div>Dec</div>
+    </div>
+  
+    <!-- Section: Applications Released -->
+    <div class="timeline-row">
+      <div class="section-label">Applications Released</div>
+    </div>
+  
+    <!-- Task Rows -->
+    <div class="timeline-row">
+      <div class="bar gmat-bar">Take GMAT</div>
+    </div>
+    
+    <div class="timeline-row">
+      <div class="bar goals-bar">Define Goals & Story</div>
+    </div>
+  
+    <div class="timeline-row">
+      <div class="bar schools-bar">Select Schools</div>
+    </div>
+  
+    <div class="timeline-row">
+      <div class="bar recommenders-bar">Ask Recommenders</div>
+    </div>
+  
+    <div class="timeline-row">
+      <div class="bar resume-bar">Develop Resume / Essays</div>
+    </div>
+  
+    <div class="timeline-row">
+      <div class="bar docs-bar">Gather all Docs</div>
+    </div>
+  
+    <div class="timeline-row">
+      <div class="bar interview-bar">Interview Prep</div>
+    </div>
+  
+    <!-- Section: Offer / WL Strategy -->
+    <div class="timeline-row">
+      <div class="bar offer-bar">Offer / WL Strategy</div>
+    </div>
+  </div>

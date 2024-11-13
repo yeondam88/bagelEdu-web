@@ -1,0 +1,213 @@
+---
+import { Image } from 'astro:assets';
+import andover from '@images/schools/philiips_academy_andover.jpeg';
+import exeter from '@images/schools/phillips_exeter_academy.jpg';
+import choate from '@images/schools/choate_rosemary.jpg';
+import hotchkiss from '@images/schools/hotchkiss_school.jpg';
+import stpauls from '@images/schools/st_paul_school.jpg';
+import groton from '@images/schools/groton.jpg';
+import lawrenceville from '@images/schools/lawrenceville_school.jpg';
+import nobles from '@images/schools/noble_and_greenough.jpg';
+import deerfield from '@images/schools/deerfield_academy.jpg';
+import concord from '@images/schools/concord_academy.jpg';
+
+const boardingSchools = [
+  {
+    name: 'Phillips Academy Andover',
+    location: 'Andover, MA',
+    image: andover,
+    ranking: '1',
+    acceptanceRate: '13%',
+    avgSAT: '1460-1550',
+    founded: 1778,
+    enrollment: 1150,
+    boardingPercent: '75%',
+    studentTeacherRatio: '5:1',
+    endowment: '$1.1B',
+    tuition: '$61,950'
+  },
+  {
+    name: 'Phillips Exeter Academy',
+    location: 'Exeter, NH',
+    image: exeter,
+    ranking: '2',
+    acceptanceRate: '15%',
+    avgSAT: '1440-1540',
+    founded: 1781,
+    enrollment: 1080,
+    boardingPercent: '80%',
+    studentTeacherRatio: '5:1',
+    endowment: '$1.3B',
+    tuition: '$61,850'
+  },
+  {
+    name: 'Choate Rosemary Hall',
+    location: 'Wallingford, CT',
+    image: choate,
+    ranking: '3',
+    acceptanceRate: '16%',
+    avgSAT: '1430-1530',
+    founded: 1890,
+    enrollment: 850,
+    boardingPercent: '78%',
+    studentTeacherRatio: '6:1',
+    endowment: '$420M',
+    tuition: '$63,880'
+  },
+  {
+    name: 'The Hotchkiss School',
+    location: 'Lakeville, CT',
+    image: hotchkiss,
+    ranking: '4',
+    acceptanceRate: '17%',
+    avgSAT: '1420-1520',
+    founded: 1891,
+    enrollment: 600,
+    boardingPercent: '95%',
+    studentTeacherRatio: '4:1',
+    endowment: '$600M',
+    tuition: '$64,100'
+  },
+  {
+    name: "St. Paul's School",
+    location: 'Concord, NH',
+    image: stpauls,
+    ranking: '5',
+    acceptanceRate: '15%',
+    avgSAT: '1410-1510',
+    founded: 1856,
+    enrollment: 535,
+    boardingPercent: '100%',
+    studentTeacherRatio: '5:1',
+    endowment: '$730M',
+    tuition: '$62,900'
+  },
+  {
+    name: 'Groton School',
+    location: 'Groton, MA',
+    image: groton,
+    ranking: '6',
+    acceptanceRate: '12%',
+    avgSAT: '1430-1530',
+    founded: 1884,
+    enrollment: 380,
+    boardingPercent: '100%',
+    studentTeacherRatio: '4:1',
+    endowment: '$550M',
+    tuition: '$63,750'
+  },
+  {
+    name: 'The Lawrenceville School',
+    location: 'Lawrenceville, NJ',
+    image: lawrenceville,
+    ranking: '7',
+    acceptanceRate: '16%',
+    avgSAT: '1420-1520',
+    founded: 1810,
+    enrollment: 820,
+    boardingPercent: '95%',
+    studentTeacherRatio: '7:1',
+    endowment: '$490M',
+    tuition: '$65,700'
+  },
+  {
+    name: 'Noble and Greenough School',
+    location: 'Dedham, MA',
+    image: nobles,
+    ranking: '8',
+    acceptanceRate: '18%',
+    avgSAT: '1410-1510',
+    founded: 1866,
+    enrollment: 614,
+    boardingPercent: '20%',
+    studentTeacherRatio: '5:1',
+    endowment: '$280M',
+    tuition: '$60,900'
+  },
+  {
+    name: 'Deerfield Academy',
+    location: 'Deerfield, MA',
+    image: deerfield,
+    ranking: '9',
+    acceptanceRate: '15%',
+    avgSAT: '1400-1500',
+    founded: 1797,
+    enrollment: 680,
+    boardingPercent: '88%',
+    studentTeacherRatio: '5:1',
+    endowment: '$620M',
+    tuition: '$65,760'
+  },
+  {
+    name: 'Concord Academy',
+    location: 'Concord, MA',
+    image: concord,
+    ranking: '10',
+    acceptanceRate: '21%',
+    avgSAT: '1380-1500',
+    founded: 1922,
+    enrollment: 400,
+    boardingPercent: '40%',
+    studentTeacherRatio: '6:1',
+    endowment: '$150M',
+    tuition: '$64,995'
+  }
+];
+---
+
+<section class="relative w-full bg-purple-600 px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+  <div class="mx-auto max-w-screen-xl">
+    {/* Header */}
+    <div>
+      <h2 class="h2 mx-auto max-w-4xl text-center text-white">
+        Top 10 Partner Boarding Schools
+      </h2>
+      <p class="mx-auto mt-4 max-w-3xl text-center text-xl leading-relaxed text-purple-50">
+        Our students have been accepted to these prestigious boarding schools
+      </p>
+    </div>
+
+    {/* Schools Grid */}
+    <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {boardingSchools.map((school, index) => (
+        <div class="relative overflow-hidden rounded-lg bg-white shadow-lg transition-transform hover:scale-105">
+          <div class="aspect-w-16 aspect-h-9">
+            <Image
+              src={school.image}
+              alt={school.name}
+              class="h-full w-full object-cover"
+            />
+          </div>
+          
+          {/* Ranking Badge */}
+          <div class="absolute left-4 top-4 flex h-12 w-12 items-center justify-center rounded-full bg-purple-600 font-written text-2xl text-white">
+            #{school.ranking}
+          </div>
+
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-gray-900">{school.name}</h3>
+            <p class="text-gray-600">{school.location}</p>
+            
+            <div class="mt-4 flex justify-between text-sm">
+              <div>
+                <span class="font-semibold">Acceptance:</span> {school.acceptanceRate}
+              </div>
+              <div>
+                <span class="font-semibold">SAT:</span> {school.avgSAT}
+              </div>
+            </div>
+
+            <div class="mt-4 grid grid-cols-2 gap-2 text-sm text-gray-600">
+              <div><span class="font-semibold">Founded:</span> {school.founded}</div>
+              <div><span class="font-semibold">Students:</span> {school.enrollment}</div>
+              <div><span class="font-semibold">Boarding:</span> {school.boardingPercent}</div>
+              <div><span class="font-semibold">Student:Teacher:</span> {school.studentTeacherRatio}</div>
+              <div><span class="font-semibold">Endowment:</span> {school.endowment}</div>
+              <div><span class="font-semibold">Tuition:</span> {school.tuition}</div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section> 

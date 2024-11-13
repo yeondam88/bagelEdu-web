@@ -18,13 +18,19 @@ const features = [
 
 const blocks = [
   {
-    tagline: 'WE ARE ELITE',
-    headline: "CEO 이력",
-    text: '현) USC 석사 재학중',
-    text2: '전) UCLA 및 서울대 MBA 졸업',
-    text3: '전) 미국 대학 입시 학습 트레이닝 전문 강사',
-    text4: '전) 서울 외국인학교 담임교사',
-    text5: '전) 크레버스 CMS 영재관 강사',
+    tagline: 'CEO 이력',
+    // headline: "CEO 이력",
+    text: `지난 8년 동안 학업과 지식 기업에 종사 하면서 자부심과 책임감을 가지고 쉼 없이 도전하고 달려왔습니다.
+결국엔 모든 사람들이 자기가 좋아하는 일을 하고, 자기 자신의 가치를 추구하며, 
+스스로가 독립적이면서 자유롭고 지속 가능한 경제주체가 되는 커뮤니티와 사회를 만들어가는 것이라고 생각합니다.
+선택과 집중 을 통해 교육 사업에 몰두하면서 경험하고 많은 배움을 얻은 만큼 
+저와 함께 나아가는 한분 한분의 소명이 되고 단단한 발판이 되어 드릴것 입니다.
+감사합니다.`,
+    text2: '현) USC 석사 재학중',
+    text3: '전) UCLA 및 서울대 MBA 졸업',
+    text4: '전) 미국 대학 입시 학습 트레이닝 전문 강사',
+    text5: '전) 서울 외국인학교 담임교사',
+    text6: '전) 크레버스 CMS 영재관 강사',
     action: { label: 'Learn more', href: '/about', icon: true },
     portraitImage: { src: portraitImage1, alt: 'Kid stacking blocks' },
     squareImage: { src: squareImage1, alt: 'Children writing on workbook' },
@@ -145,6 +151,9 @@ const blocks = [
             </p>
             <p class="mt-3 max-w-2xl text-lg leading-loose text-purple-800">
               {block.text5}
+            </p>
+            <p class="mt-3 max-w-2xl text-lg leading-loose text-purple-800">
+              {block.text6}
             </p>
             <div class="mt-6">
               <Button href={block.action.href} variant="accent" size="sm">

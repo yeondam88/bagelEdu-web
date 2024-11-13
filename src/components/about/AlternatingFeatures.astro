@@ -15,20 +15,21 @@ const bgBlobs = [lightYellowBlob, lightPurpleBlob, lightRoseBlob]
 const blocks = [
   {
     tagline: 'Smart. Kind. Global.',
-    headline: 'Developing young, caring and responsible individuals',
-    text: 'Lorem ipsum dolor, sit amet consectetur elit do eius mod tempor labore sit amet. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Half galão extraction extra luwak luwak at con cappuccino milk that cortado organic est sit.',
+    headline: 'Kelly 한 , c-gate 학생 어머님',
+    text: `저희 아이는 영유를 다닐 적에 영어 거부감이 심하게 왔었는데, 베이글에듀 튜터쌤을 만나 다시 영어에 대한 흥미를 갖게 되었어요. 약 1년동안 일반 유치원으로 옮기고 , 그동한 튜터쌤과  차근차근 레벨테스트를 준비 한 덕분에 지금은 원하는 곳에서 재미있게 다니고 있답니다. 
+미국인 튜터 쌤 께서 영어 발음이 정확하여 아이 영어 speaking/ 인터뷰 대비 수업에 굉장히 도움이 많이 되었어요.`,
     image: { src: blockImage1, alt: 'Child covered in paint' },
   },
   {
     tagline: 'Pod environment',
-    headline: 'Getting the attention they deserve',
-    text: 'Lorem ipsum dolor, sit amet consectetur elit do eius mod tempor labore sit amet. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Half galão extraction extra luwak luwak at con cappuccino milk that cortado organic est sit.',
+    headline: '박재상 Cornell University 합격자',
+    text: `밤낮 가릴거 없이 저를 파악 하시기 위해 최선을 다하시는 티나쌤(컨설턴트) 를 보고 저도 다시 마음을 다잡고 공부 하기로 마음먹고 실천 중입니다. 저희 부모님도 힘들어 하셨는데, 티나쌤은 제가 어떤 사람인지, 어떤 가치를 가지고  있는지를 명확하게 파악하여 저를 브랜딩 하시더라고요. 솔직히 저의 강점화 흥미를 빠르게 파악하여 저의 가치를 200% 올려주셔서 너무 감사했어요.`,
     image: { src: blockImage2, alt: 'Child painting' },
   },
   {
     tagline: 'Personalized learning.',
-    headline: 'Every child has their own personalized education program',
-    text: 'Lorem ipsum dolor, sit amet consectetur elit do eius mod tempor labore sit amet. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Half galão extraction extra luwak luwak at con cappuccino milk that cortado organic est sit.',
+    headline: 'New York University, Hudson Sung 합격자',
+    text: `I thought I was ordinary, but Min discovered unique traits that set me apart. Min’s commitment and unique aspirations ensured high level quality. I was able to succeed because of her dedication and knowledge that she had. Thanks a lot to her.`,
     image: { src: blockImage3, alt: 'Child working on workbook' },
   },
 ]
@@ -40,7 +41,7 @@ const blocks = [
     {/* Section header */}
     <div class="px-4 text-center sm:px-6 lg:px-8">
       <h3 class="h2 text-purple-900">
-        <span class="block">A place for every child to</span>
+        <span class="block">학부모 및 학생들의 생생한 후기</span>
         {/* Underlined text */}
         <span class="relative block">
           <span class="relative">
@@ -49,7 +50,7 @@ const blocks = [
               src={highlight}
               alt=""
             />
-            <span class="relative">learn and grow</span>
+            <span class="relative">Students Reviews</span>
           </span>
         </span>
       </h3>
@@ -71,9 +72,9 @@ const blocks = [
               </span>
             </div>
             <div>
-              <h1 class="h3 mt-3.5 font-bold text-purple-900">
+              <h3 class="h4 mt-3.5 font-bold text-purple-900">
                 {block.headline}
-              </h1>
+              </h3>
               <p class="mt-3 max-w-xl text-lg text-purple-800 sm:text-xl sm:leading-relaxed">
                 {block.text}
               </p>
