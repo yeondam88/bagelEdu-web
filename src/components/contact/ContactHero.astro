@@ -64,16 +64,24 @@ import SelectBox from './SelectBox.astro'
         <form class="mt-8 space-y-6" action="#">
           <TextField
             name="name"
-            label="Name *"
+            label="이름 *"
             placeholder="John Doe"
             required
           />
           <TextField
             name="email"
-            label="Email *"
+            label="이메일 *"
             type="email"
             autocomplete="email"
             placeholder="john@email.com"
+            required
+          />
+          <TextField
+            name="phone"
+            label="전화번호 *"
+            type="tel"
+            autocomplete="tel"
+            placeholder="010-1234-5678"
             required
           />
           <TextField
@@ -82,9 +90,9 @@ import SelectBox from './SelectBox.astro'
             type="text"
             required
           />
-          <SelectBox name="grade" label="현재 학년 *" required />
+          <SelectBox name="grade" label="관심 프로그램 *" required />
           <TextField
-            label="Message *"
+            label="문의사항 *"
             name="message"
             elementType="textarea"
             placeholder="Tell us how we can help you..."

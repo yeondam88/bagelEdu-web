@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets'
 import Layout from '@layouts/Layout.astro'
 import AboutHero from '@components/about/AboutHero.astro'
 import AlternatingFeatures from '@components/about/AlternatingFeatures.astro'
@@ -6,7 +7,10 @@ import Stats from '@components/about/Stats.astro'
 import Staff from '@components/about/Staff.astro'
 import Values from '@components/about/Values.astro'
 import TopBoardingSchools from '@components/about/TopBoardingSchools.astro'
+import CoreValue from '@components/about/CoreValue.astro'
 import { SITE } from '@config'
+
+import CoreValueImage from '@images/stock/core-value.png'
 ---
 
 <Layout
@@ -22,6 +26,13 @@ import { SITE } from '@config'
   </div>
 
   <AlternatingFeatures />
+  <Image 
+    src={CoreValueImage}
+    alt="Core Value" 
+    class="w-full" 
+    width={1920}
+    height={1080}
+  />
   <!-- <Stats /> -->
   <!-- <Staff />
   <Values /> -->

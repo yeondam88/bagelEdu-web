@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets'
-import logo from '@images/bright-logo.png'
+import logo from '@images/bagelEdu-logo.png'
 import Button from './Button.astro'
 import { Icon } from 'astro-icon/components'
 import { getCollection } from 'astro:content'
@@ -9,13 +9,18 @@ import type { Program } from '@types'
 const navigation = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
-  { label: 'Programs' },
+  { label: 'Our Services' },
+  { label: 'Admission Guide' },
+  { label: 'Resources' },
+  { label: 'Blog & News' },
   // { label: 'Parents', href: '/parents' },
   // { label: 'Contact', href: '/contact' },
 ]
 
 const pathname = Astro.url.pathname.replace(/(?<=.)\/$/, '')
 const programs: Program[] = await getCollection('programs')
+const admissionGuide: Program[] = await getCollection('admissionGuide')
+const resources: Program[] = await getCollection('resources')
 ---
 
 <div class="px-4 sm:px-6">
@@ -28,7 +33,7 @@ const programs: Program[] = await getCollection('programs')
         {
           navigation.map((link) => (
             <div>
-              {link.label == 'Programs' ? (
+              {link.label == 'Our Services' || link.label == 'Admission Guide' || link.label == 'Resources' ? (
                 <div class="relative" x-data="{ open: false }">
                   <button
                     type="button"
@@ -40,7 +45,7 @@ const programs: Program[] = await getCollection('programs')
                         class="relative z-10 flex items-center text-lg font-medium duration-300 ease-in-out group-hover:text-purple-600"
                         x-bind:class="open ? 'text-purple-600' : 'text-purple-700'"
                       >
-                        Programs
+                        {link.label}
                         <Icon
                           name="chevron-down"
                           class="h-4.5 ml-1.5 w-4.5 transform duration-300 ease-in-out"
@@ -57,25 +62,25 @@ const programs: Program[] = await getCollection('programs')
                     x-show.transition="open"
                     @click.away="open = false"
                   >
-                    {programs.map((program, index) => (
+                    {(link.label === 'Our Services' ? programs : link.label === 'Admission Guide' ? admissionGuide : resources).map((item, index, arr) => (
                       <div>
                         <a
-                          href={`/programs/${program.slug}`}
+                          href={`/${link.label === 'Our Services' ? 'programs' : link.label === 'Admission Guide' ? 'admission-guide' : 'resources'}/${item.slug}`}
                           class:list={[
                             'group block w-full rounded-xl py-4 sm:p-5',
-                            pathname === `/programs/${program.slug}`
+                            pathname === `/${link.label === 'Our Services' ? 'programs' : link.label === 'Admission Guide' ? 'admission-guide' : 'resources'}/${item.slug}`
                               ? 'bg-purple-25'
                               : 'transition duration-200 ease-in-out hover:bg-purple-25/60',
                           ]}
                         >
                           <h5 class="text-lg font-semibold text-purple-600">
-                            {program.data.name}
+                            {item.data.name}
                           </h5>
                           <p class="mt-1 text-sm text-purple-800 opacity-90">
-                            {program.data.dropdownDescription}
+                            {item.data.dropdownDescription}
                           </p>
                         </a>
-                        {index != programs.length - 1 && (
+                        {index != arr.length - 1 && (
                           <hr class="my-1 border-purple-200/30 sm:my-2" />
                         )}
                       </div>
