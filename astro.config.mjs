@@ -19,4 +19,11 @@ export default defineConfig({
     sitemap(),
     icon(),
   ],
+  vite: {
+    build: {
+      rollupOptions: {
+        external: ['@images/bageledu/jenny-sohn.jpg'],
+      },
+    },
+  },
 })
