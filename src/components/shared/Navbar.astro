@@ -19,8 +19,8 @@ const navigation = [
 
 const pathname = Astro.url.pathname.replace(/(?<=.)\/$/, '')
 const programs: Program[] = await getCollection('programs')
-const admissionGuide: Program[] = await getCollection('admissionGuide')
-const resources: Program[] = await getCollection('resources')
+const admissionGuide = await getCollection('admissionGuide')
+const resources = await getCollection('resources')
 ---
 
 <div class="px-4 sm:px-6">
