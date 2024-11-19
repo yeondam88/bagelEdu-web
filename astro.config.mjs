@@ -18,17 +18,5 @@ export default defineConfig({
     mdx(),
     sitemap(),
     icon(),
-  ],
-  vite: {
-    resolve: {
-      alias: {
-        '@images': '/src/images'
-      }
-    },
-    build: {
-      rollupOptions: {
-        external: ['@images/bageledu/jenny-sohn.jpg'],
-      },
-    },
-  },
+  ]
 })
