@@ -45,7 +45,7 @@ const featuredPrograms = await getCollection(
               <Image
                 src={curvedDottedLine}
                 class="absolute left-1/2 top-0 hidden -translate-y-1/2 md:block"
-                style={{ width: 'calc(50% + 4rem)' }}
+                style={{ width: 'calc(50% + 4rem)', maxHeight: '900px' }}
                 alt=""
               />
             )}
@@ -60,6 +60,7 @@ const featuredPrograms = await getCollection(
               <div
                 class="flex flex-col justify-between"
                 transition:name={program.slug}
+                style={{ minHeight: '602px' }}
               >
                 <div class="flex-1">
                   <h3 class="h3 text-purple-900">{program.data.name}</h3>

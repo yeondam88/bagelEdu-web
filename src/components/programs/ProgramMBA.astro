@@ -1,0 +1,443 @@
+---
+import MBAAPPTimeline from '@images/stock/mba-app-timeline.png'
+import type { Program } from '@types'
+import { Image } from 'astro:assets'
+
+interface Props {
+    program: Program
+}
+
+const businessSchools = [
+    {
+        name: 'Harvard Business School',
+        applicationDeadlines: [
+            'Round 1: Sep 4, 2024',
+            'Round 2: Jan 6, 2025'
+        ],
+        decisionReleaseDates: [
+            'Round 1: Dec 10, 2024',
+            'Round 2: Mar 26, 2025'
+        ],
+    },
+    {
+        name: 'Wharton School',
+        applicationDeadlines: [
+            'Round 1: Sep 4, 2024',
+            'Round 2: Jan 3, 2025',
+            'Round 3: Apr 2, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: Dec 10, 2024',
+            'Round 2: Apr 1, 2025',
+            'Round 3: May 13, 2025',
+        ],
+    },
+    {
+        name: 'Columbia Business School (August Entry)',
+        applicationDeadlines: [
+            'Round 1: Sep 10, 2024',
+            'Round 2: Jan 7, 2025',
+            'Round 3: Apr 1, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: Dec 10, 2024',
+            'Round 2: Mar 26, 2025',
+            'Round 3: May 15, 2025',
+        ],
+    },
+    {
+        name: 'Kellogg School of Management',
+        applicationDeadlines: [
+            'Round 1: Sep 11, 2024',
+            'Round 2: Jan 8, 2025',
+            'Round 3: Apr 2, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: Dec 11, 2024',
+            'Round 2: Mar 26, 2025',
+            'Round 3: May 7, 2025',
+        ],
+    },
+    {
+        name: 'Chicago Booth School of Business',
+        applicationDeadlines: [
+            'Round 1: Sep 19, 2024',
+            'Round 2: Jan 7, 2025',
+            'Round 3: Apr 3, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: Dec 5, 2024',
+            'Round 2: Mar 27, 2025',
+            'Round 3: May 22, 2025',
+        ],
+    },
+    {
+        name: 'Dartmouth Tuck School of Business',
+        applicationDeadlines: [
+            'Round 1: Sep 26, 2024',
+            'Round 2: Jan 6, 2025',
+            'Round 3: Mar 26, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: Dec 12, 2024',
+            'Round 2: Mar 13, 2025',
+            'Round 3: May 1, 2025',
+        ],
+    },
+    {
+        name: 'Duke Fuqua School of Business',
+        applicationDeadlines: [
+            'Early Action: Sep 4, 2024',
+            'Round 1: Oct 1, 2024',
+            'Round 2: Jan 9, 2025',
+            'Round 3: Feb 20, 2025',
+        ],
+        decisionReleaseDates: [
+            'Early Action: Oct 18, 2024',
+            'Round 1: Dec 12, 2024',
+            'Round 2: Mar 14, 2025',
+            'Round 3: Apr 4, 2025',
+        ],
+    },
+    {
+        name: 'Michigan Ross School of Business',
+        applicationDeadlines: [
+            'Round 1: Sep 9, 2024',
+            'Round 2: Jan 6, 2025',
+            'Round 3: Mar 24, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: Dec 6, 2024',
+            'Round 2: Mar 14, 2025',
+            'Round 3: May 2, 2025',
+        ],
+    },
+    {
+        name: 'Virginia Darden',
+        applicationDeadlines: [
+            'Early Action: Sep 5, 2024',
+            'Round 1: Oct 2, 2024',
+            'Round 2: Jan 7, 2025',
+            'Round 3: Apr 2, 2025',
+        ],
+        decisionReleaseDates: [
+            'Early Action: Oct 16, 2024',
+            'Round 1: Dec 11, 2024',
+            'Round 2: Mar 12, 2025',
+            'Round 3: Apr 30, 2025',
+        ],
+    },
+    {
+        name: 'Vanderbilt Owen',
+        applicationDeadlines: [
+            'Round 1: Oct 8, 2024',
+            'Round 2: Jan 8, 2025',
+            'Round 3: Feb 25, 2025',
+            'Round 4: Apr 1, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: Dec 13, 2024',
+            'Round 2: Mar 14, 2025',
+            'Round 3: Apr 4, 2025',
+            'Round 4: May 2, 2025',
+        ],
+    },
+    {
+        name: 'Stanford Graduate School of Business',
+        applicationDeadlines: [
+            'Round 1: Sep 10, 2024',
+            'Round 2: Jan 8, 2025',
+            'Round 3: Apr 8, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: Dec 5, 2024',
+            'Round 2: Apr 3, 2025',
+            'Round 3: May 29, 2025',
+        ],
+    },
+    {
+        name: 'NYU Stern',
+        applicationDeadlines: [
+            'Round 1: Sep 16, 2024',
+            'Round 2: Oct 16, 2024',
+            'Round 3: Jan 16, 2025',
+            'Round 4: Apr 16, 2025'
+        ],
+        decisionReleaseDates: [
+            'Round 1: Dec 1, 2024',
+            'Round 2: Jan 1, 2025',
+            'Round 3: Apr 1, 2025',
+            'Round 4: Ongoing',
+        ],
+    },
+    {
+        name: 'INSEAD MBA January Intake 2024',
+        applicationDeadlines: [
+            'Round 1: Mar 11, 2025',
+            'Round 2: Apr 22, 2025',
+            'Round 3: Jun 17, 2025',
+            'Round 4: Aug 5, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: May 16, 2025',
+            'Round 2: Jul 4, 2025',
+            'Round 3: Aug 22, 2025',
+            'Round 4: Oct 10, 2025',
+        ],
+    },
+    {
+        name: 'INSEAD MBA August Intake 2024',
+        applicationDeadlines: [
+            'Round 1: Sep 10, 2024',
+            'Round 2: Nov 5, 2024',
+            'Round 3: Jan 14, 2025',
+            'Round 4: Mar 4, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: Nov 15, 2024',
+            'Round 2: Jan 10, 2025',
+            'Round 3: Mar 21, 2025',
+            'Round 4: May 2, 2025',
+        ],
+    },
+    {
+        name: 'Yale School of Management',
+        applicationDeadlines: [
+            'Round 1: Sep 10, 2024',
+            'Round 2: Jan 7, 2025',
+            'Round 3: Apr 8, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: Dec 5, 2024',
+            'Round 2: Mar 26, 2025',
+            'Round 3: May 16, 2025',
+        ],
+    },
+    {
+        name: 'Cambridge Judge Business School',
+        applicationDeadlines: [
+            'Round 1: Aug 27, 2024',
+            'Round 2: Oct 7, 2024',
+            'Round 3: Jan 6, 2025',
+            'Round 4: Mar 31, 2025',
+        ],
+        decisionReleaseDates: [
+            'Round 1: Oct 11, 2024',
+            'Round 2: Nov 8, 2024',
+            'Round 3: Feb 2025',
+            'Round 4: Apr 2025',
+        ],
+    },
+]
+
+const essayTips = [
+  {
+    id: 1,
+    title: "인터뷰",
+    description: `
+      이렇게 지원을 해서 서류가 통과가 되면, 인터뷰가 기다리고 있습니다.
+      인터뷰는 직접 학교에 방문해서 인터뷰를 볼 수도 있고, 방법이 여의치 않은 경우 온라인으로 면접을 보거나, 혹은 한국 동문들이 면접을 보기도 합니다. 
+      Duke, Kellogg, Berkeley, Chicago Booth 등이 한국 동문들이 면접을 보는 경우가 있었으며, Yale의 경우는 한국으로 학교에서 Interviewer를 보내서 면접을 진행하며, 
+      Cornell과 UCLA의 경우는 SKYPE 면접을 봅니다.
+    `
+  },
+  {
+    id: 2,
+    title: "GMAT 혹은 GRE",
+    description: `
+      아메리칸 MBA를 준비할 때 가장 신경써야 할 부분이 GMAT 시험이라고 할 수 있습니다.
+      요즘은 GRE로 시험을 대체할 수 있는 학교도 많이 있는데, 이 부분에 대해서는 학교마다 다르기에 
+      세심히 준비가 필요로 합니다. GMAT은 Graduate Management Admission Test로 모든 MBA 지원자가 
+      학교 입학을 위해서 시험을 치워야 하는 필수 요건입니다. 시험의 유효 기간은 5년이며, 크게 4분야로 나뉩니다.
+    `
+  },
+  {
+    id: 3,
+    title: "TOEFL",
+    description: `
+      TOEFL의 경우 GMAT과 함께 MBA를 준비하는데 중요한 시험 중 하나입니다.
+      요즘 MBA 학교에서 적어도 영어 실력을 더욱 중요시하는 경향이 강해지다 보니, 
+      TOEFL 점수도 점점 중요한 Factor 중 하나로 자리잡고 있는 추세입니다. 일부 학교의 경우 TOEFL 및 
+      IELTS 점수 최소 지원 점수 제한이 있는 경우도 있습니다. 예를 들어 HBS의 경우 공식적으로 TOEFL 점수 109점, 
+      IELTS 점수 7.5 점이 최소 지원 커트라인입니다.
+    `
+  }
+];
+
+const gmatDetails = [
+  {
+    section: "Quantitative Reasoning",
+    time: "62 minutes",
+    questions: "31 questions",
+    score: "6 - 51"
+  },
+  {
+    section: "Verbal Reasoning",
+    time: "65 minutes",
+    questions: "36 questions",
+    score: "6 - 51"
+  },
+  {
+    section: "Integrated Reasoning",
+    time: "30 minutes",
+    questions: "12 questions",
+    score: "1 - 8"
+  },
+  {
+    section: "Analytical Writing Assessment",
+    time: "30 minutes",
+    questions: "1 question",
+    score: "0 - 6"
+  },
+  {
+    section: "Total",
+    time: "3 hours 7 minutes",
+    questions: "80 questions",
+    score: "200 - 800"
+  }
+];
+
+const {
+    program: {
+        data: { AdditionalSection: data, name },
+    },
+} = Astro.props
+---
+
+<style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+  
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+  
+    th {
+      background-color: #ff0;
+      font-weight: bold;
+    }
+  
+    .essay-section {
+      margin-bottom: 2rem;
+    }
+  
+    .essay-title {
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+  
+    .essay-description {
+      line-height: 1.6;
+    }
+  </style>
+
+
+<section class="relative w-full px-4 py-16 sm:px-6 sm:py-24 xl:px-8">
+    {/* Container */}
+    <div class="mx-auto max-w-xl lg:max-w-screen-xl">
+        <Image
+            class="mx-auto"
+            src={MBAAPPTimeline}
+            alt="MBA Admissions Consulting Timeline"
+            width={MBAAPPTimeline.width}
+            height={MBAAPPTimeline.height}
+        />
+        <h2 class="h3 mt-3.5 text-purple-900 sm:mt-4 text-center py-8">
+            MBA application deadlines and decision release dates for the <br />2024–2025 admissions cycle
+        </h2>
+
+        <table
+            style="width: 100%; border-collapse: collapse; text-align: left;"
+        >
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ccc; padding: 10px;"
+                        >Business School</th
+                    >
+                    <th style="border: 1px solid #ccc; padding: 10px;"
+                        >Application Deadlines</th
+                    >
+                    <th style="border: 1px solid #ccc; padding: 10px;"
+                        >Decision Release Dates</th
+                    >
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    businessSchools.map((school) => (
+                        <tr>
+                            <td style="border: 1px solid #ccc; padding: 10px;">
+                                {school.name}
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 10px;">
+                                {school.applicationDeadlines.map((deadline) => (
+                                    <div>{deadline}</div>
+                                ))}
+                            </td>
+                            <td style="border: 1px solid #ccc; padding: 10px;">
+                                {school.decisionReleaseDates.map((date) => (
+                                    <div>{date}</div>
+                                ))}
+                            </td>
+                        </tr>
+                    ))
+                }
+            </tbody>
+        </table>
+
+        <div class="mt-12">
+            <h2 class="h2 mt-3.5 text-purple-900 sm:mt-4 mb-8">
+                Essay Tips
+            </h2>
+            <p class="mt-3 text-lg leading-relaxed text-purple-800">
+                1) 직장 경력 <br/>
+                일반적으로는 최소 3년 정도의 직장 경력을 요구 합니다.  삼성전자, 유명 컨설팅, IB 등 해외에서도 모두 아는 직장 경력이 있다면 아무래도 유리할 수 있습니다. MBA 도 결국 졸업 후 취업이 잘 될 것 같은 사람을 뽑는데, 기존 직장 경력이 좋은 사람이 아무래도 MBA 이후 취업에 더 유리할 수 밖에 없기 때문입니다. <br/><br/>
+                
+                2) 이력서, 에세이, 추천서 <br/><br />
+                
+                보통 GMAT과 토플 점수를 확보하게 되면, 실질적인 Application절차를 시작합니다. 이때 필요한 Package가 이력서 (Resume), 에세이 (Essay), 지원서 (Application Form), 추천서 (Recommendation Letter) 입니다. 이 4가지 지원 패키지를 학교별로 갖추는 데도 상당히 시간이 소요되기 때문에, GMAT과 토플은 늦어도 4월 이전에 끝내고, 5월 부터는 학교별 지원 패키지를 준비하는 데 시간을 쓰는 것을 추천 드립니다. 
+                우선 이력서의 경우 반드시 1 page로 작성하여야 합니다.  일반적으로 학력정보(Education), 직장경험(Work Experience), 그리고 기타 Personal하게 강조하고 싶은 부분이 있으면 Additional Information으로 구분하여 작성합니다. 학력정보는 학교, 전공 등을 주로 명시하고, 학교내에서 했던 기타 클럽활동이나 리더십 경험이 있으면 같이 언급해 주면 좋습니다. 직장경험은 회사 이름, 직책, 근무기간과 더불어 내 성과에 대해서도 함께 강조할 필요가 있습니다.마지막으로 기타정보에는 내 특기사항에 대해서 서술하는데, 특기나 취미, 혹은 외국어 능력 등 인터뷰어가 흥미를 느낄 만한 내용이 있으면 함께 명시하면 좋습니다. <br /><br /><br />
+                단 1장이지만, 상당히 노력이 많이 들어가는 부분이므로, 꼭 어떤 내용을 적을지 여러 사람과 이야기를 나누고, 컨설턴트의 자문 및 원어민의 첨삭이 필요로 합니다. <br/><br/>
+                다음으로 에세이의 경우 각 학교마다 에세이 질문이 다르며, 일반적으로는 2개에서 4개의 질문에 대해서 작성을 요구합니다. 보통은 왜 MBA에 지원하는지, 그리고 커리어 골은 무엇인지에 대한 질문은 가장 기본이며, 아주 특이한 질문을 요청하는 학교도 있습니다. <br/><br/>
+                마지막으로 추천서의 경우 학교별로 최소 2명에서 3명까지 요구하기도 하는데, 일반적으로는 전 상사와 학교 교수님에게 요청을 많이 합니다. 
+                
+            </p>
+        </div>
+        <div class="grid grid-cols-2 gap-4 mt-24">
+            <div class="h-full">
+                {essayTips.map((tip) => (
+                    <div class="essay-section">
+                        <div class="essay-title">{tip.id}) {tip.title}</div>
+                        <div class="essay-description">{tip.description}</div>
+                    </div>
+                ))}
+            </div>
+            <div class="h-full">
+                <table class="h-full">
+                    <thead>
+                        <tr>
+                            <th>Exam Section</th>
+                            <th>Time Limit</th>
+                            <th>Number of Questions</th>
+                            <th>Score Range</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {gmatDetails.map((detail) => (
+                            <tr>
+                                <td>{detail.section}</td>
+                                <td>{detail.time}</td>
+                                <td>{detail.questions}</td>
+                                <td>{detail.score}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

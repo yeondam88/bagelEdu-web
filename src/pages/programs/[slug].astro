@@ -4,6 +4,7 @@ import ProgramHero from '@components/programs/ProgramHero.astro'
 import ProgramInformation from '@components/programs/ProgramInformation.astro'
 import ProgramDescription from '@components/programs/ProgramDescription.astro'
 import ProgramPricing from '@components/programs/ProgramPricing.astro'
+import ProgramMBA from '@components/programs/ProgramMBA.astro'
 import { getCollection } from 'astro:content'
 import { SITE } from '@config'
 import type { Program } from '@types'
@@ -35,4 +36,7 @@ const ogImageUrl = typeof ogImage === 'string' ? ogImage : ogImage?.src
   <ProgramInformation program={program} />
   <ProgramDescription program={program} />
   <ProgramPricing program={program} />
+  {program.data.name === 'MBA Admissions Consulting' && (
+    <ProgramMBA program={program} />
+  )}
 </Layout>

@@ -35,3 +35,9 @@ export type SocialMedia =
   | 'mail'
   | 'twitter'
   | 'x'
+
+type Logo = {
+  src: string | ImageMetadata;
+  alt: string;
+  href: string;
+}

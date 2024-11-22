@@ -6,6 +6,7 @@ const programsCollection = defineCollection({
       name: z.string(),
       dropdownDescription: z.string(),
       featured: z.boolean(),
+      image: image(),
       hero: z.object({
         tagline: z.string(),
         headline: z.string(),
@@ -22,11 +23,15 @@ const programsCollection = defineCollection({
       }),
       infoSection: z.object({
         headline: z.string(),
-        text: z.string(),
-        ages: z.string(),
-        duration: z.string(),
-        schedule: z.string(),
-        classSize: z.string(),
+        text: z.string().optional(),
+        ages: z.string().optional(),
+        duration: z.string().optional(),
+        schedule: z.string().optional(),
+        classSize: z.string().optional(),
+        program1: z.string().optional(),
+        program2: z.string().optional(),
+        program3: z.string().optional(),
+        program4: z.string().optional(),
       }),
       descriptionSection: z.object({
         portraitImage: z.object({
@@ -40,24 +45,11 @@ const programsCollection = defineCollection({
           }),
         ),
       }),
-      pricingSection: z.object({
-        tagline: z.string(),
-        headline: z.string(),
-        text: z.string(),
-        pricingOptions: z.array(
-          z.object({
-            name: z.string(),
-            price: z.string(),
-            interval: z.string(),
-            shortDescription: z.string(),
-            features: z.array(z.string()),
-            action: z.object({
-              label: z.string(),
-              href: z.string(),
-              icon: z.boolean(),
-            }),
-          }),
-        ),
+      AdditionalSection: z.object({
+        headline1: z.string(),
+        text1: z.string(),
+        headline2: z.string(),
+        text2: z.string(),
       }),
     }),
 })

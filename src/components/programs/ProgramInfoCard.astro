@@ -10,7 +10,7 @@ interface Props {
     startColor: string
     endColor: string
   }
-  text: string
+  text: string | undefined
 }
 
 const { icon, title, gradientColors, text } = Astro.props
@@ -22,24 +22,47 @@ const { icon, title, gradientColors, text } = Astro.props
     gradientColors.bgColor,
   ]}
 >
-  <span
-    class:list={[
-      'flex h-14 w-14 items-center justify-center rounded-2xl shadow-md',
-      gradientColors.iconBgColor,
-    ]}
-  >
-    <Icon name={icon} class="h-8 w-8 text-purple-700" />
-  </span>
-  <h4 class="mt-4 text-center text-xl font-semibold text-purple-900">
-    {title}
-  </h4>
-  <div
-    class:list={[
-      'my-2 h-1.5 w-8 rounded-2xl bg-gradient-to-r',
-      gradientColors.startColor,
-      gradientColors.endColor,
-    ]}
-  >
+  <div class="flex w-full flex-col items-center">
+    <span
+      class:list={[
+        'flex h-14 w-14 items-center justify-center rounded-2xl shadow-md',
+        gradientColors.iconBgColor,
+      ]}
+    >
+      <Icon name={icon} class="h-8 w-8 text-purple-700" />
+    </span>
+    <h4 class="mt-4 text-center text-xl font-semibold text-purple-900">
+      {title}
+    </h4>
+    <div
+      class:list={[
+        'my-2 h-1.5 w-8 rounded-2xl bg-gradient-to-r',
+        gradientColors.startColor,
+        gradientColors.endColor,
+      ]}
+    >
+    </div>
   </div>
-  <p class="text-center text-lg text-purple-800">{text}</p>
+  <div class="text-center text-lg text-purple-800" x-data="{ expanded: false }">
+    <p
+      class="transition-all duration-200"
+      :class="expanded ? '' : 'line-clamp-3'"
+    >
+      {text}
+    </p>
+    {
+      text && (
+        <button
+          @click="expanded = !expanded"
+          class="mt-2 text-sm font-medium text-purple-600 hover:text-purple-800"
+        >
+          <span x-text="expanded ? 'Read Less' : 'Read More'" />
+        </button>
+      )
+    }
+  </div>
 </div>
+
+<script>
+  import 'alpinejs'
+</script>

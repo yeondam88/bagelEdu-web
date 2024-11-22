@@ -1,0 +1,45 @@
+---
+import HarvardLogo from '@images/schools/harvard-u-logo.svg'
+import StanfordLogo from '@images/schools/stanford-university-logo.png'
+import MITLogo from '@images/schools/mit-logo.jpg'
+import PrincetonLogo from '@images/schools/princeton-u-logo.svg'
+import ColumbiaLogo from '@images/schools/columbia-u-logo.png'
+import YaleLogo from '@images/schools/yale-logo.png'
+import BrownLogo from '@images/schools/Brown-University-Logo.png'
+import CornellLogo from '@images/schools/Cornell-University-Logo.png'
+import PennLogo from '@images/schools/Pennsylvania-University-Logo.png'
+import MichiganLogo from '@images/schools/Michigan-University-Logo.png'
+import NYULogo from '@images/schools/NYU-Logo.png'
+import JohnsHopkinsLogo from '@images/schools/johns-hopkins-university-logo.jpg'
+
+const logos = [
+  { src: HarvardLogo.src, alt: 'Harvard University' },
+  { src: StanfordLogo.src, alt: 'Stanford University' },
+  { src: MITLogo.src, alt: 'MIT' },
+  { src: PrincetonLogo.src, alt: 'Princeton University' },
+  { src: ColumbiaLogo.src, alt: 'Columbia University' },
+  { src: YaleLogo.src, alt: 'Yale University' },
+  { src: BrownLogo.src, alt: 'Brown University' },
+  { src: CornellLogo.src, alt: 'Cornell University' },
+  { src: PennLogo.src, alt: 'University of Pennsylvania' },
+  { src: MichiganLogo.src, alt: 'University of Michigan' },
+  { src: NYULogo.src, alt: 'New York University' },
+  { src: JohnsHopkinsLogo.src, alt: 'Johns Hopkins University' }
+]
+---
+<section
+  class="relative w-full bg-gray-100 px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
+>
+  <div class="mx-auto max-w-screen-xl">
+    <h2 class="h2 mx-auto text-center text-purple-900 mb-8">
+      Universities Featured
+    </h2>
+    <div class="grid grid-cols-3 gap-8 md:grid-cols-4 items-center justify-items-center bg-gray-100 py-16 px-8">
+      {logos.map((logo) => (
+        <div class="w-72 h-40 flex items-center justify-center p-4 bg-white rounded shadow-sm hover:grayscale-0 transition-all">
+          <img src={logo.src} alt={logo.alt} class="w-32 h-32 object-contain" />
+        </div>
+      ))}
+    </div></h2>
+  </div>
+</section>

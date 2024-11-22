@@ -1,0 +1,83 @@
+---
+import InfoCard from './ProgramInfoCard.astro'
+
+const {
+    program: {
+        data: { infoSection: data, name },
+    },
+} = Astro.props
+---
+
+<div
+    class="mt-12 grid gap-8 sm:mt-14 sm:max-w-none sm:grid-cols-2 sm:gap-6 lg:mt-24 lg:grid-cols-3 xl:gap-12"
+>
+    <InfoCard
+        icon="mood-kid"
+        title="개인별 맞춤 레벨업으로 학습 효율성 강화 및 성적 상승 효과"
+        gradientColors={{
+            bgColor: 'bg-yellow-200',
+            iconBgColor: 'bg-yellow-400',
+            startColor: 'from-yellow-400',
+            endColor: 'to-yellow-500',
+        }}
+        text={data.ages}
+    />
+
+    <InfoCard
+        icon="calendar"
+        title="명확한 목표 설정으로 학습 동기부여 및 멘탈 관리"
+        gradientColors={{
+            bgColor: 'bg-purple-50',
+            iconBgColor: 'bg-purple-200',
+            startColor: 'from-purple-200',
+            endColor: 'to-purple-300',
+        }}
+        text={data.duration}
+    />
+
+    <InfoCard
+        icon="clock"
+        title="계획 및 실천을 위한 로드맵 밀착 관리"
+        gradientColors={{
+            bgColor: 'bg-rose-50',
+            iconBgColor: 'bg-rose-200',
+            startColor: 'from-rose-100',
+            endColor: 'to-rose-300',
+        }}
+        text={data.schedule}
+    />
+
+    <InfoCard
+        icon="users-group"
+        title="확실한 이해 상승을 위한 온오프라인 1:1 케어 학습"
+        gradientColors={{
+            bgColor: 'bg-blue-50',
+            iconBgColor: 'bg-blue-200',
+            startColor: 'from-blue-100',
+            endColor: 'to-blue-300',
+        }}
+        text={data.classSize}
+    />
+    <InfoCard
+        icon="users-group"
+        title="스스로 공부할 수있도록 자기주도 학습 능력 향상"
+        gradientColors={{
+            bgColor: 'bg-blue-50',
+            iconBgColor: 'bg-blue-200',
+            startColor: 'from-blue-100',
+            endColor: 'to-blue-300',
+        }}
+        text={data.classSize}
+    />
+    <InfoCard
+        icon="users-group"
+        title="세심하게 검증된 SKY / IVY League Top 7 출신의 선생님 선발"
+        gradientColors={{
+            bgColor: 'bg-blue-50',
+            iconBgColor: 'bg-blue-200',
+            startColor: 'from-blue-100',
+            endColor: 'to-blue-300',
+        }}
+        text=""
+    />
+</div>

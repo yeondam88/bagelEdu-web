@@ -77,25 +77,9 @@ const { Content } = await program.render()
       </div>
       <div class="order-1 flex flex-col justify-center lg:order-2 lg:py-36">
         <div
-          class="prose prose-lg prose-invert relative z-20 w-full max-w-none py-16 lg:py-36"
+          class="prose prose-lg prose-invert relative z-20 mx-auto sm:prose-xl"
         >
-          <table class="w-full border-collapse rounded-lg overflow-hidden">
-            <thead>
-              <tr>
-                <th class="bg-purple-800 p-6 text-left text-lg font-semibold">프로그램 이름</th>
-                <th class="bg-purple-800 p-6 text-left text-lg font-semibold" style="width: 150px;">기간</th>
-                <th class="bg-purple-800 p-6 text-left text-lg font-semibold">상세내용</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="bg-purple-700/40 border-b-8 border-purple-600">
-                <td class="p-6"><span class="font-semibold">TIP (The Intern Project)</span></td>
-                <td class="p-6">8주</td>
-                <td class="p-6">LA 카운티의 고등학생 대상...</td>
-              </tr>
-              <!-- Apply same classes to other rows -->
-            </tbody>
-          </table>
+        <Content />
         </div>
       </div>
     </div>
