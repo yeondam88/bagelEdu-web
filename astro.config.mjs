@@ -12,6 +12,6 @@ export default defineConfig({
   site: SITE.website,
   trailingSlash: 'never',
   integrations: [tailwind(), alpinejs(), mdx(), sitemap(), icon()],
-  output: 'server',
+  output: 'static',
   adapter: vercel(),
 })
