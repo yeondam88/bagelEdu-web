@@ -6,7 +6,10 @@ import dotsLargeGrid from '@images/illustrations/dots-large-grid.svg'
 import dotsGrid from '@images/illustrations/dots-grid.svg'
 import dotsStrip from '@images/illustrations/dots-strip.svg'
 import SelectBox from './SelectBox.astro'
+import toast from 'react-hot-toast';
 ---
+
+<div id="toast-container"></div>
 
 <section
   class="overflow-hidden bg-gradient-to-b from-purple-25 to-purple-50 px-4 pb-12 sm:px-6 lg:px-8 lg:pt-24"
@@ -67,7 +70,11 @@ import SelectBox from './SelectBox.astro'
           </p>
         </div>
         {/* Contact form */}
-        <form class="mt-8 space-y-6" action="#">
+        <form 
+          class="mt-8 space-y-6" 
+          id="contactForm"
+          onsubmit="return false;"
+        >
           <TextField
             name="name"
             label="이름 *"
@@ -106,10 +113,45 @@ import SelectBox from './SelectBox.astro'
           />
 
           <div class="mt-6 flex justify-start">
-            <Button>Send message</Button>
+            <Button type="submit">Send message</Button>
           </div>
         </form>
       </div>
     </div>
   </div>
 </section>
+
+<script>
+  import toast from 'react-hot-toast';
+  const form = document.getElementById('contactForm');
+  
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    try {
+      console.log(new FormData(e.target as HTMLFormElement))
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        body: new FormData(e.target as HTMLFormElement)
+      });
+      
+      const data = await res.json();
+      
+      if (res.ok) {
+        toast.success(data.message);
+        (e.target as HTMLFormElement).reset();
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
+      toast.error('Something went wrong. Please try again.');
+    }
+  });
+</script>
+
+<script>
+  import { Toaster } from 'react-hot-toast';
+  const toaster = document.createElement('div');
+  document.body.appendChild(toaster);
+  new Toaster().render(toaster);
+</script>

@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets'
-import logo from '@images/bagelEdu-logo.png'
+import logo from '@images/bageledu-logo-transparent.png'
 import Button from './Button.astro'
 import { Icon } from 'astro-icon/components'
 import { getCollection } from 'astro:content'
@@ -9,10 +9,10 @@ import type { Program } from '@types'
 const navigation = [
   { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
-  { label: 'Our Services' },
-  { label: 'Admission Guide' },
-  { label: 'Resources' },
-  { label: 'Blog & News' },
+  { label: 'Our Services', href: '/programs' },
+  { label: 'Admission Guide', href: '/admission-guide' },
+  // { label: 'Resources' },
+  { label: 'Blog & News', href: '/blog' },
   // { label: 'Parents', href: '/parents' },
   // { label: 'Contact', href: '/contact' },
 ]
@@ -30,6 +30,11 @@ const resources = await getCollection('resources')
       <div
         class="hidden items-center justify-between md:space-x-6 lg:flex lg:space-x-10"
       >
+      <div class="w-32 flex-shrink-0 flex-grow-0">
+        <a href="/">
+          <Image src={logo} alt="Bright" class="h-auto" />
+        </a>
+      </div>
         {
           navigation.map((link) => (
             <div>
@@ -121,7 +126,7 @@ const resources = await getCollection('resources')
         <Button href="/contact">Free Consultation</Button>
       </div>
       {/* Logo on smaller screens: < lg */}
-      <div class="block w-48 flex-shrink-0 flex-grow-0 sm:w-52 lg:hidden">
+      <div class="block w-56 flex-shrink-0 flex-grow-0 sm:w-60 lg:hidden">
         <a href="/">
           <Image src={logo} alt="Bright" class="h-auto" />
         </a>

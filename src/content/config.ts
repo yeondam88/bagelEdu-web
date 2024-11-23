@@ -133,6 +133,25 @@ const galleryCollection = defineCollection({
     }),
 })
 
+const blogCollection = defineCollection({
+  schema: ({ image }) => z.object({
+    title: z.string(),
+      date: z.string(),
+      author: z.string(),
+      image: image(),
+      excerpt: z.string(),
+  }),
+});
+
+const admissionGuideCollection = defineCollection({
+  schema: ({ image }) => z.object({
+    name: z.string(),
+    dropdownDescription: z.string(),
+    image: image(),
+    fullHeight: z.boolean().optional(),
+  }),
+});
+
 export const collections = {
   programs: programsCollection,
   staff: staffCollection,
@@ -141,4 +160,6 @@ export const collections = {
   events: eventsCollection,
   newsletters: newslettersCollection,
   gallery: galleryCollection,
+  blog: blogCollection,
+  admissionGuide: admissionGuideCollection,
 }

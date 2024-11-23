@@ -18,5 +18,6 @@ export default defineConfig({
     mdx(),
     sitemap(),
     icon(),
-  ]
+  ],
+  output: 'server',
 })
