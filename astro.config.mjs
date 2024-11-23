@@ -5,20 +5,13 @@ import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
 import icon from 'astro-icon'
 import { SITE } from './src/config'
-import vercel from '@astrojs/vercel';
+import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
   trailingSlash: 'never',
-  integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    alpinejs(),
-    mdx(),
-    sitemap(),
-    icon(),
-  ],
-  output: vercel()
+  integrations: [tailwind(), alpinejs(), mdx(), sitemap(), icon()],
+  output: 'server',
+  adapter: vercel(),
 })
