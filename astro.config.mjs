@@ -5,6 +5,7 @@ import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
 import icon from 'astro-icon'
 import { SITE } from './src/config'
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,5 +20,5 @@ export default defineConfig({
     sitemap(),
     icon(),
   ],
-  output: 'server',
+  output: vercel()
 })
