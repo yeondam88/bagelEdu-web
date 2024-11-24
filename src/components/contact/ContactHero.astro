@@ -74,6 +74,9 @@ import toast from 'react-hot-toast';
           class="mt-8 space-y-6" 
           id="contactForm"
           onsubmit="return false;"
+          method="POST" 
+          action="/api/contact"
+          enctype="multipart/form-data"
         >
           <TextField
             name="name"

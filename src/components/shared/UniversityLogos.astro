@@ -27,19 +27,31 @@ const logos = [
   { src: JohnsHopkinsLogo.src, alt: 'Johns Hopkins University' }
 ]
 ---
-<section
-  class="relative w-full bg-gray-100 px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
->
+<section class="relative w-full bg-gray-100 px-4 py-8 sm:px-6 sm:py-16 lg:px-8">
   <div class="mx-auto max-w-screen-xl">
-    <h2 class="h2 mx-auto text-center text-purple-900 mb-8">
+    <h2 class="h2 mx-auto text-center text-purple-900 mb-4 sm:mb-8 text-2xl sm:text-3xl lg:text-4xl">
       Universities Featured
     </h2>
-    <div class="grid grid-cols-3 gap-8 md:grid-cols-4 items-center justify-items-center bg-gray-100 py-16 px-8">
+    
+    <div class="grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-8">
       {logos.map((logo) => (
-        <div class="w-72 h-40 flex items-center justify-center p-4 bg-white rounded shadow-sm hover:grayscale-0 transition-all">
-          <img src={logo.src} alt={logo.alt} class="w-32 h-32 object-contain" />
+        <div class="
+          w-full aspect-[4/3] 
+          flex items-center justify-center 
+          p-2 sm:p-4 
+          bg-white rounded shadow-sm 
+          hover:shadow-md 
+          transition-all duration-300
+          hover:grayscale-0
+        ">
+          <img 
+            src={logo.src} 
+            alt={logo.alt} 
+            class="w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 object-contain" 
+            loading="lazy"
+          />
         </div>
       ))}
-    </div></h2>
+    </div>
   </div>
 </section>

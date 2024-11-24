@@ -1,4 +1,5 @@
 import { z, defineCollection } from 'astro:content'
+import { image } from 'astro:assets'
 
 const programsCollection = defineCollection({
   schema: ({ image }) =>
@@ -138,8 +139,11 @@ const blogCollection = defineCollection({
     title: z.string(),
       date: z.string(),
       author: z.string(),
-      image: image(),
+      image: z.string(),
       excerpt: z.string(),
+      category: z.string().optional(),
+      authorImage: image(),
+      tags: z.array(z.string()).optional(),
   }),
 });
 

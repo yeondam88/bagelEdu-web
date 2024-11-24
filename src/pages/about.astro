@@ -7,7 +7,7 @@ import Stats from '@components/about/Stats.astro'
 import Staff from '@components/about/Staff.astro'
 import Values from '@components/about/Values.astro'
 import TopBoardingSchools from '@components/about/TopBoardingSchools.astro'
-import CoreValue from '@components/about/CoreValue.astro'
+import BagelEduCoreValue from '@components/shared/BagelEduCoreValue.astro'
 import { SITE } from '@config'
 
 import CoreValueImage from '@images/stock/bageledu-core-value.png'
@@ -26,13 +26,7 @@ import CoreValueImage from '@images/stock/bageledu-core-value.png'
   </div>
 
   <AlternatingFeatures />
-  <Image 
-    src={CoreValueImage}
-    alt="Core Value" 
-    class="w-full" 
-    width={1920}
-    height={1080}
-  />
+  <BagelEduCoreValue />
   <!-- <Stats /> -->
   <!-- <Staff />
   <Values /> -->

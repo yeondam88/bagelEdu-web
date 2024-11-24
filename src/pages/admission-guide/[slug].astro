@@ -3,6 +3,9 @@ import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 
+export const prerender = true;
+
+
 export async function getStaticPaths() {
   const admissionGuide = await getCollection('admissionGuide');
   return admissionGuide.map(admissionGuide => ({

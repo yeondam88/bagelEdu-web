@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import Layout from '@layouts/Layout.astro'
 import ProgramHero from '@components/programs/ProgramHero.astro'
 import ProgramInformation from '@components/programs/ProgramInformation.astro'
@@ -10,18 +12,15 @@ import { SITE } from '@config'
 import type { Program } from '@types'
 
 export async function getStaticPaths() {
-  const programs: Program[] = await getCollection('programs')
-  return programs.map((program) => ({
-    params: { slug: program.slug },
-    props: { program },
-  }))
+  const programEntries = await getCollection('programs');
+  return programEntries.map(entry => ({
+    params: { slug: entry.slug },
+    props: { program: entry },
+  }));
 }
 
-interface Props {
-  program: Program
-}
-
-const { program } = Astro.props
+const { program } = Astro.props;
+if (!program) throw new Error('No program found');
 
 const ogImage = program.data.hero.image.src
 const ogImageUrl = typeof ogImage === 'string' ? ogImage : ogImage?.src

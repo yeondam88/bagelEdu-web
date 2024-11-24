@@ -16,6 +16,8 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const formData = await request.formData();
     
+    console.log('Received form data:', Object.fromEntries(formData));
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -25,30 +27,129 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
     const htmlTemplate = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
-        <h2 style="color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px;">New Inquiry from BagelEdu</h2>
-        
-        <div style="margin: 20px 0;">
-          <p style="margin: 10px 0;"><strong style="color: #34495e;">Name:</strong> ${formData.get('name')}</p>
-          <p style="margin: 10px 0;"><strong style="color: #34495e;">Email:</strong> ${formData.get('email')}</p>
-          <p style="margin: 10px 0;"><strong style="color: #34495e;">Phone:</strong> ${formData.get('phone')}</p>
-          <p style="margin: 10px 0;"><strong style="color: #34495e;">Service Type:</strong> ${formData.get('grade')}</p>
-        </div>
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body style="margin: 0; padding: 0; background-color: #f6f9fc;">
+          <div style="
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px 20px;
+          ">
+            <div style="
+              background: white;
+              border-radius: 12px;
+              padding: 32px;
+              box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            ">
+              <div style="text-align: center; margin-bottom: 24px;">
+                <img 
+                  src="https://bageledu.sfo3.cdn.digitaloceanspaces.com/bageledu-logo-v1.png" 
+                  alt="BagelEdu Logo" 
+                  style="
+                    width: 180px;
+                    height: auto;
+                    margin: 0 auto;
+                  "
+                />
+              </div>
+              <div style="text-align: center; margin-bottom: 32px;">
+                <h1 style="
+                  color: #1a1a1a;
+                  font-size: 24px;
+                  font-weight: 600;
+                  margin: 0;
+                ">New Inquiry from BagelEdu</h1>
+              </div>
 
-        <div style="background: #f9f9f9; padding: 15px; border-radius: 4px; margin: 20px 0;">
-          <h3 style="color: #2c3e50; margin-top: 0;">Message:</h3>
-          <p style="white-space: pre-wrap;">${formData.get('message')}</p>
-        </div>
+              <div style="margin: 24px 0; border-top: 1px solid #e1e1e1; padding-top: 24px;">
+                <div style="margin-bottom: 16px;">
+                  <p style="
+                    margin: 0 0 8px;
+                    color: #666;
+                    font-size: 14px;
+                    font-weight: 500;
+                  ">Name</p>
+                  <p style="margin: 0; color: #1a1a1a; font-size: 16px;">${formData.get('name')}</p>
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                  <p style="
+                    margin: 0 0 8px;
+                    color: #666;
+                    font-size: 14px;
+                    font-weight: 500;
+                  ">Email</p>
+                  <p style="margin: 0; color: #1a1a1a; font-size: 16px;">${formData.get('email')}</p>
+                </div>
 
-        <div style="color: #7f8c8d; font-size: 12px; margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
-          <p>This is an automated message from BagelEdu Contact Form.</p>
-        </div>
-      </div>
+                <div style="margin-bottom: 16px;">
+                  <p style="
+                    margin: 0 0 8px;
+                    color: #666;
+                    font-size: 14px;
+                    font-weight: 500;
+                  ">Phone</p>
+                  <p style="margin: 0; color: #1a1a1a; font-size: 16px;">${formData.get('phone')}</p>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                  <p style="
+                    margin: 0 0 8px;
+                    color: #666;
+                    font-size: 14px;
+                    font-weight: 500;
+                  ">Service Type</p>
+                  <p style="margin: 0; color: #1a1a1a; font-size: 16px;">${formData.get('grade')}</p>
+                </div>
+              </div>
+
+              <div style="
+                background: #f8fafc;
+                border-radius: 8px;
+                padding: 24px;
+                margin: 24px 0;
+              ">
+                <p style="
+                  margin: 0 0 8px;
+                  color: #666;
+                  font-size: 14px;
+                  font-weight: 500;
+                ">Message</p>
+                <p style="
+                  margin: 0;
+                  color: #1a1a1a;
+                  font-size: 16px;
+                  white-space: pre-wrap;
+                  line-height: 1.5;
+                ">${formData.get('message')}</p>
+              </div>
+
+              <div style="
+                margin-top: 32px;
+                padding-top: 24px;
+                border-top: 1px solid #e1e1e1;
+                text-align: center;
+              ">
+                <p style="
+                  margin: 0;
+                  color: #666;
+                  font-size: 13px;
+                ">This is an automated message from BagelEdu Contact Form</p>
+              </div>
+            </div>
+          </div>
+        </body>
+      </html>
     `;
 
     const mailOptions = {
       from: import.meta.env.PUBLIC_EMAIL_USER,
-      to: 'bageledu@gmail.com',
+      to: import.meta.env.EMAIL_TO_ACCOUNT,
       subject: `New Inquiry from ${formData.get('name')}`,
       html: htmlTemplate,
       // Keep text version as fallback
@@ -68,9 +169,15 @@ export const POST: APIRoute = async ({ request }) => {
     }), { status: 200 });
 
   } catch (error) {
-    console.error('Server error:', error);  // Debug line
+    console.error('Form submission error:', error);
     return new Response(JSON.stringify({
-      message: 'Failed to send message. Please try again later.'
-    }), { status: 500 });
+      message: 'Error processing form submission',
+      error: error.message
+    }), {
+      status: 400,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 }
