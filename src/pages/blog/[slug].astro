@@ -2,7 +2,6 @@
 import { getCollection } from 'astro:content';
 import Layout from '@layouts/Layout.astro';
 import { formatDate } from '../../utils/date';
-import { Image } from 'astro:assets';
 
 export const prerender = true;
 
@@ -52,7 +51,7 @@ const { Content } = await entry.render();
           {entry.data.author && (
             <div class="flex items-center gap-x-2">
               {entry.data.authorImage && (
-                <Image 
+                <img 
                   src={entry.data.authorImage} 
                   alt={entry.data.author}
                   class="w-8 h-8 rounded-full object-cover"

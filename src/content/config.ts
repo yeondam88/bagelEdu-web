@@ -141,7 +141,7 @@ const blogCollection = defineCollection({
       image: z.string(),
       excerpt: z.string(),
       category: z.string().optional(),
-      authorImage: image(),
+      authorImage: z.string(),
       tags: z.array(z.string()).optional(),
   }),
 });

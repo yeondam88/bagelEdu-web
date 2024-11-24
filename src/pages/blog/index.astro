@@ -1,7 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
 
 const posts = await getCollection('blog');
 ---
@@ -27,7 +26,11 @@ const posts = await getCollection('blog');
               <p class="text-gray-600 line-clamp-2 mb-4">{post.data.excerpt}</p>
               <div class="mt-auto flex items-center gap-2">
                 {post.data.authorImage && (
-                  <Image src={post.data.authorImage} alt={post.data.author} class="w-8 h-8 rounded-full object-cover" />
+                  <img 
+                    src={post.data.authorImage} 
+                    alt={post.data.author} 
+                    class="w-8 h-8 rounded-full object-cover object-center" 
+                  />
                 )}
                 <span class="text-sm text-gray-600">{post.data.author}</span>
               </div>
