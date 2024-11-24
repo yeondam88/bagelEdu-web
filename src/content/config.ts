@@ -1,5 +1,4 @@
 import { z, defineCollection } from 'astro:content'
-import { image } from 'astro:assets'
 
 const programsCollection = defineCollection({
   schema: ({ image }) =>

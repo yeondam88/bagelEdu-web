@@ -172,7 +172,7 @@ export const POST: APIRoute = async ({ request }) => {
     console.error('Form submission error:', error);
     return new Response(JSON.stringify({
       message: 'Error processing form submission',
-      error: error.message
+      error: error instanceof Error ? error.message : 'Unknown error'
     }), {
       status: 400,
       headers: {
