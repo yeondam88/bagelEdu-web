@@ -87,8 +87,7 @@ const faqsCollection = defineCollection({
   type: 'data',
   schema: () =>
     z.object({
-      question: z.string(),
-      answer: z.string(),
+      question: z.string()
     }),
 })
 
