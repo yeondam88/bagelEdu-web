@@ -84,7 +84,6 @@ const testimonialsCollection = defineCollection({
 })
 
 const faqsCollection = defineCollection({
-  type: 'data',
   schema: () =>
     z.object({
       question: z.string()
