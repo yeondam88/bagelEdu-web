@@ -6,10 +6,12 @@ import dotsLargeGrid from '@images/illustrations/dots-large-grid.svg'
 import dotsGrid from '@images/illustrations/dots-grid.svg'
 import dotsStrip from '@images/illustrations/dots-strip.svg'
 import SelectBox from './SelectBox.astro'
-import toast from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast'
 ---
 
-<div id="toast-container"></div>
+<div id="toast-container">
+  <Toaster client:load />
+</div>
 
 <section
   class="overflow-hidden bg-gradient-to-b from-purple-25 to-purple-50 px-4 pb-12 sm:px-6 lg:px-8 lg:pt-24"
@@ -73,9 +75,6 @@ import toast from 'react-hot-toast';
         <form 
           class="mt-8 space-y-6" 
           id="contactForm"
-          onsubmit="return false;"
-          method="POST" 
-          action="/api/contact"
           enctype="multipart/form-data"
         >
           <TextField
@@ -126,13 +125,13 @@ import toast from 'react-hot-toast';
 
 <script>
   import toast from 'react-hot-toast';
+  
   const form = document.getElementById('contactForm');
   
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     try {
-      console.log(new FormData(e.target as HTMLFormElement))
       const res = await fetch('/api/contact', {
         method: 'POST',
         body: new FormData(e.target as HTMLFormElement)
@@ -141,20 +140,14 @@ import toast from 'react-hot-toast';
       const data = await res.json();
       
       if (res.ok) {
-        toast.success(data.message);
+        toast.success('메시지가 성공적으로 전송되었습니다.');
         (e.target as HTMLFormElement).reset();
       } else {
-        toast.error(data.message);
+        toast.error('메시지 전송에 실패했습니다.');
       }
     } catch (err) {
-      toast.error('Something went wrong. Please try again.');
+      toast.error('오류가 발생했습니다. 다시 시도해주세요.');
+      console.error(err);
     }
   });
-</script>
-
-<script>
-  import { Toaster } from 'react-hot-toast';
-  const toaster = document.createElement('div');
-  document.body.appendChild(toaster);
-  new Toaster().render(toaster);
 </script>
