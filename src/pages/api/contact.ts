@@ -103,8 +103,18 @@ export const POST: APIRoute = async ({ request }) => {
                     color: #666;
                     font-size: 14px;
                     font-weight: 500;
-                  ">Service Type</p>
+                  ">Grade</p>
                   <p style="margin: 0; color: #1a1a1a; font-size: 16px;">${formData.get('grade')}</p>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                  <p style="
+                    margin: 0 0 8px;
+                    color: #666;
+                    font-size: 14px;
+                    font-weight: 500;
+                  ">Program Name</p>
+                  <p style="margin: 0; color: #1a1a1a; font-size: 16px;">${formData.get('program-name')}</p>
                 </div>
               </div>
 
@@ -157,7 +167,8 @@ export const POST: APIRoute = async ({ request }) => {
         Name: ${formData.get('name')}
         Email: ${formData.get('email')}
         Phone: ${formData.get('phone')}
-        Service Type: ${formData.get('grade')}
+        Grade: ${formData.get('grade')}
+        Program Name: ${formData.get('program-name')}
         Message: ${formData.get('message')}
       `
     };
