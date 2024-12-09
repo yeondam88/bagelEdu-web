@@ -6,6 +6,7 @@ import CallToAction from '@components/shared/CallToAction.astro'
 import Footer from '@components/shared/Footer.astro'
 import { ViewTransitions } from 'astro:transitions'
 import { SITE } from '@config'
+import Analytics from '@vercel/analytics/astro'
 
 interface Props {
   title?: string
@@ -63,5 +64,6 @@ const socialImageURL = new URL(ogImage ?? SITE.ogImage, Astro.url.origin).href
     <slot />
     <CallToAction />
     <Footer />
+    <Analytics />
   </body>
 </html>

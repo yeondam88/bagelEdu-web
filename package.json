@@ -24,6 +24,7 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.15",
     "@types/alpinejs": "^3.13.10",
+    "@vercel/analytics": "^1.4.1",
     "alpinejs": "^3.14.1",
     "astro": "^4.15.6",
     "astro-icon": "^1.1.1",
