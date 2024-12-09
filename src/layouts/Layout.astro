@@ -58,7 +58,7 @@ const socialImageURL = new URL(ogImage ?? SITE.ogImage, Astro.url.origin).href
     <meta property="twitter:image" content={socialImageURL} />
 
     <ViewTransitions />
-    <Analytics />
+    <Analytics mode="production"/>
   </head>
   <body>
     <Header />
