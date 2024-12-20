@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html,
+  body {
+    @apply overflow-x-hidden w-full relative;
+  }
+}
+
 /* Typography */
 .h1 {
   @apply text-5xl font-extrabold leading-snug sm:text-6xl xl:text-7xl sm:leading-tight xl:leading-tighter;

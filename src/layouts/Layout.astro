@@ -32,7 +32,7 @@ const socialImageURL = new URL(ogImage ?? SITE.ogImage, Astro.url.origin).href
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -59,7 +59,7 @@ const socialImageURL = new URL(ogImage ?? SITE.ogImage, Astro.url.origin).href
 
     <ViewTransitions />
   </head>
-  <body class="select-none">
+  <body class="select-none overflow-x-hidden">
     <Header />
     <slot />
     <CallToAction />
