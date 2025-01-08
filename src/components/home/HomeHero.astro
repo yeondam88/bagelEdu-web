@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets'
 import portraitImage from '@images/stock/jenny-sohn-no-bg.png'
-import ConsultationButton from '@components/shared/ConsultationButton.astro'
 
 const stats = [
   { name: '합격률', value: '98%' },
@@ -12,11 +11,11 @@ const stats = [
 
 <div class="relative isolate overflow-hidden bg-white">
   <div class="mx-auto max-w-7xl px-6 pt-16 lg:flex lg:px-8 lg:pt-24">
-    <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-48">
-      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-6xl">
+    <div class="mx-auto max-w-2xl px-4 sm:px-0 lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-48 mt-12">
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-6xl">
         아이비리그 출신의 튜터와 함께 하는 밀착형 영어 수업!
       </h1>
-      <div class="mt-10">
+      <div class="mt-6 sm:mt-10">
         <a
           href="/contact"
           class="inline-block w-auto px-6 py-2.5 text-base font-medium text-white rounded-full bg-gradient-to-r from-purple-600 to-purple-500 shadow-lg transition-all hover:from-purple-500 hover:to-purple-400"
@@ -25,11 +24,11 @@ const stats = [
         </a>
       </div>
       
-      <div class="mt-16 grid grid-cols-3 gap-8 md:gap-12">
+      <div class="mt-12 sm:mt-16 grid grid-cols-3 gap-4 sm:gap-8 md:gap-12">
         {stats.map((stat) => (
           <div class="flex flex-col">
-            <dt class="text-base font-semibold leading-7 text-purple-600">{stat.name}</dt>
-            <dd class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{stat.value}</dd>
+            <dt class="text-sm sm:text-base font-semibold leading-7 text-purple-600">{stat.name}</dt>
+            <dd class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{stat.value}</dd>
           </div>
         ))}
       </div>
@@ -41,7 +40,7 @@ const stats = [
           alt="BagelEdu Tutor"
           width={800}
           height={1000}
-          class="w-[36rem]"
+          class="w-[18rem] sm:w-[24rem] md:w-[30rem] lg:w-[36rem]"
         />
       </div>
     </div>
