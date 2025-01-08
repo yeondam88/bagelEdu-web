@@ -1,56 +1,89 @@
 ---
-import HarvardLogo from '@images/schools/harvard-u-logo.svg'
-import StanfordLogo from '@images/schools/stanford-university-logo.png'
-import MITLogo from '@images/schools/MIT-Logo.jpg'
-import PrincetonLogo from '@images/schools/princeton-u-logo.svg'
-import ColumbiaLogo from '@images/schools/columbia-u-logo.png'
-import YaleLogo from '@images/schools/yale-logo.png'
-import BrownLogo from '@images/schools/Brown-University-Logo.png'
-import CornellLogo from '@images/schools/Cornell-University-Logo.png'
-import PennLogo from '@images/schools/Pennsylvania-University-Logo.png'
-import MichiganLogo from '@images/schools/Michigan-University-Logo.png'
-import NYULogo from '@images/schools/NYU-Logo.png'
-import JohnsHopkinsLogo from '@images/schools/johns-hopkins-university-logo.jpg'
+import HarvardLogo from '@images/universities-logos/image.webp'
+import StanfordLogo from '@images/universities-logos/image-6.webp'
+import PrincetonLogo from '@images/universities-logos/image-7.webp'
+import YaleLogo from '@images/universities-logos/image-8.webp'
+import BrownLogo from '@images/universities-logos/image-9.webp'
+import PennLogo from '@images/universities-logos/image-10.webp'
+import ColumbiaLogo from '@images/universities-logos/image-11.webp'
+import UCLALogo from '@images/universities-logos/image-12.webp'
+import DukeLogo from '@images/universities-logos/image-13.webp'
+import DartmouthLogo from '@images/universities-logos/image-14.webp'
+import CMULogo from '@images/universities-logos/image-15.webp'
+import BerkeleyLogo from '@images/universities-logos/image-16.webp'
+import GeorgiaTechLogo from '@images/universities-logos/image-17.webp'
+import BostonCollegeLogo from '@images/universities-logos/image-18.webp'
+import NYULogo from '@images/universities-logos/image-19.webp'
+import MichiganLogo from '@images/universities-logos/image-20.webp'
+import WashingtonLogo from '@images/universities-logos/image-21.webp'
+import NorthwesternLogo from '@images/universities-logos/image-22.webp'
 
-const logos = [
+const topRow = [
   { src: HarvardLogo.src, alt: 'Harvard University' },
-  { src: StanfordLogo.src, alt: 'Stanford University' },
-  { src: MITLogo.src, alt: 'MIT' },
   { src: PrincetonLogo.src, alt: 'Princeton University' },
-  { src: ColumbiaLogo.src, alt: 'Columbia University' },
+  { src: StanfordLogo.src, alt: 'Stanford University' },
   { src: YaleLogo.src, alt: 'Yale University' },
   { src: BrownLogo.src, alt: 'Brown University' },
-  { src: CornellLogo.src, alt: 'Cornell University' },
   { src: PennLogo.src, alt: 'University of Pennsylvania' },
-  { src: MichiganLogo.src, alt: 'University of Michigan' },
+]
+
+const middleRow = [
+  { src: ColumbiaLogo.src, alt: 'Columbia University' },
+  { src: UCLALogo.src, alt: 'UCLA' },
+  { src: DukeLogo.src, alt: 'Duke University' },
+  { src: DartmouthLogo.src, alt: 'Dartmouth College' },
+  { src: CMULogo.src, alt: 'Carnegie Mellon University' },
+  { src: BerkeleyLogo.src, alt: 'UC Berkeley' },
+]
+
+const bottomRow = [
+  { src: GeorgiaTechLogo.src, alt: 'Georgia Institute of Technology' },
+  { src: BostonCollegeLogo.src, alt: 'Boston College' },
   { src: NYULogo.src, alt: 'New York University' },
-  { src: JohnsHopkinsLogo.src, alt: 'Johns Hopkins University' }
+  { src: MichiganLogo.src, alt: 'University of Michigan' },
+  { src: WashingtonLogo.src, alt: 'University of Washington' },
+  { src: NorthwesternLogo.src, alt: 'Northwestern University' },
 ]
 ---
-<section class="relative w-full bg-gray-100 px-4 py-8 sm:px-6 sm:py-16 lg:px-8">
-  <div class="mx-auto max-w-screen-xl">
-    <h2 class="h2 mx-auto text-center text-purple-900 mb-4 sm:mb-8 text-2xl sm:text-3xl lg:text-4xl">
-      Universities Featured
-    </h2>
-    
-    <div class="grid grid-cols-2 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-8">
-      {logos.map((logo) => (
-        <div class="
-          w-full aspect-[4/3] 
-          flex items-center justify-center 
-          p-2 sm:p-4 
-          bg-white rounded shadow-sm 
-          hover:shadow-md 
-          transition-all duration-300
-          hover:grayscale-0
-        ">
-          <img 
-            src={logo.src} 
-            alt={logo.alt} 
-            class="w-16 h-16 sm:w-24 sm:h-24 lg:w-32 lg:h-32 object-contain" 
-            loading="lazy"
-          />
-        </div>
+
+<section class="relative w-full bg-white pb-16 sm:pb-20 sm:pt-10">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="mx-auto max-w-4xl text-center">
+      <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
+        컨설팅을 함께한 학생들의 <span class="text-emerald-600">92%</span>가<br />
+        자신이 원하는 학교에 합격했어요
+      </h2>
+      <p class="mt-6 text-lg leading-8 text-gray-600">
+        학생이 원하는 학교에 합격하는 것은<br />
+        인생에서 이루 말할 수 없는 성공 경험을 쌓는<br />
+        첫 번째 시작입니다
+      </p>
+    </div>
+
+    <div class="mx-auto grid max-w-lg grid-cols-6 items-center gap-x-8 gap-y-12 sm:max-w-xl sm:gap-x-10 sm:gap-y-14 lg:mx-0 lg:max-w-none pt-10">
+      {topRow.map((logo) => (
+        <img
+          class="col-span-1 h-8 w-auto object-contain lg:h-12"
+          src={logo.src}
+          alt={logo.alt}
+          loading="lazy"
+        />
+      ))}
+      {middleRow.map((logo) => (
+        <img
+          class="col-span-1 h-8 w-auto object-contain lg:h-12"
+          src={logo.src}
+          alt={logo.alt}
+          loading="lazy"
+        />
+      ))}
+      {bottomRow.map((logo) => (
+        <img
+          class="col-span-1 h-8 w-auto object-contain lg:h-12"
+          src={logo.src}
+          alt={logo.alt}
+          loading="lazy"
+        />
       ))}
     </div>
   </div>

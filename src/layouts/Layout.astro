@@ -59,10 +59,10 @@ const socialImageURL = new URL(ogImage ?? SITE.ogImage, Astro.url.origin).href
 
     <ViewTransitions />
   </head>
-  <body class="select-none overflow-x-hidden">
+  <body class="overflow-x-hidden">
     <Header />
     <slot />
-    <CallToAction />
+    <!-- <CallToAction /> -->
     <Footer />
     <Analytics mode="auto" debug={true} />
   </body>

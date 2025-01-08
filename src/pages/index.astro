@@ -7,23 +7,32 @@ import Stats from '@components/about/Stats.astro'
 import FeaturedPrograms from '@components/home/FeaturedPrograms.astro'
 import Testimonials from '@components/home/Testimonials.astro'
 import Faqs from '@components/home/Faqs.astro'
-import Timeline from '@components/shared/Timeline.astro'
+import GlobalYouth from '@components/shared/GlobalYouth.astro'
 import UniversityLogos from '@components/shared/UniversityLogos.astro'
+import BootcampCTA from '@components/home/BootcampCTA.astro'
+import ConsultingPackages from '@components/home/ConsultingPackages.astro'
+import AcceptanceStats from '@components/home/AcceptanceStats.astro'
 import { SITE } from '@config'
 ---
 
 <Layout title={`${SITE.title} - Creating a brighter future for your child`}>
   <HomeHero />
   {/* Gradient background transition */}
-  <div
-    class="h-40 w-full bg-gradient-to-b from-purple-50 to-yellow-100 sm:h-48 xl:h-52"
-  >
-  </div>
-  <HomeFeatureBlocks />
-  <FeaturedPrograms />
-  <Testimonials />
-  <Faqs />
-  <Stats />
   <UniversityLogos />
-  <!-- <Timeline /> -->
+  <HomeFeatureBlocks />
+  
+  <!-- <FeaturedPrograms /> -->
+  <Faqs />
+  <!-- <AcceptanceStats /> -->
+  <Testimonials />
+  <GlobalYouth />
+  
+  
+  
+  <ConsultingPackages />
+
+  <Stats />
+  
+  <BootcampCTA />
+  
 </Layout>
