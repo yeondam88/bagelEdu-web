@@ -8,18 +8,22 @@ import ProgramPricing from '@components/programs/ProgramPricing.astro'
 import ProgramMBA from '@components/programs/ProgramMBA.astro'
 import { getCollection } from 'astro:content'
 import { SITE } from '@config'
-import type { Program } from '@types'
+import type { CollectionEntry } from 'astro:content'
 
-export async function getStaticPaths() {
-  const programEntries = await getCollection('programs');
-  return programEntries.map(entry => ({
-    params: { slug: entry.slug },
-    props: { program: entry },
-  }));
+type Props = {
+  program: CollectionEntry<'programs'>
 }
 
-const { program } = Astro.props;
-if (!program) throw new Error('No program found');
+export async function getStaticPaths() {
+  const programEntries = await getCollection('programs')
+  return programEntries.map((entry: CollectionEntry<'programs'>) => ({
+    params: { slug: entry.slug },
+    props: { program: entry }
+  }))
+}
+
+const { program } = Astro.props
+if (!program) throw new Error('No program found')
 
 const ogImage = program.data.hero.image.src
 const ogImageUrl = typeof ogImage === 'string' ? ogImage : ogImage?.src
