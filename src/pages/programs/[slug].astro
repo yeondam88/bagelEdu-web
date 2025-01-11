@@ -2,7 +2,6 @@
 export const prerender = true;
 
 import Layout from '@layouts/Layout.astro'
-import ProgramHero from '@components/programs/ProgramHero.astro'
 import ProgramInformation from '@components/programs/ProgramInformation.astro'
 import ProgramDescription from '@components/programs/ProgramDescription.astro'
 import ProgramPricing from '@components/programs/ProgramPricing.astro'
@@ -31,11 +30,63 @@ const ogImageUrl = typeof ogImage === 'string' ? ogImage : ogImage?.src
   description={program.data.hero.text}
   ogImage={ogImageUrl}
 >
-  <ProgramHero program={program} />
-  <ProgramInformation program={program} />
-  <ProgramDescription program={program} />
-  <ProgramPricing program={program} />
-  {program.data.name === 'MBA Admissions Consulting' && (
-    <ProgramMBA program={program} />
-  )}
+  <div class="relative">
+    {/* Gradient background */}
+    <div class="absolute inset-0 bg-gradient-to-b from-purple-50/80 to-white pointer-events-none"></div>
+    
+    {/* Decorative elements */}
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <div class="absolute -top-24 -right-24 w-96 h-96 bg-purple-100/50 rounded-full blur-3xl"></div>
+      <div class="absolute top-48 -left-48 w-96 h-96 bg-pink-100/30 rounded-full blur-3xl"></div>
+    </div>
+
+    {/* Hero section */}
+    <div class="relative pt-32 pb-24 md:pt-40 md:pb-32">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+          <div class="text-center">
+            <p class="inline-block text-sm font-semibold text-purple-600 tracking-wide uppercase mb-3 bg-purple-50 px-3 py-1 rounded-full">
+              프로그램 소개
+            </p>
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 mb-8">
+              <span class="inline-block mb-2">{program.data.hero.headline}</span>
+              <span class="block h-1.5 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+            </h1>
+            <p class="mt-8 text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+              {program.data.hero.text}
+            </p>
+            <div class="mt-12">
+              <a 
+                href={program.data.hero.action.href} 
+                class="inline-flex items-center justify-center px-8 py-4 text-lg font-medium rounded-2xl text-white bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                {program.data.hero.action.label}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="space-y-32 pb-32">
+    <ProgramInformation program={program} />
+    <div class="relative">
+      <div class="absolute inset-0 bg-gradient-to-b from-gray-50 to-white pointer-events-none"></div>
+      <div class="relative">
+        <ProgramDescription program={program} />
+      </div>
+    </div>
+    <ProgramPricing program={program} />
+    {program.data.name === 'MBA Admissions Consulting' && (
+      <ProgramMBA program={program} />
+    )}
+  </div>
 </Layout>
+
+<style>
+  .blur-3xl {
+    --tw-blur: blur(64px);
+    filter: var(--tw-blur);
+  }
+</style>

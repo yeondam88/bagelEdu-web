@@ -10,131 +10,88 @@ interface Props {
 const { program } = Astro.props
 ---
 
-<section class="relative w-full px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
-  {/* Container */}
-  <div class="mx-auto max-w-xl lg:max-w-screen-xl">
-    {/* Section header text */}
-    <div class="lg:grid lg:grid-cols-2 lg:gap-16 xl:gap-32">
-      <div class="flex items-center">
-        <h2 class="h2 max-w-4xl text-purple-900">
-          {program.data.infoSection.headline}
-        </h2>
+<section class="relative w-full overflow-hidden">
+  {/* Decorative elements */}
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute -left-32 top-0 w-96 h-96 bg-purple-50/50 rounded-full blur-3xl"></div>
+    <div class="absolute -right-32 bottom-0 w-96 h-96 bg-pink-50/30 rounded-full blur-3xl"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Section header */}
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">
+        <span class="inline-block mb-2">{program.data.infoSection.headline}</span>
+        <span class="block h-1 w-32 mx-auto bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+      </h2>
+      <p class="mt-6 text-xl text-gray-600 leading-relaxed">
+        {program.data.infoSection.text}
+      </p>
+    </div>
+
+    {/* Program features */}
+    <div class="mt-20 max-w-lg mx-auto grid gap-8 lg:grid-cols-3 lg:max-w-none">
+      {program.data.infoSection.features?.map((feature) => (
+        <div class="relative flex flex-col rounded-2xl bg-white border border-gray-100 hover:border-purple-100 transition-all duration-300 hover:shadow-xl group">
+          <div class="absolute inset-0 rounded-2xl bg-gradient-to-b from-purple-50/50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="relative flex-1 p-8">
+            <div class="flex items-center space-x-4">
+              <div class="flex-shrink-0">
+                <div class="h-14 w-14 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg">
+                  <svg class="h-7 w-7 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d={feature.icon} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900">{feature.title}</h3>
+            </div>
+            <p class="mt-5 text-lg text-gray-600 leading-relaxed">{feature.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    {/* Program specific content */}
+    {program.data.name === 'Tutor Service Online/Offline' && (
+      <div class="mt-32">
+        <ProgramTutor program={program} />
       </div>
-      <div class="mt-6 flex items-center lg:mt-0">
-        <p class="text-xl leading-relaxed text-purple-800">
-          {program.data.infoSection.text}
+    )}
+
+    {/* Program benefits */}
+    <div class="mt-32">
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <h3 class="text-4xl font-bold text-gray-900">
+          <span class="inline-block mb-2">프로그램 혜택</span>
+          <span class="block h-1 w-24 mx-auto bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+        </h3>
+        <p class="mt-6 text-xl text-gray-600">
+          이 프로그램을 통해 얻을 수 있는 핵심 혜택들을 소개합니다
         </p>
       </div>
-    </div>
-    {
-      program.data.name === 'Tutor Service Online/Offline' && (
-        <ProgramTutor program={program} />
-      )
-    }
-    {/* Class info */}
-    <div
-      class="mt-12 grid gap-8 sm:mt-14 sm:max-w-none sm:grid-cols-2 sm:gap-6 lg:mt-24 lg:grid-cols-4 xl:gap-12"
-    >
-      {
-        program.data.name === 'Undergraduate Admissions Consulting' && (
-          <>
-            <InfoCard
-              icon="mood-kid"
-              title="GPA Premier Consulting and Extracurricular Profile"
-              gradientColors={{
-                bgColor: 'bg-yellow-200',
-                iconBgColor: 'bg-yellow-400',
-                startColor: 'from-yellow-400',
-                endColor: 'to-yellow-500',
-              }}
-              text={program.data.infoSection.ages}
-            />
-
-            <InfoCard
-              icon="calendar"
-              title="Tailored Academic Roadmap"
-              gradientColors={{
-                bgColor: 'bg-purple-50',
-                iconBgColor: 'bg-purple-200',
-                startColor: 'from-purple-200',
-                endColor: 'to-purple-300',
-              }}
-              text={program.data.infoSection.duration}
-            />
-
-            <InfoCard
-              icon="clock"
-              title="Target college List & College applications"
-              gradientColors={{
-                bgColor: 'bg-rose-50',
-                iconBgColor: 'bg-rose-200',
-                startColor: 'from-rose-100',
-                endColor: 'to-rose-300',
-              }}
-              text={program.data.infoSection.schedule}
-            />
-
-            <InfoCard
-              icon="users-group"
-              title="Standardized Test Preparation"
-              gradientColors={{
-                bgColor: 'bg-blue-50',
-                iconBgColor: 'bg-blue-200',
-                startColor: 'from-blue-100',
-                endColor: 'to-blue-300',
-              }}
-              text={program.data.infoSection.classSize}
-            />
-            <InfoCard
-              icon="mood-kid"
-              title="Essay Writing Practice & Interview Training"
-              gradientColors={{
-                bgColor: 'bg-yellow-200',
-                iconBgColor: 'bg-yellow-400',
-                startColor: 'from-yellow-400',
-                endColor: 'to-yellow-500',
-              }}
-              text={program.data.infoSection.program1 ?? ''}
-            />
-
-            <InfoCard
-              icon="calendar"
-              title="Summer Activities Planning: Work Research, Summer Camp"
-              gradientColors={{
-                bgColor: 'bg-purple-50',
-                iconBgColor: 'bg-purple-200',
-                startColor: 'from-purple-200',
-                endColor: 'to-purple-300',
-              }}
-              text={program.data.infoSection.program2 ?? ''}
-            />
-
-            <InfoCard
-              icon="clock"
-              title="Career Counseling"
-              gradientColors={{
-                bgColor: 'bg-rose-50',
-                iconBgColor: 'bg-rose-200',
-                startColor: 'from-rose-100',
-                endColor: 'to-rose-300',
-              }}
-              text={program.data.infoSection.program3 ?? ''}
-            />
-
-            <InfoCard
-              icon="users-group"
-              title="Motivation, Time Management & Strategies"
-              gradientColors={{
-                bgColor: 'bg-blue-50',
-                iconBgColor: 'bg-blue-200',
-                startColor: 'from-blue-100',
-                endColor: 'to-blue-300',
-              }}
-              text={program.data.infoSection.program4 ?? ''}
-            />
-          </>
-        )
-      }
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        {program.data.infoSection.benefits?.map((benefit) => (
+          <div class="relative bg-white rounded-2xl p-8 transition-all duration-300 hover:shadow-xl group border border-gray-100 hover:border-purple-100">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-b from-purple-50/50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="relative">
+              <div class="h-14 w-14 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg mb-6">
+                <svg class="h-7 w-7 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d={benefit.icon} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <h4 class="text-xl font-bold text-gray-900 group-hover:text-purple-900 transition-colors duration-300">{benefit.title}</h4>
+              <p class="mt-4 text-lg text-gray-600 leading-relaxed">{benefit.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .blur-3xl {
+    --tw-blur: blur(64px);
+    filter: var(--tw-blur);
+  }
+</style>
