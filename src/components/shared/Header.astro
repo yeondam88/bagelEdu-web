@@ -14,6 +14,7 @@ import {
   Cross2Icon,
   HamburgerMenuIcon
 } from '@radix-ui/react-icons'
+import type { CollectionEntry } from 'astro:content'
 
 // 각 프로그램 타입별 아이콘 매핑
 const programIcons = {
@@ -39,19 +40,20 @@ const allBlogPosts = await getCollection('blog')
 
 // 최신 블로그 포스트 3개 가져오기
 const recentBlogPosts = allBlogPosts
-  .sort((a, b) => new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime())
+  .sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
+    new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+  )
   .slice(0, 3)
 
   console.log('Recent blog posts:', recentBlogPosts)
 
 // Group programs by category
-const featuredPrograms = programs.filter(p => p.data.featured)
-const regularPrograms = programs.filter(p => !p.data.featured)
+const featuredPrograms = programs.filter((p: { data: { featured: any } }) => p.data.featured)
+const regularPrograms = programs.filter((p: { data: { featured: any } }) => !p.data.featured)
 
 // 프로그램 타입에 따른 아이콘 이름 가져오기
 const getProgramIcon = (program: any) => {
-
-  let type = 'default'
+  let type: keyof typeof programIcons = 'default'
   
   if (program.data.name.toLowerCase().includes('tutor')) {
     type = 'early-preparation'
@@ -63,7 +65,7 @@ const getProgramIcon = (program: any) => {
     type = 'package'
   }
   
-  return programIcons[type] || programIcons.default
+  return programIcons[type]
 }
 ---
 
@@ -142,7 +144,7 @@ const getProgramIcon = (program: any) => {
                         <div class="mb-6">
                           <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Featured Programs</h3>
                           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {featuredPrograms.map((program) => (
+                            {featuredPrograms.map((program: { slug: any; data: { name: unknown; dropdownDescription: unknown } }) => (
                               <a 
                                 href={`/programs/${program.slug}`} 
                                 class:list={[
@@ -177,7 +179,7 @@ const getProgramIcon = (program: any) => {
                         
                         <div>
                           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {regularPrograms.map((program) => (
+                            {regularPrograms.map((program: { slug: any; data: { name: unknown } }) => (
                               <a 
                                 href={`/programs/${program.slug}`} 
                                 class:list={[
@@ -228,7 +230,7 @@ const getProgramIcon = (program: any) => {
                             </a>
                           </div>
                           <div class="space-y-6">
-                            {recentBlogPosts.map((post) => (
+                            {recentBlogPosts.map((post: { slug: any; data: { title: unknown; excerpt: unknown; date: string | number | Date } }) => (
                               <a href={`/blog/${post.slug}`} class="block group hover:bg-purple-50 rounded-lg p-3 transition-all duration-200">
                                 <p class="text-sm font-medium text-gray-900 group-hover:text-purple-600 transition-colors duration-200 line-clamp-1">
                                   {post.data.title}
@@ -278,7 +280,7 @@ const getProgramIcon = (program: any) => {
                     <div class="p-6">
                       <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Admission Resources</h3>
                       <div class="space-y-4">
-                        {admissionGuide.map((item) => (
+                        {admissionGuide.map((item: { slug: any; data: { name: unknown; dropdownDescription: unknown } }) => (
                           <a 
                             href={`/admission-guide/${item.slug}`} 
                             class:list={[
@@ -365,7 +367,7 @@ const getProgramIcon = (program: any) => {
                       x-transition:enter-end="transform opacity-100 scale-100"
                       class="mt-2 space-y-2"
                     >
-                      {(link.label === 'Our Services' ? programs : admissionGuide).map((item) => (
+                      {(link.label === 'Our Services' ? programs : admissionGuide).map((item: { slug: any; data: { name: unknown } }) => (
                         <a
                           href={`/${link.label === 'Our Services' ? 'programs' : 'admission-guide'}/${item.slug}`}
                           class="block pl-4 py-2 text-base text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
@@ -402,6 +404,7 @@ const getProgramIcon = (program: any) => {
 
 <script>
   import Alpine from 'alpinejs'
+  // @ts-ignore
   window.Alpine = Alpine
   Alpine.start()
 </script>
