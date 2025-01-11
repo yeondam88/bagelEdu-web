@@ -41,11 +41,9 @@ const allBlogPosts = await getCollection('blog')
 // 최신 블로그 포스트 3개 가져오기
 const recentBlogPosts = allBlogPosts
   .sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
-    new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
   )
   .slice(0, 3)
-
-  console.log('Recent blog posts:', recentBlogPosts)
 
 // Group programs by category
 const featuredPrograms = programs.filter((p: { data: { featured: any } }) => p.data.featured)
