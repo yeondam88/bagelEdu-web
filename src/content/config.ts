@@ -20,6 +20,10 @@ const programsCollection = defineCollection({
           src: image(),
           alt: z.string(),
         }),
+        image2: z.object({
+          src: image(),
+          alt: z.string(),
+        })
       }),
       infoSection: z.object({
         headline: z.string(),
@@ -32,18 +36,16 @@ const programsCollection = defineCollection({
         program2: z.string().optional(),
         program3: z.string().optional(),
         program4: z.string().optional(),
-      }),
-      descriptionSection: z.object({
-        portraitImage: z.object({
-          src: image(),
-          alt: z.string(),
-        }),
-        squareImages: z.array(
-          z.object({
-            src: image(),
-            alt: z.string(),
-          }),
-        ),
+        features: z.array(z.object({
+          icon: z.string().optional(),
+          title: z.string(),
+          description: z.string(),
+        })).optional(),
+        benefits: z.array(z.object({
+          icon: z.string().optional(),
+          title: z.string(),
+          description: z.string(),
+        })).optional(),
       }),
       AdditionalSection: z.object({
         headline1: z.string(),
@@ -51,6 +53,25 @@ const programsCollection = defineCollection({
         headline2: z.string(),
         text2: z.string(),
       }),
+      pricingSection: z.object({
+        headline: z.string(),
+        text: z.string(),
+        packages: z.array(z.object({
+          title: z.string(),
+          description: z.string(),
+          price: z.string(),
+          duration: z.string(),
+        })),
+      }),
+      stemPrograms: z.object({
+        title: z.string(),
+        programs: z.array(z.object({
+          name: z.string(),
+          duration: z.string(),
+          description: z.string(),
+        })),
+      }).optional(),
+      
     }),
 })
 
@@ -136,7 +157,14 @@ const blogCollection = defineCollection({
     title: z.string(),
       date: z.string(),
       author: z.string(),
-      image: z.string(),
+      image: z.object({
+        url: z.string(),
+        alt: z.string()
+      }),
+      image2: z.object({
+        url: z.string(),
+        alt: z.string()
+      }),
       excerpt: z.string(),
       category: z.string().optional(),
       authorImage: z.string(),

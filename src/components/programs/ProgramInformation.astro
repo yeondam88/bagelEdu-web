@@ -1,109 +1,161 @@
 ---
-import InfoCard from './ProgramInfoCard.astro'
+import type { CollectionEntry } from 'astro:content'
 import ProgramTutor from './ProgramTutor.astro'
-import type { Program } from '@types'
-
 interface Props {
-  program: Program
+  program: CollectionEntry<'programs'>
 }
 
 const { program } = Astro.props
-
-interface Feature {
-  icon: string;
-  title: string;
-  description: string;
-}
-
-interface Benefit {
-  icon: string;
-  title: string;
-  description: string;
-}
+const { infoSection } = program.data
+const { Content } = await program.render()
+// Convert individual fields to card data
+const cards = [
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>',
+    title: 'GPA Premier Consulting',
+    description: infoSection.ages,
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>',
+    title: 'Academic Roadmap',
+    description: infoSection.duration,
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
+    title: 'Target College List',
+    description: infoSection.schedule,
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>',
+    title: 'Test Preparation',
+    description: infoSection.classSize,
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z"/></svg>',
+    title: 'Essay & Interview',
+    description: infoSection.program1,
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>',
+    title: 'Summer Activities',
+    description: infoSection.program2,
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+    title: 'Career Counseling',
+    description: infoSection.program3,
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    title: 'Time Management',
+    description: infoSection.program4,
+  },
+]
 ---
 
-<section class="relative w-full overflow-hidden">
-  {/* Decorative elements */}
-  <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute -left-32 top-0 w-96 h-96 bg-purple-50/50 rounded-full blur-3xl"></div>
-    <div class="absolute -right-32 bottom-0 w-96 h-96 bg-pink-50/30 rounded-full blur-3xl"></div>
-  </div>
-
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    {/* Section header */}
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">
-        <span class="inline-block mb-2">{program.data.infoSection.headline}</span>
-        <span class="block h-1 w-32 mx-auto bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+<section class="relative overflow-hidden bg-[#F5F5F7] py-16 sm:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="mb-12 flex flex-col items-start gap-4">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        {infoSection.headline}
       </h2>
-      <p class="mt-6 text-xl text-gray-600 leading-relaxed">
-        {program.data.infoSection.text}
+      <p class="text-lg text-gray-600">
+        {infoSection.text}
       </p>
     </div>
 
-    {/* Program features */}
-    <div class="mt-20 max-w-lg mx-auto grid gap-8 lg:grid-cols-3 lg:max-w-none">
-      {program.data.infoSection.features?.map((feature: Feature) => (
-        <div class="relative flex flex-col rounded-2xl bg-white border border-gray-100 hover:border-purple-100 transition-all duration-300 hover:shadow-xl group">
-          <div class="absolute inset-0 rounded-2xl bg-gradient-to-b from-purple-50/50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          <div class="relative flex-1 p-8">
-            <div class="flex items-center space-x-4">
-              <div class="flex-shrink-0">
-                <div class="h-14 w-14 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg">
-                  <svg class="h-7 w-7 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d={feature.icon} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-              </div>
-              <h3 class="text-2xl font-bold text-gray-900">{feature.title}</h3>
-            </div>
-            <p class="mt-5 text-lg text-gray-600 leading-relaxed">{feature.description}</p>
+    {
+      program.data.name === 'Tutor Service Online/Offline' && (
+        <ProgramTutor program={program} />
+      )
+    }
+
+    {
+      program.data.name === 'Summer/Winter Camp' &&
+        program.data.stemPrograms && (
+          <div class="overflow-x-auto">
+            <h2 class="py-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+              STEM Programs for Students
+            </h2>
+            <table class="min-w-full divide-y divide-gray-200">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  >
+                    Program Name
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  >
+                    Duration
+                  </th>
+                  <th
+                    scope="col"
+                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                  >
+                    Description
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-200 bg-white">
+                {program.data.stemPrograms.programs.map((prog) => (
+                  <tr>
+                    <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                      {prog.name}
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                      {prog.duration}
+                    </td>
+                    <td class="px-6 py-4 text-sm text-gray-500">
+                      {prog.description}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            
+          </div>
+        )
+    }
+    {program.data.AdditionalSection && (
+      <div class="mt-12">
+        <div class="space-y-12">
+          <div>
+            <h3 class="text-2xl font-bold tracking-tight text-gray-900">
+              {program.data.AdditionalSection.headline1}
+            </h3>
+            <p class="mt-4 whitespace-pre-line text-gray-600">
+              {program.data.AdditionalSection.text1}
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-2xl font-bold tracking-tight text-gray-900">
+              {program.data.AdditionalSection.headline2}
+            </h3>
+            <p class="mt-4 whitespace-pre-line text-gray-600">
+              {program.data.AdditionalSection.text2}
+            </p>
           </div>
         </div>
-      ))}
-    </div>
-
-    {/* Program specific content */}
-    {program.data.name === 'Tutor Service Online/Offline' && (
-      <div class="mt-32">
-        <ProgramTutor program={program} />
       </div>
     )}
-
-    {/* Program benefits */}
-    <div class="mt-32">
-      <div class="max-w-3xl mx-auto text-center mb-16">
-        <h3 class="text-4xl font-bold text-gray-900">
-          <span class="inline-block mb-2">프로그램 혜택</span>
-          <span class="block h-1 w-24 mx-auto bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
-        </h3>
-        <p class="mt-6 text-xl text-gray-600">
-          이 프로그램을 통해 얻을 수 있는 핵심 혜택들을 소개합니다
-        </p>
-      </div>
-      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-        {program.data.infoSection.benefits?.map((benefit: Benefit) => (
-          <div class="relative bg-white rounded-2xl p-8 transition-all duration-300 hover:shadow-xl group border border-gray-100 hover:border-purple-100">
-            <div class="absolute inset-0 rounded-2xl bg-gradient-to-b from-purple-50/50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            <div class="relative">
-              <div class="h-14 w-14 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg mb-6">
-                <svg class="h-7 w-7 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d={benefit.icon} stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </div>
-              <h4 class="text-xl font-bold text-gray-900 group-hover:text-purple-900 transition-colors duration-300">{benefit.title}</h4>
-              <p class="mt-4 text-lg text-gray-600 leading-relaxed">{benefit.description}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
   </div>
 </section>
 
 <style>
-  .blur-3xl {
-    --tw-blur: blur(64px);
-    filter: var(--tw-blur);
+  .shadow-sm {
+    box-shadow:
+      0 1px 3px 0 rgba(0, 0, 0, 0.1),
+      0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  }
+  .shadow-md {
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -2px rgba(0, 0, 0, 0.1);
   }
 </style>

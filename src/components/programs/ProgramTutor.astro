@@ -8,76 +8,92 @@ const {
 } = Astro.props
 ---
 
-<div
-    class="mt-12 grid gap-8 sm:mt-14 sm:max-w-none sm:grid-cols-2 sm:gap-6 lg:mt-24 lg:grid-cols-3 xl:gap-12"
->
-    <InfoCard
-        icon="mood-kid"
-        title="개인별 맞춤 레벨업으로 학습 효율성 강화 및 성적 상승 효과"
-        gradientColors={{
-            bgColor: 'bg-yellow-200',
-            iconBgColor: 'bg-yellow-400',
-            startColor: 'from-yellow-400',
-            endColor: 'to-yellow-500',
-        }}
-        text={data.ages}
-    />
+<div class="relative py-16 sm:py-24">
+  <div class="mx-auto max-w-7xl px-6 lg:px-8">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+        <div class="relative p-6">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-md bg-gray-900/90 group-hover:bg-gray-900">
+              <svg class="h-5 w-5 text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">개인별 맞춤 레벨업으로 학습 효율성 강화 및 성적 상승 효과</h3>
+          </div>
+          <p class="text-sm text-gray-600">{data.ages}</p>
+        </div>
+      </div>
 
-    <InfoCard
-        icon="calendar"
-        title="명확한 목표 설정으로 학습 동기부여 및 멘탈 관리"
-        gradientColors={{
-            bgColor: 'bg-purple-50',
-            iconBgColor: 'bg-purple-200',
-            startColor: 'from-purple-200',
-            endColor: 'to-purple-300',
-        }}
-        text={data.duration}
-    />
+      <div class="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+        <div class="relative p-6">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-md bg-gray-900/90 group-hover:bg-gray-900">
+              <svg class="h-5 w-5 text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">명확한 목표 설정으로 학습 동기부여 및 멘탈 관리</h3>
+          </div>
+          <p class="text-sm text-gray-600">{data.duration}</p>
+        </div>
+      </div>
 
-    <InfoCard
-        icon="clock"
-        title="계획 및 실천을 위한 로드맵 밀착 관리"
-        gradientColors={{
-            bgColor: 'bg-rose-50',
-            iconBgColor: 'bg-rose-200',
-            startColor: 'from-rose-100',
-            endColor: 'to-rose-300',
-        }}
-        text={data.schedule}
-    />
+      <div class="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+        <div class="relative p-6">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-md bg-gray-900/90 group-hover:bg-gray-900">
+              <svg class="h-5 w-5 text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">계획 및 실천을 위한 로드맵 밀착 관리</h3>
+          </div>
+          <p class="text-sm text-gray-600">{data.schedule}</p>
+        </div>
+      </div>
 
-    <InfoCard
-        icon="users-group"
-        title="확실한 이해 상승을 위한 온오프라인 1:1 케어 학습"
-        gradientColors={{
-            bgColor: 'bg-blue-50',
-            iconBgColor: 'bg-blue-200',
-            startColor: 'from-blue-100',
-            endColor: 'to-blue-300',
-        }}
-        text={data.classSize}
-    />
-    <InfoCard
-        icon="users-group"
-        title="스스로 공부할 수있도록 자기주도 학습 능력 향상"
-        gradientColors={{
-            bgColor: 'bg-blue-50',
-            iconBgColor: 'bg-blue-200',
-            startColor: 'from-blue-100',
-            endColor: 'to-blue-300',
-        }}
-        text={data.classSize}
-    />
-    <InfoCard
-        icon="users-group"
-        title="세심하게 검증된 SKY / IVY League Top 7 출신의 선생님 선발"
-        gradientColors={{
-            bgColor: 'bg-blue-50',
-            iconBgColor: 'bg-blue-200',
-            startColor: 'from-blue-100',
-            endColor: 'to-blue-300',
-        }}
-        text=""
-    />
+      <div class="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+        <div class="relative p-6">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-md bg-gray-900/90 group-hover:bg-gray-900">
+              <svg class="h-5 w-5 text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">확실한 이해 상승을 위한 온오프라인 1:1 케어 학습</h3>
+          </div>
+          <p class="text-sm text-gray-600">{data.classSize}</p>
+        </div>
+      </div>
+
+      <div class="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+        <div class="relative p-6">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-md bg-gray-900/90 group-hover:bg-gray-900">
+              <svg class="h-5 w-5 text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">스스로 공부할 수있도록 자기주도 학습 능력 향상</h3>
+          </div>
+          <p class="text-sm text-gray-600">{data.classSize}</p>
+        </div>
+      </div>
+
+      <div class="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-200 hover:shadow-md hover:-translate-y-0.5">
+        <div class="relative p-6">
+          <div class="flex items-center space-x-4 mb-4">
+            <div class="flex h-10 w-10 items-center justify-center rounded-md bg-gray-900/90 group-hover:bg-gray-900">
+              <svg class="h-5 w-5 text-gray-50" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+              </svg>
+            </div>
+            <h3 class="text-lg font-medium text-gray-900">세심하게 검증된 SKY / IVY League Top 7 출신의 선생님 선발</h3>
+          </div>
+          <p class="text-sm text-gray-600"></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

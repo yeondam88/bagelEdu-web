@@ -304,40 +304,7 @@ const {
 } = Astro.props
 ---
 
-<style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-  
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
-    }
-  
-    th {
-      background-color: #ff0;
-      font-weight: bold;
-    }
-  
-    .essay-section {
-      margin-bottom: 2rem;
-    }
-  
-    .essay-title {
-      font-weight: bold;
-      margin-bottom: 0.5rem;
-    }
-  
-    .essay-description {
-      line-height: 1.6;
-    }
-  </style>
-
-
 <section class="relative w-full px-4 py-16 sm:px-6 sm:py-24 xl:px-8">
-    {/* Container */}
     <div class="mx-auto max-w-xl lg:max-w-screen-xl">
         <Image
             class="mx-auto"
@@ -346,93 +313,83 @@ const {
             width={MBAAPPTimeline.width}
             height={MBAAPPTimeline.height}
         />
-        <h2 class="h3 mt-3.5 text-purple-900 sm:mt-4 text-center py-8">
+        <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center py-8">
             MBA application deadlines and decision release dates for the <br />2024–2025 admissions cycle
         </h2>
 
-        <table
-            style="width: 100%; border-collapse: collapse; text-align: left;"
-        >
-            <thead>
-                <tr>
-                    <th style="border: 1px solid #ccc; padding: 10px;"
-                        >Business School</th
-                    >
-                    <th style="border: 1px solid #ccc; padding: 10px;"
-                        >Application Deadlines</th
-                    >
-                    <th style="border: 1px solid #ccc; padding: 10px;"
-                        >Decision Release Dates</th
-                    >
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    businessSchools.map((school) => (
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Business School</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Application Deadlines</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Decision Release Dates</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {businessSchools.map((school) => (
                         <tr>
-                            <td style="border: 1px solid #ccc; padding: 10px;">
-                                {school.name}
-                            </td>
-                            <td style="border: 1px solid #ccc; padding: 10px;">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{school.name}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {school.applicationDeadlines.map((deadline) => (
                                     <div>{deadline}</div>
                                 ))}
                             </td>
-                            <td style="border: 1px solid #ccc; padding: 10px;">
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                 {school.decisionReleaseDates.map((date) => (
                                     <div>{date}</div>
                                 ))}
                             </td>
                         </tr>
-                    ))
-                }
-            </tbody>
-        </table>
+                    ))}
+                </tbody>
+            </table>
+        </div>
 
-        <div class="mt-12">
-            <h2 class="h2 mt-3.5 text-purple-900 sm:mt-4 mb-8">
+        <div class="mt-16">
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-8">
                 Essay Tips
             </h2>
-            <p class="mt-3 text-lg leading-relaxed text-purple-800">
-                1) 직장 경력 <br/>
-                일반적으로는 최소 3년 정도의 직장 경력을 요구 합니다.  삼성전자, 유명 컨설팅, IB 등 해외에서도 모두 아는 직장 경력이 있다면 아무래도 유리할 수 있습니다. MBA 도 결국 졸업 후 취업이 잘 될 것 같은 사람을 뽑는데, 기존 직장 경력이 좋은 사람이 아무래도 MBA 이후 취업에 더 유리할 수 밖에 없기 때문입니다. <br/><br/>
+            <div class="prose prose-lg max-w-none text-gray-500">
+                <p class="mb-6">
+                    1) 직장 경력 <br/>
+                    일반적으로는 최소 3년 정도의 직장 경력을 요구 합니다. 삼성전자, 유명 컨설팅, IB 등 해외에서도 모두 아는 직장 경력이 있다면 아무래도 유리할 수 있습니다. MBA 도 결국 졸업 후 취업이 잘 될 것 같은 사람을 뽑는데, 기존 직장 경력이 좋은 사람이 아무래도 MBA 이후 취업에 더 유리할 수 밖에 없기 때문입니다.
+                </p>
                 
-                2) 이력서, 에세이, 추천서 <br/><br />
-                
-                보통 GMAT과 토플 점수를 확보하게 되면, 실질적인 Application절차를 시작합니다. 이때 필요한 Package가 이력서 (Resume), 에세이 (Essay), 지원서 (Application Form), 추천서 (Recommendation Letter) 입니다. 이 4가지 지원 패키지를 학교별로 갖추는 데도 상당히 시간이 소요되기 때문에, GMAT과 토플은 늦어도 4월 이전에 끝내고, 5월 부터는 학교별 지원 패키지를 준비하는 데 시간을 쓰는 것을 추천 드립니다. 
-                우선 이력서의 경우 반드시 1 page로 작성하여야 합니다.  일반적으로 학력정보(Education), 직장경험(Work Experience), 그리고 기타 Personal하게 강조하고 싶은 부분이 있으면 Additional Information으로 구분하여 작성합니다. 학력정보는 학교, 전공 등을 주로 명시하고, 학교내에서 했던 기타 클럽활동이나 리더십 경험이 있으면 같이 언급해 주면 좋습니다. 직장경험은 회사 이름, 직책, 근무기간과 더불어 내 성과에 대해서도 함께 강조할 필요가 있습니다.마지막으로 기타정보에는 내 특기사항에 대해서 서술하는데, 특기나 취미, 혹은 외국어 능력 등 인터뷰어가 흥미를 느낄 만한 내용이 있으면 함께 명시하면 좋습니다. <br /><br /><br />
-                단 1장이지만, 상당히 노력이 많이 들어가는 부분이므로, 꼭 어떤 내용을 적을지 여러 사람과 이야기를 나누고, 컨설턴트의 자문 및 원어민의 첨삭이 필요로 합니다. <br/><br/>
-                다음으로 에세이의 경우 각 학교마다 에세이 질문이 다르며, 일반적으로는 2개에서 4개의 질문에 대해서 작성을 요구합니다. 보통은 왜 MBA에 지원하는지, 그리고 커리어 골은 무엇인지에 대한 질문은 가장 기본이며, 아주 특이한 질문을 요청하는 학교도 있습니다. <br/><br/>
-                마지막으로 추천서의 경우 학교별로 최소 2명에서 3명까지 요구하기도 하는데, 일반적으로는 전 상사와 학교 교수님에게 요청을 많이 합니다. 
-                
-            </p>
+                <p class="mb-6">
+                    2) 이력서, 에세이, 추천서 <br/>
+                    보통 GMAT과 토플 점수를 확보하게 되면, 실질적인 Application절차를 시작합니다. 이때 필요한 Package가 이력서 (Resume), 에세이 (Essay), 지원서 (Application Form), 추천서 (Recommendation Letter) 입니다. 이 4가지 지원 패키지를 학교별로 갖추는 데도 상당히 시간이 소요되기 때문에, GMAT과 토플은 늦어도 4월 이전에 끝내고, 5월 부터는 학교별 지원 패키지를 준비하는 데 시간을 쓰는 것을 추천 드립니다.
+                </p>
+            </div>
         </div>
-        <div class="grid grid-cols-2 gap-4 mt-24">
-            <div class="h-full">
+
+        <div class="grid md:grid-cols-2 gap-8 mt-16">
+            <div class="space-y-8">
                 {essayTips.map((tip) => (
-                    <div class="essay-section">
-                        <div class="essay-title">{tip.id}) {tip.title}</div>
-                        <div class="essay-description">{tip.description}</div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">{tip.id}) {tip.title}</h3>
+                        <p class="text-gray-600">{tip.description}</p>
                     </div>
                 ))}
             </div>
-            <div class="h-full">
-                <table class="h-full">
-                    <thead>
+            
+            <div class="bg-white rounded-lg shadow-sm overflow-hidden">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
                         <tr>
-                            <th>Exam Section</th>
-                            <th>Time Limit</th>
-                            <th>Number of Questions</th>
-                            <th>Score Range</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Exam Section</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time Limit</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Questions</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score Range</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="bg-white divide-y divide-gray-200">
                         {gmatDetails.map((detail) => (
                             <tr>
-                                <td>{detail.section}</td>
-                                <td>{detail.time}</td>
-                                <td>{detail.questions}</td>
-                                <td>{detail.score}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{detail.section}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{detail.time}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{detail.questions}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{detail.score}</td>
                             </tr>
                         ))}
                     </tbody>

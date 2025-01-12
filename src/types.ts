@@ -1,46 +1,111 @@
+import type { ImageMetadata } from 'astro'
 import type { CollectionEntry } from 'astro:content'
 
-interface InfoSection {
-  headline: string;
-  text?: string;
-  ages?: string;
-  duration?: string;
-  schedule?: string;
-  classSize?: string;
-  program1?: string;
-  program2?: string;
-  program3?: string;
-  program4?: string;
-  features?: Array<{
-    icon: string;
-    title: string;
-    description: string;
-  }>;
-  benefits?: Array<{
-    icon: string;
-    title: string;
-    description: string;
-  }>;
+export interface Feature {
+  icon: string
+  title: string
+  description: string
 }
 
-export interface Program {
-  id: string;
-  slug: string;
+export interface Benefit {
+  icon: string
+  title: string
+  description: string
+}
+
+export interface Package {
+  icon: string
+  title: string
+  description: string
+  price: string
+  duration: string
+  features: string[]
+}
+
+export interface InfoSection {
+  headline: string
+  text: string
+  ages?: string
+  duration?: string
+  schedule?: string
+  classSize?: string
+  program1?: string
+  program2?: string
+  program3?: string
+  program4?: string
+  features?: Feature[]
+  benefits?: Benefit[]
+}
+
+export interface DescriptionSection {
+  headline: string
+  text: string
+  portraitImage?: ImageMetadata
+  squareImages?: ImageMetadata[]
+}
+
+export interface AdditionalSection {
+  headline: string
+  text: string
+  features?: Feature[]
+}
+
+export interface PricingSection {
+  headline: string
+  text: string
+  packages?: Package[]
+}
+
+export interface ProgramData {
+  name: string
+  dropdownDescription: string
+  featured: boolean
+  hero: {
+    headline: string
+    text: string
+    image: ImageMetadata
+    action: {
+      label: string
+      href: string
+      icon?: string
+    }
+  }
+  descriptionSection?: DescriptionSection
+  infoSection?: InfoSection
+  AdditionalSection?: AdditionalSection
+  pricingSection?: PricingSection
+}
+
+export type Program = CollectionEntry<'programs'>
+
+export interface AdmissionGuide {
+  id: string
+  slug: string
   data: {
-    name: string;
-    dropdownDescription?: string;
-    featured?: boolean;
+    name: string
+    dropdownDescription: string
+    featured: boolean
     hero: {
-      headline: string;
-      text: string;
-      image: ImageMetadata;
-      action: {
-        label: string;
-        href: string;
-      };
-    };
-    infoSection: InfoSection;
-  };
+      headline: string
+      text: string
+      image: ImageMetadata
+    }
+  }
+}
+
+export interface Resource {
+  id: string
+  slug: string
+  data: {
+    name: string
+    dropdownDescription: string
+    featured: boolean
+    hero: {
+      headline: string
+      text: string
+      image: ImageMetadata
+    }
+  }
 }
 
 export type GalleryEntry = CollectionEntry<'gallery'>
@@ -79,7 +144,7 @@ export type SocialMedia =
   | 'x'
 
 type Logo = {
-  src: string | ImageMetadata;
-  alt: string;
-  href: string;
+  src: string | ImageMetadata
+  alt: string
+  href: string
 }
