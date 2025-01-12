@@ -1,8 +1,9 @@
 ---
-import { Building2, Mail, Phone } from 'lucide-react'
-import { CONTACT } from '@config'
-import highlight from '@images/illustrations/underline-simple-light-purple.svg'
 import { Image } from 'astro:assets'
+import highlight from '@images/illustrations/underline-simple-light-purple.svg'
+import { Building2, Mail, Phone } from 'lucide-react'
+import { Toaster } from 'react-hot-toast'
+import { CONTACT } from '@config'
 ---
 
 <div
@@ -26,32 +27,37 @@ import { Image } from 'astro:assets'
 
   <!-- Main Content -->
   <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-    <div class="grid gap-x-8 gap-y-16 py-16 lg:grid-cols-2 lg:gap-y-20">
+    <div class="grid gap-x-8 gap-y-16 lg:grid-cols-2 lg:gap-y-20 py-16">
       <!-- Left Column - Contact Info -->
       <div class="lg:pr-8">
-        <h2 class="h1 mx-auto mt-6 max-w-3xl text-left text-purple-900">
-        <span class="relative block">
-          <span class="relative">
-            <Image
-              class="absolute inset-0 translate-y-9 transform sm:translate-y-11 xl:translate-y-14"
-              src={highlight}
-              alt=""
-            />
-            <span class="relative">BagelEdu</span>
+        <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+          {/* Underlined text */}
+          <span class="relative block">
+            <span class="relative">
+              <Image
+                class="absolute inset-0 translate-y-9 transform sm:translate-y-11 xl:translate-y-14"
+                src={highlight}
+                alt=""
+              />
+              <span class="relative">BagelEdu</span>
+            </span>
           </span>
-        </span>
-      </h2>
+        </h1>
         <p class="mt-6 text-lg leading-8 text-gray-600">
-          에 대한 궁금증부터, 성적 향상 및 합격 가능성
-          예상까지. 지금 바로 무료로 상담 받으세요.
+          에 대한 궁금증부터, 성적 향상 및 합격 가능성 예상까지. 지금 바로
+          무료로 상담 받으세요.
         </p>
-        <ul class="list-inside list-disc mt-6 space-y-2 text-md text-gray-900">
+        <ul class="text-md mt-6 list-inside list-disc space-y-2 text-gray-900">
           <li>첫 30분 무료 상담</li>
-          <li>유료 상담: 전화 혹은 zoom, 대면 상담 모두 30 이후 부터 1시간 5만원 상담비</li>
+          <li>
+            유료 상담: 전화 혹은 zoom, 대면 상담 모두 30 이후 부터 1시간 5만원
+            상담비
+          </li>
         </ul>
-        <p class="mt-6 text-md leading-8 text-gray-600">
-          (프로그램 질문에 대한 상담, 학교와의 fit, 합격 가능성, 진로 고민, 미국 학업 및 생활 등)
-          * 상담 후 프로그램 계약 시, 상담비는 컨설팅비에 포함되어 환불됩니다.
+        <p class="text-md mt-6 leading-8 text-gray-600">
+          (프로그램 질문에 대한 상담, 학교와의 fit, 합격 가능성, 진로 고민, 미국
+          학업 및 생활 등) * 상담 후 프로그램 계약 시, 상담비는 컨설팅비에
+          포함되어 환불됩니다.
         </p>
         <dl class="mt-10 space-y-4 text-base leading-7 text-gray-600">
           <div class="flex gap-x-4">
@@ -59,9 +65,7 @@ import { Image } from 'astro:assets'
               <span class="sr-only">Address</span>
               <Building2 client:load className="h-7 w-6 text-gray-400" />
             </dt>
-            <dd>
-              {CONTACT.address}
-            </dd>
+            <dd>{CONTACT.address}</dd>
           </div>
           <div class="flex gap-x-4">
             <dt class="flex-none">
@@ -92,7 +96,6 @@ import { Image } from 'astro:assets'
       <form
         id="contactForm"
         class="rounded-xl bg-white shadow-xl ring-1 ring-gray-200 sm:rounded-xl md:col-span-2 lg:col-span-1"
-        enctype="multipart/form-data"
       >
         <div class="px-6 py-12 sm:p-12">
           <div class="grid grid-cols-1 gap-x-8 gap-y-6">
@@ -107,7 +110,7 @@ import { Image } from 'astro:assets'
                 type="text"
                 name="name"
                 id="name"
-                placeholder="John Doe"
+                placeholder="홍길동"
                 class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                 required
               />
@@ -123,8 +126,7 @@ import { Image } from 'astro:assets'
                 type="email"
                 name="email"
                 id="email"
-                autocomplete="email"
-                placeholder="john@email.com"
+                placeholder="example@email.com"
                 class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                 required
               />
@@ -140,8 +142,7 @@ import { Image } from 'astro:assets'
                 type="tel"
                 name="phone"
                 id="phone"
-                autocomplete="tel"
-                 placeholder="010-1234-5678"
+                placeholder="010-1234-5678"
                 class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                 required
               />
@@ -167,7 +168,7 @@ import { Image } from 'astro:assets'
                 for="program-name"
                 class="block text-sm font-semibold leading-6 text-gray-900"
               >
-                관심 프로그램
+                관심 프로그램 *
               </label>
               <select
                 id="program-name"
@@ -176,10 +177,16 @@ import { Image } from 'astro:assets'
                 required
               >
                 <option value="">프로그램을 선택해주세요</option>
-                <option value="Tutor Service Online/Offline">Tutor Service Online/Offline</option>
+                <option value="Tutor Service Online/Offline"
+                  >Tutor Service Online/Offline</option
+                >
                 <option value="Summer/Winter Camp">Summer/Winter Camp</option>
-                <option value="Undergraduate Admissions Consulting">Undergraduate Admissions Consulting</option>
-                <option value="MBA Admissions Consulting">MBA Admissions Consulting</option>
+                <option value="Undergraduate Admissions Consulting"
+                  >Undergraduate Admissions Consulting</option
+                >
+                <option value="MBA Admissions Consulting"
+                  >MBA Admissions Consulting</option
+                >
               </select>
             </div>
             <div>
@@ -187,7 +194,7 @@ import { Image } from 'astro:assets'
                 for="message"
                 class="block text-sm font-semibold leading-6 text-gray-900"
               >
-                문의사항
+                문의사항 *
               </label>
               <textarea
                 name="message"
@@ -212,31 +219,31 @@ import { Image } from 'astro:assets'
   </div>
 </div>
 
+<Toaster client:load />
+
 <script>
-  import toast from 'react-hot-toast';
-  
-  const form = document.getElementById('contactForm');
-  
+  import toast from 'react-hot-toast'
+
+  const form = document.getElementById('contactForm')
+
   form?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
+    e.preventDefault()
+
     try {
       const res = await fetch('/api/contact', {
         method: 'POST',
-        body: new FormData(e.target as HTMLFormElement)
-      });
-      
-      const data = await res.json();
-      
+        body: new FormData(e.target as HTMLFormElement),
+      })
+
       if (res.ok) {
-        toast.success('메시지가 성공적으로 전송되었습니다.');
-        (e.target as HTMLFormElement).reset();
+        toast.success('메시지가 성공적으로 전송되었습니다.')
+        ;(e.target as HTMLFormElement).reset()
       } else {
-        toast.error('메시지 전송에 실패했습니다.');
+        toast.error('메시지 전송에 실패했습니다.')
       }
     } catch (err) {
-      toast.error('오류가 발생했습니다. 다시 시도해주세요.');
-      console.error(err);
+      toast.error('오류가 발생했습니다. 다시 시도해주세요.')
+      console.error(err)
     }
-  });
+  })
 </script>
