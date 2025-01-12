@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content'
 import Layout from '@layouts/Layout.astro'
 import { formatDate } from '../../utils/date'
+import { Image } from 'astro:assets'
 
 export const prerender = true
 
@@ -83,8 +84,8 @@ const { Content } = await entry.render()
 
         <div class="flex-1">
           <div class="relative w-full">
-            <img
-              src={entry.data.image.url}
+            <Image 
+              src={entry.data.image.src}
               alt={entry.data.image.alt}
               width={600}
               height={400}
