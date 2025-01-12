@@ -1,154 +1,216 @@
 ---
+import { Building2, Mail, Phone } from 'lucide-react'
+import { CONTACT } from '@config'
+import highlight from '@images/illustrations/underline-simple-light-purple.svg'
 import { Image } from 'astro:assets'
-import Button from '@components/shared/Button.astro'
-import TextField from './TextField.astro'
-import dotsLargeGrid from '@images/illustrations/dots-large-grid.svg'
-import dotsGrid from '@images/illustrations/dots-grid.svg'
-import dotsStrip from '@images/illustrations/dots-strip.svg'
-import SelectBox from './SelectBox.astro'
-import { Toaster } from 'react-hot-toast'
 ---
 
-<div id="toast-container">
-  <Toaster client:load />
-</div>
-
-<section
-  class="overflow-hidden bg-gradient-to-b from-purple-25 to-purple-50 px-4 pb-12 sm:px-6 lg:px-8 lg:pt-24"
+<div
+  class="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100"
 >
-  {/* Container */}
-  <div
-    class="mx-auto max-w-xl lg:grid lg:max-w-screen-xl lg:grid-cols-2 lg:gap-10 xl:gap-32"
-  >
-    {/* Hero header */}
-    <div class="py-16 lg:py-32">
-      <div>
-        <span
-          class="inline-block -rotate-1 rounded-full bg-purple-200 px-4 py-2 font-medium text-purple-700 shadow-md"
-        >
-          Free Consultation
-        </span>
-      </div>
-      <h1 class="h1 mt-4 max-w-md text-purple-900">
-        BagelEdu
-      </h1>
-      <p class="mt-3 max-w-lg text-xl leading-relaxed text-purple-800">
-        에 대한 궁금증부터, 성적 향상 및 합격 가능성 예상까지.
-      </p>
-      <p class="max-w-lg text-xl leading-relaxed text-purple-800">지금 바로 무료로 상담 받으세요.</p>
-      <ol class="max-w-lg text-xl leading-relaxed text-purple-800 mt-4">
-        <li>- 첫 30분 무료 상담</li>
-        <li>- 유료 상담: 전화 혹은 zoom, 대면 상담 모두 30 이후 부터 1시간 5만원 상담비</li>
-        <li>(프로그램 질문에 대한 상담, 학교와의 fit, 합격 가능성, 진로 고민, 미국 학업 및 생활 등)</li>
-        <li>* 상담 후 프로그램 계약 시, 상담비는 컨설팅비에 포함되어 환불됩니다.</li>
-      </ol>
-
-      <div class="mt-8">
-        <button
-          id="bookingButton"
-          class="w-auto px-6 py-2.5 text-base font-medium text-white rounded-full bg-gradient-to-r from-purple-600 to-purple-500 shadow-lg transition-all hover:from-purple-500 hover:to-purple-400"
-        >
-          상담 예약하기
-        </button>
-      </div>
-
-      <!-- Booking iframe container -->
-      <div id="bookingContainer" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center">
-        <div class="relative bg-white rounded-lg p-4 w-full max-w-4xl mx-4">
-          <button id="closeButton" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
-          <iframe 
-            src="https://app.usemotion.com/meet/yeondam/meeting" 
-            title="Motion Booking Page" 
-            width="100%" 
-            height="840px" 
-            frameborder="0"
-          ></iframe>
-        </div>
-      </div>
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 h-full w-full">
+    <div
+      class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:96px_96px]"
+    >
     </div>
-    {/* Contact form container */}
-    <div class="relative">
-      {/* Background decorations */}
-      <Image
-        src={dotsLargeGrid}
-        class="absolute -right-16 -top-12 w-80 opacity-60 sm:-top-16 lg:-top-16 lg:left-14 lg:hidden lg:w-36"
-        alt=""
-      />
-      <Image
-        src={dotsGrid}
-        class="absolute -right-16 -top-16 hidden w-40 opacity-75 lg:-top-16 lg:left-14 lg:block lg:w-36"
-        alt=""
-      />
-      <Image
-        src={dotsStrip}
-        class="absolute -right-16 top-1/2 hidden w-20 rotate-90 opacity-75 lg:block"
-        alt=""
-      />
-      {/* Contact form card */}
-      <div
-        class="relative z-10 mx-auto w-full rounded-3xl bg-white px-4 py-10 shadow-xl sm:p-16 lg:ml-auto lg:mr-0 lg:p-12 xl:p-14"
-      >
-        <div>
-          <h3 class="text-2xl font-bold text-purple-900">Send us a message</h3>
-          <p class="mt-0.5 text-purple-800 text-opacity-90">
-            We'll get back to you within 24 hours.
-          </p>
-        </div>
-        {/* Contact form */}
-        <form 
-          class="mt-8 space-y-6" 
-          id="contactForm"
-          enctype="multipart/form-data"
-        >
-          <TextField
-            name="name"
-            label="이름 *"
-            placeholder="John Doe"
-            required
-          />
-          <TextField
-            name="email"
-            label="이메일 *"
-            type="email"
-            autocomplete="email"
-            placeholder="john@email.com"
-            required
-          />
-          <TextField
-            name="phone"
-            label="전화번호 *"
-            type="tel"
-            autocomplete="tel"
-            placeholder="010-1234-5678"
-            required
-          />
-          <TextField
-            name="grade"
-            label="현재 학년 *"
-            type="text"
-            required
-          />
-          <SelectBox name="program-name" label="관심 프로그램 *" required />
-          <TextField
-            label="문의사항 *"
-            name="message"
-            elementType="textarea"
-            placeholder="Tell us how we can help you..."
-            required
-          />
-
-          <div class="mt-6 flex justify-start">
-            <Button type="submit">Send message</Button>
-          </div>
-        </form>
-      </div>
+    <div
+      class="bg-primary/5 absolute left-0 right-0 top-0 -z-10 m-auto h-[610px] w-[610px] rounded-full blur-[100px]"
+    >
+    </div>
+    <div
+      class="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent"
+    >
     </div>
   </div>
-</section>
+
+  <!-- Main Content -->
+  <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
+    <div class="grid gap-x-8 gap-y-16 py-16 lg:grid-cols-2 lg:gap-y-20">
+      <!-- Left Column - Contact Info -->
+      <div class="lg:pr-8">
+        <h2 class="h1 mx-auto mt-6 max-w-3xl text-left text-purple-900">
+        <span class="relative block">
+          <span class="relative">
+            <Image
+              class="absolute inset-0 translate-y-9 transform sm:translate-y-11 xl:translate-y-14"
+              src={highlight}
+              alt=""
+            />
+            <span class="relative">BagelEdu</span>
+          </span>
+        </span>
+      </h2>
+        <p class="mt-6 text-lg leading-8 text-gray-600">
+          에 대한 궁금증부터, 성적 향상 및 합격 가능성
+          예상까지. 지금 바로 무료로 상담 받으세요.
+        </p>
+        <ul class="list-inside list-disc mt-6 space-y-2 text-md text-gray-900">
+          <li>첫 30분 무료 상담</li>
+          <li>유료 상담: 전화 혹은 zoom, 대면 상담 모두 30 이후 부터 1시간 5만원 상담비</li>
+        </ul>
+        <p class="mt-6 text-md leading-8 text-gray-600">
+          (프로그램 질문에 대한 상담, 학교와의 fit, 합격 가능성, 진로 고민, 미국 학업 및 생활 등)
+          * 상담 후 프로그램 계약 시, 상담비는 컨설팅비에 포함되어 환불됩니다.
+        </p>
+        <dl class="mt-10 space-y-4 text-base leading-7 text-gray-600">
+          <div class="flex gap-x-4">
+            <dt class="flex-none">
+              <span class="sr-only">Address</span>
+              <Building2 client:load className="h-7 w-6 text-gray-400" />
+            </dt>
+            <dd>
+              {CONTACT.address}
+            </dd>
+          </div>
+          <div class="flex gap-x-4">
+            <dt class="flex-none">
+              <span class="sr-only">Phone</span>
+              <Phone client:load className="h-7 w-6 text-gray-400" />
+            </dt>
+            <dd>
+              <a class="hover:text-gray-900" href="tel:+82-2-1234-5678">
+                {CONTACT.phone}
+              </a>
+            </dd>
+          </div>
+          <div class="flex gap-x-4">
+            <dt class="flex-none">
+              <span class="sr-only">Email</span>
+              <Mail client:load className="h-7 w-6 text-gray-400" />
+            </dt>
+            <dd>
+              <a class="hover:text-gray-900" href="mailto:info@bageledu.com">
+                {CONTACT.email}
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Right Column - Contact Form -->
+      <form
+        id="contactForm"
+        class="rounded-xl bg-white shadow-xl ring-1 ring-gray-200 sm:rounded-xl md:col-span-2 lg:col-span-1"
+        enctype="multipart/form-data"
+      >
+        <div class="px-6 py-12 sm:p-12">
+          <div class="grid grid-cols-1 gap-x-8 gap-y-6">
+            <div>
+              <label
+                for="name"
+                class="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                이름 *
+              </label>
+              <input
+                type="text"
+                name="name"
+                id="name"
+                placeholder="John Doe"
+                class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                이메일 *
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                autocomplete="email"
+                placeholder="john@email.com"
+                class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="phone"
+                class="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                전화번호 *
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                id="phone"
+                autocomplete="tel"
+                 placeholder="010-1234-5678"
+                class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="grade"
+                class="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                현재 학년 *
+              </label>
+              <input
+                type="text"
+                name="grade"
+                id="grade"
+                placeholder="9학년"
+                class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="program-name"
+                class="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                관심 프로그램
+              </label>
+              <select
+                id="program-name"
+                name="program-name"
+                class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                required
+              >
+                <option value="">프로그램을 선택해주세요</option>
+                <option value="Tutor Service Online/Offline">Tutor Service Online/Offline</option>
+                <option value="Summer/Winter Camp">Summer/Winter Camp</option>
+                <option value="Undergraduate Admissions Consulting">Undergraduate Admissions Consulting</option>
+                <option value="MBA Admissions Consulting">MBA Admissions Consulting</option>
+              </select>
+            </div>
+            <div>
+              <label
+                for="message"
+                class="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                문의사항
+              </label>
+              <textarea
+                name="message"
+                id="message"
+                rows="4"
+                placeholder="문의하실 내용을 입력해주세요..."
+                class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                required></textarea>
+            </div>
+          </div>
+          <div class="mt-8 flex justify-end">
+            <button
+              type="submit"
+              class="rounded-md bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+            >
+              문의하기
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <script>
   import toast from 'react-hot-toast';
@@ -175,33 +237,6 @@ import { Toaster } from 'react-hot-toast'
     } catch (err) {
       toast.error('오류가 발생했습니다. 다시 시도해주세요.');
       console.error(err);
-    }
-  });
-</script>
-
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
-    const bookingButton = document.getElementById('bookingButton');
-    const bookingContainer = document.getElementById('bookingContainer');
-    const closeButton = document.getElementById('closeButton');
-
-    if (bookingButton && bookingContainer && closeButton) {
-      bookingButton.addEventListener('click', () => {
-        bookingContainer.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
-      });
-
-      closeButton.addEventListener('click', () => {
-        bookingContainer.classList.add('hidden');
-        document.body.style.overflow = '';
-      });
-
-      bookingContainer.addEventListener('click', (e) => {
-        if (e.target === bookingContainer) {
-          bookingContainer.classList.add('hidden');
-          document.body.style.overflow = '';
-        }
-      });
     }
   });
 </script>

@@ -71,7 +71,7 @@ const programsCollection = defineCollection({
           description: z.string(),
         })),
       }).optional(),
-      
+
     }),
 })
 
@@ -155,20 +155,16 @@ const galleryCollection = defineCollection({
 const blogCollection = defineCollection({
   schema: ({ image }) => z.object({
     title: z.string(),
-      date: z.string(),
-      author: z.string(),
-      image: z.object({
-        url: z.string(),
-        alt: z.string()
-      }),
-      image2: z.object({
-        url: z.string(),
-        alt: z.string()
-      }),
-      excerpt: z.string(),
-      category: z.string().optional(),
-      authorImage: z.string(),
-      tags: z.array(z.string()).optional(),
+    date: z.string(),
+    author: z.string(),
+    image: z.object({
+      url: z.string(),
+      alt: z.string()
+    }),
+    excerpt: z.string(),
+    category: z.string().optional(),
+    authorImage: z.string(),
+    tags: z.array(z.string()).optional(),
   }),
 });
 
