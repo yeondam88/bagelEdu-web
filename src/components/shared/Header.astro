@@ -1,7 +1,4 @@
 ---
-import { Image } from 'astro:assets'
-import logo from '../../images/bageledu/bageleducation6.png'
-import mobileLogo from '../../images/bageledu/bageledu-mobile-logo.png'
 import { getCollection } from 'astro:content'
 import { Fragment } from 'react'
 import { 
@@ -83,7 +80,7 @@ const getProgramIcon = (program: any) => {
     <div class="max-w-screen-xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between px-4 py-4">
       <div class="flex items-center justify-between w-full md:w-auto">
         <a href="/" class="flex items-center">
-          <Image src={logo} alt="BagelEdu" class="h-8 w-auto" />
+          <img src="/images/bageledu/BagelEducation6.png" alt="BagelEdu" class="h-8 w-auto" />
         </a>
         <button 
           type="button" 
@@ -325,7 +322,7 @@ const getProgramIcon = (program: any) => {
       <div class="px-4 pt-5 pb-6">
         <div class="flex items-center justify-between">
           <div>
-            <Image src={logo} alt="BagelEdu" class="h-8 w-auto" />
+            <img src="/images/bageledu/bageledu-mobile-logo.png" alt="BagelEdu" class="h-8 w-auto" />
           </div>
           <div class="-mr-2">
             <button 
