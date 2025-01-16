@@ -1,8 +1,6 @@
 ---
-import { Image } from 'astro:assets'
 import { SOCIALS, CONTACT } from '@config'
 import { getCollection } from 'astro:content'
-import logo from '@images/bageledu/bageleducation6.png'
 import type { Program } from '@types'
 
 const programs: Program[] = await getCollection('programs')
@@ -13,7 +11,7 @@ const programs: Program[] = await getCollection('programs')
     <div class="xl:grid xl:grid-cols-4 xl:gap-8">
       <div class="space-y-8 p-4">
         <a href="/">
-          <Image src={logo} alt="Bright" class="h-12 w-auto" />
+          <img src="/images/bageledu/BagelEducation6.png" alt="BagelEdu" class="h-12 w-auto" />
         </a>
       </div>
 
