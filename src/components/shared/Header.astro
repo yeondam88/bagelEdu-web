@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets'
-import logo from '@images/bageledu/bageledu-logo-new.png'
-import type { Program } from '@types'
+import logo from '@images/bageledu/bageleducation6.png'
+import mobileLogo from '@images/bageledu/bageledu-mobile-logo.png'
 import { getCollection } from 'astro:content'
 import { Fragment } from 'react'
 import { 
@@ -80,10 +80,10 @@ const getProgramIcon = (program: any) => {
   </div>
 
   <nav class="bg-white backdrop-blur-sm fixed w-full z-20 top-0 start-0 border-b border-gray-200">
-    <div class="max-w-screen-xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between px-4 py-1">
+    <div class="max-w-screen-xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between px-4 py-4">
       <div class="flex items-center justify-between w-full md:w-auto">
         <a href="/" class="flex items-center">
-          <Image src={logo} alt="BagelEdu" class="h-16 w-auto" />
+          <Image src={logo} alt="BagelEdu" class="h-8 w-auto" />
         </a>
         <button 
           type="button" 
