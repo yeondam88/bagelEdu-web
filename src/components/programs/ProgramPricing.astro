@@ -1,43 +1,67 @@
 ---
-import MBAAPPTimeline from '@images/stock/mba-app-timeline.png'
 import type { Program } from '@types'
-import { Image } from 'astro:assets'
 
 interface Props {
   program: Program
 }
 
-const {
-  program: {
-    data: { AdditionalSection: data, name },
-  },
-} = Astro.props
+interface PricingPackage {
+  title: string
+  description: string
+  price: string
+  duration: string
+}
+
+const { program } = Astro.props
+const pricingSection = program.data.pricingSection
+
+if (!pricingSection) {
+  return null
+}
 ---
 
-<section class="relative w-full px-4 py-16 sm:px-6 sm:py-24 xl:px-8">
-  {/* Container */}
-  <div class="mx-auto max-w-xl lg:max-w-screen-xl">
-    <div class="lg:gap-0">
-      {/* Section content */}
-      <div class="flex flex-col justify-center pr-10 xl:pr-0">
-        <h2 class="h2 mt-3.5 text-purple-900 sm:mt-4">
-          {data.headline1}
-        </h2>
-        <p class="mt-3 text-lg leading-relaxed text-purple-800">
-          {data.text1}
-        </p>
-        <div class="mt-12">
-          <h2 class="h2 mt-3.5 text-purple-900 sm:mt-4">
-            {data.headline2}
-          </h2>
-          <p class="mt-3 text-lg leading-relaxed text-purple-800">
-            {data.text2}
-          </p>
-        </div>
-      </div>
-    </div>
+<section class="relative w-full overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute -left-32 top-0 w-96 h-96 bg-purple-50/50 rounded-full blur-3xl"></div>
+    <div class="absolute -right-32 bottom-0 w-96 h-96 bg-pink-50/30 rounded-full blur-3xl"></div>
   </div>
 
-  
-  
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-gray-900">
+        <span class="inline-block mb-2">{pricingSection.headline}</span>
+        <span class="block h-1 w-32 mx-auto bg-gradient-to-r from-purple-600 to-pink-600 rounded-full"></span>
+      </h2>
+      <p class="mt-6 text-xl text-gray-600 leading-relaxed">
+        {pricingSection.text}
+      </p>
+    </div>
+
+    {pricingSection.packages && (
+      <div class="mt-20 max-w-lg mx-auto grid gap-8 lg:grid-cols-3 lg:max-w-none">
+        {pricingSection.packages.map((pkg: PricingPackage) => (
+          <div class="relative flex flex-col rounded-2xl bg-white border border-gray-100 hover:border-purple-100 transition-all duration-300 hover:shadow-xl group">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-b from-purple-50/50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div class="relative flex-1 p-8">
+              <div class="flex items-center space-x-4">
+                <h3 class="text-2xl font-bold text-gray-900">{pkg.title}</h3>
+              </div>
+              <p class="mt-5 text-lg text-gray-600 leading-relaxed">{pkg.description}</p>
+              <div class="mt-8">
+                <div class="text-3xl font-bold text-purple-600">{pkg.price}</div>
+                <div class="mt-2 text-gray-500">{pkg.duration}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
 </section>
+
+<style>
+  .blur-3xl {
+    --tw-blur: blur(64px);
+    filter: var(--tw-blur);
+  }
+</style>

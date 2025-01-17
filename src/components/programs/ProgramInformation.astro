@@ -1,140 +1,239 @@
 ---
-import InfoCard from './ProgramInfoCard.astro'
+import type { CollectionEntry } from 'astro:content'
+import { Icon } from 'astro-icon/components'
 import ProgramTutor from './ProgramTutor.astro'
-import type { Program } from '@types'
+import ProgramInfoCard from './ProgramInfoCard.astro'
 
 interface Props {
-  program: Program
+  program: CollectionEntry<'programs'>
+}
+
+interface StemProgram {
+  name: string
+  duration: string
+  description: string
 }
 
 const { program } = Astro.props
+const { infoSection } = program.data
+const { Content } = await program.render()
+// Convert individual fields to card data
+const cards = [
+  {
+    icon: 'tabler:book',
+    title: 'GPA Premier Consulting and Extracurricular Profile',
+    description: infoSection.ages,
+  },
+  {
+    icon: 'tabler:calendar',
+    title: 'Tailored Academic Roadmap',
+    description: infoSection.duration,
+  },
+  {
+    icon: 'tabler:target',
+    title: 'Target college List & College applications',
+    description: infoSection.schedule,
+  },
+  {
+    icon: 'tabler:box',
+    title: 'Standardized Test Preparation',
+    description: infoSection.classSize,
+  },
+  {
+    icon: 'tabler:pencil',
+    title: 'Essay Writing Practice & Interview Training',
+    description: infoSection.program1,
+  },
+  {
+    icon: 'tabler:sun',
+    title: 'Summer Activities Planning: Work Research, Summer Camp',
+    description: infoSection.program2,
+  },
+  {
+    icon: 'tabler:compass',
+    title: 'Career Counseling',
+    description: infoSection.program3,
+  },
+  {
+    icon: 'tabler:clock',
+    title: 'Motivation, Time Management & Strategies',
+    description: infoSection.program4,
+  },
+]
 ---
 
-<section class="relative w-full px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
-  {/* Container */}
-  <div class="mx-auto max-w-xl lg:max-w-screen-xl">
-    {/* Section header text */}
-    <div class="lg:grid lg:grid-cols-2 lg:gap-16 xl:gap-32">
-      <div class="flex items-center">
-        <h2 class="h2 max-w-4xl text-purple-900">
-          {program.data.infoSection.headline}
-        </h2>
-      </div>
-      <div class="mt-6 flex items-center lg:mt-0">
-        <p class="text-xl leading-relaxed text-purple-800">
-          {program.data.infoSection.text}
-        </p>
-      </div>
+<section class="relative overflow-hidden bg-[#F5F5F7] py-16 sm:py-24">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col items-start gap-4 lg:mb-12">
+      <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+        {infoSection.headline}
+      </h2>
+      <p class="text-lg text-gray-600">
+        {infoSection.text}
+      </p>
     </div>
+
     {
-      program.data.name === 'Tutor Service Online/Offline' && (
-        <ProgramTutor program={program} />
+      program.data.name === 'Undergraduate Admissions Consulting' && (
+        <>
+          <div class="mt-12">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {cards.map((card) => (
+                <ProgramInfoCard
+                  {...card}
+                  gradientColors={{
+                    bgColor: '#F5F5F7',
+                    iconBgColor: '#4F46E5',
+                    startColor: '#4F46E5',
+                    endColor: '#9333EA',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+          <div class="tutor-content mt-12">
+            <Content />
+          </div>
+        </>
       )
     }
-    {/* Class info */}
-    <div
-      class="mt-12 grid gap-8 sm:mt-14 sm:max-w-none sm:grid-cols-2 sm:gap-6 lg:mt-24 lg:grid-cols-4 xl:gap-12"
-    >
-      {
-        program.data.name === 'Undergraduate Admissions Consulting' && (
-          <>
-            <InfoCard
-              icon="mood-kid"
-              title="GPA Premier Consulting and Extracurricular Profile"
-              gradientColors={{
-                bgColor: 'bg-yellow-200',
-                iconBgColor: 'bg-yellow-400',
-                startColor: 'from-yellow-400',
-                endColor: 'to-yellow-500',
-              }}
-              text={program.data.infoSection.ages}
-            />
 
-            <InfoCard
-              icon="calendar"
-              title="Tailored Academic Roadmap"
-              gradientColors={{
-                bgColor: 'bg-purple-50',
-                iconBgColor: 'bg-purple-200',
-                startColor: 'from-purple-200',
-                endColor: 'to-purple-300',
-              }}
-              text={program.data.infoSection.duration}
-            />
+    {
+      program.data.name === 'Tutor Service Online/Offline' && (
+        <>
+          <ProgramTutor program={program} />
+          <div class="tutor-content mt-12">
+            <Content />
+          </div>
+        </>
+      )
+    }
 
-            <InfoCard
-              icon="clock"
-              title="Target college List & College applications"
-              gradientColors={{
-                bgColor: 'bg-rose-50',
-                iconBgColor: 'bg-rose-200',
-                startColor: 'from-rose-100',
-                endColor: 'to-rose-300',
-              }}
-              text={program.data.infoSection.schedule}
-            />
+    {
+      program.data.name === 'Summer/Winter Camp' &&
+        program.data.stemPrograms && (
+          <div>
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:py-4">
+              STEM Programs for Students
+            </h2>
 
-            <InfoCard
-              icon="users-group"
-              title="Standardized Test Preparation"
-              gradientColors={{
-                bgColor: 'bg-blue-50',
-                iconBgColor: 'bg-blue-200',
-                startColor: 'from-blue-100',
-                endColor: 'to-blue-300',
-              }}
-              text={program.data.infoSection.classSize}
-            />
-            <InfoCard
-              icon="mood-kid"
-              title="Essay Writing Practice & Interview Training"
-              gradientColors={{
-                bgColor: 'bg-yellow-200',
-                iconBgColor: 'bg-yellow-400',
-                startColor: 'from-yellow-400',
-                endColor: 'to-yellow-500',
-              }}
-              text={program.data.infoSection.program1 ?? ''}
-            />
+            {/* Desktop view */}
+            <div class="hidden overflow-x-auto md:block">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                    >
+                      Program Name
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                    >
+                      Duration
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                    >
+                      Description
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  {program.data.stemPrograms.programs.map(
+                    (prog: StemProgram) => (
+                      <tr>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                          {prog.name}
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                          {prog.duration}
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">
+                          {prog.description}
+                        </td>
+                      </tr>
+                    ),
+                  )}
+                </tbody>
+              </table>
+            </div>
 
-            <InfoCard
-              icon="calendar"
-              title="Summer Activities Planning: Work Research, Summer Camp"
-              gradientColors={{
-                bgColor: 'bg-purple-50',
-                iconBgColor: 'bg-purple-200',
-                startColor: 'from-purple-200',
-                endColor: 'to-purple-300',
-              }}
-              text={program.data.infoSection.program2 ?? ''}
-            />
-
-            <InfoCard
-              icon="clock"
-              title="Career Counseling"
-              gradientColors={{
-                bgColor: 'bg-rose-50',
-                iconBgColor: 'bg-rose-200',
-                startColor: 'from-rose-100',
-                endColor: 'to-rose-300',
-              }}
-              text={program.data.infoSection.program3 ?? ''}
-            />
-
-            <InfoCard
-              icon="users-group"
-              title="Motivation, Time Management & Strategies"
-              gradientColors={{
-                bgColor: 'bg-blue-50',
-                iconBgColor: 'bg-blue-200',
-                startColor: 'from-blue-100',
-                endColor: 'to-blue-300',
-              }}
-              text={program.data.infoSection.program4 ?? ''}
-            />
-          </>
+            {/* Mobile view */}
+            <div class="space-y-6 md:hidden">
+              {program.data.stemPrograms.programs.map((prog: StemProgram) => (
+                <div class="space-y-3 rounded-lg bg-white p-4 shadow-sm">
+                  <div class="font-medium text-gray-900">{prog.name}</div>
+                  <div class="text-sm text-gray-500">
+                    <span class="font-medium">Duration:</span> {prog.duration}
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    <span class="font-medium">Description:</span>
+                    <br />
+                    {prog.description}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         )
-      }
-    </div>
+    }
+    {
+      program.data.AdditionalSection && (
+        <div class="mt-12">
+          <div class="space-y-12">
+            <div>
+              <h3 class="text-2xl font-bold tracking-tight text-gray-900">
+                {program.data.AdditionalSection.headline1}
+              </h3>
+              <p class="mt-4 whitespace-pre-line text-gray-600 leading-relaxed text-lg space-y-6">
+                  {program.data.AdditionalSection.text1}
+              </p>
+            </div>
+
+            <div>
+              <h3 class="text-2xl font-bold tracking-tight text-gray-900">
+                {program.data.AdditionalSection.headline2}
+              </h3>
+              <p class="mt-4 whitespace-pre-line text-gray-600">
+                {program.data.AdditionalSection.text2}
+              </p>
+            </div>
+          </div>
+        </div>
+      )
+    }
   </div>
 </section>
+
+<style>
+  .shadow-sm {
+    box-shadow:
+      0 1px 3px 0 rgba(0, 0, 0, 0.1),
+      0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  }
+  .shadow-md {
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  .tutor-content {
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700 !important;
+      color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+      white-space: pre-line;
+      margin-top: 1rem;
+    }
+  }
+</style>

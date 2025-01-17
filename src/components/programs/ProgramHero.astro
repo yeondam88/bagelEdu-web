@@ -1,64 +1,62 @@
 ---
 import { Image } from 'astro:assets'
-import { Icon } from 'astro-icon/components'
-import Button from '@components/shared/Button.astro'
 import type { Program } from '@types'
 
 interface Props {
   program: Program
 }
 
-const {
-  program,
-  program: {
-    data: { hero },
-  },
-} = Astro.props
+const { program } = Astro.props
+const { hero } = program.data
 ---
 
-<section
-  class="relative bg-gradient-to-b from-purple-25 to-purple-50 px-4 pt-16 sm:px-6 lg:px-8"
->
-  <div class="mx-auto max-w-screen-xl">
-    {/* Header */}
-    <div class="relative">
-      <h2 class="h1 mx-auto mt-4 max-w-3xl text-center text-purple-900">
-        {hero.headline}
-      </h2>
-      <p
-        class="mx-auto mt-4 max-w-2xl text-center text-xl leading-relaxed text-purple-800 sm:mt-5"
-      >
+<section class="relative overflow-hidden bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+    <div class="text-center">
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
+        <span class="block xl:inline">{hero.headline}</span>
+      </h1>
+      <p class="mx-auto mt-3 max-w-md text-base text-gray-500 sm:text-lg md:mt-5 md:max-w-3xl md:text-xl">
         {hero.text}
       </p>
-      {/* CTA button */}
-      <div class="mt-8 flex justify-center">
-        <Button href={hero.action.href}>
-          {hero.action.label}
-          {
-            hero.action.icon && (
-              <Icon
-                name="tabler:arrow-narrow-right"
-                class="ml-3 h-6 w-6 group-hover:animate-horizontal-bounce"
-              />
-            )
-          }
-        </Button>
-      </div>
-    </div>
-    {/* Hero image */}
-      <div class="relative z-10 mt-14 sm:mt-16" transition:name={program.slug}>
-        <div class="aspect-h-2 aspect-w-3 relative sm:aspect-h-9 sm:aspect-w-16">
-          <Image
-            class="absolute inset-0 h-full w-full rounded-3xl object-cover shadow-xl"
-            src={program.data.image}
-            alt={hero.image.alt || ''}
-          />
+      <div class="mx-auto mt-5 max-w-md sm:flex sm:justify-center md:mt-8">
+        <div class="rounded-md shadow">
+          <a
+            href={hero.action.href}
+            class="flex w-full items-center justify-center rounded-md border border-transparent bg-purple-600 px-8 py-3 text-base font-medium text-white hover:bg-purple-700 md:py-4 md:px-10 md:text-lg"
+          >
+            {hero.action.icon && (
+              <span class="mr-2">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d={hero.action.icon.toString()} />
+                </svg>
+              </span>
+            )}
+            {hero.action.label}
+          </a>
         </div>
       </div>
-  </div>
-  {/* Background overlay effect */}
-  <div
-    class="absolute inset-x-0 bottom-0 top-auto z-0 hidden h-64 bg-white sm:block"
-  >
+    </div>
+    <div class="relative mt-16">
+      <div class="absolute inset-0 flex items-center" aria-hidden="true">
+        <div class="w-full border-t border-gray-300"></div>
+      </div>
+      <div class="relative flex justify-center">
+        <div class="inline-flex items-center rounded-full border border-gray-300 bg-white px-4 py-1.5 text-sm font-medium leading-5 text-gray-500">
+          <span>Learn more about our program</span>
+        </div>
+      </div>
+    </div>
+    <div class="relative mt-8">
+      <div class="aspect-w-16 aspect-h-9 overflow-hidden rounded-lg shadow-lg">
+        <Image 
+          src={hero.image.src} 
+          alt="Program hero" 
+          class="object-cover"
+          width={hero.image.src.width}
+          height={hero.image.src.height}
+        />
+      </div>
+    </div>
   </div>
 </section>
