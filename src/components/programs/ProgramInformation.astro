@@ -1,8 +1,17 @@
 ---
 import type { CollectionEntry } from 'astro:content'
+import { Icon } from 'astro-icon/components'
 import ProgramTutor from './ProgramTutor.astro'
+import ProgramInfoCard from './ProgramInfoCard.astro'
+
 interface Props {
   program: CollectionEntry<'programs'>
+}
+
+interface StemProgram {
+  name: string
+  duration: string
+  description: string
 }
 
 const { program } = Astro.props
@@ -11,43 +20,43 @@ const { Content } = await program.render()
 // Convert individual fields to card data
 const cards = [
   {
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>',
-    title: 'GPA Premier Consulting',
+    icon: 'tabler:book',
+    title: 'GPA Premier Consulting and Extracurricular Profile',
     description: infoSection.ages,
   },
   {
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>',
-    title: 'Academic Roadmap',
+    icon: 'tabler:calendar',
+    title: 'Tailored Academic Roadmap',
     description: infoSection.duration,
   },
   {
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>',
-    title: 'Target College List',
+    icon: 'tabler:target',
+    title: 'Target college List & College applications',
     description: infoSection.schedule,
   },
   {
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>',
-    title: 'Test Preparation',
+    icon: 'tabler:box',
+    title: 'Standardized Test Preparation',
     description: infoSection.classSize,
   },
   {
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3Z"/></svg>',
-    title: 'Essay & Interview',
+    icon: 'tabler:pencil',
+    title: 'Essay Writing Practice & Interview Training',
     description: infoSection.program1,
   },
   {
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>',
-    title: 'Summer Activities',
+    icon: 'tabler:sun',
+    title: 'Summer Activities Planning: Work Research, Summer Camp',
     description: infoSection.program2,
   },
   {
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>',
+    icon: 'tabler:compass',
     title: 'Career Counseling',
     description: infoSection.program3,
   },
   {
-    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
-    title: 'Time Management',
+    icon: 'tabler:clock',
+    title: 'Motivation, Time Management & Strategies',
     description: infoSection.program4,
   },
 ]
@@ -55,7 +64,7 @@ const cards = [
 
 <section class="relative overflow-hidden bg-[#F5F5F7] py-16 sm:py-24">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="mb-12 flex flex-col items-start gap-4">
+    <div class="flex flex-col items-start gap-4 lg:mb-12">
       <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
         {infoSection.headline}
       </h2>
@@ -65,85 +74,138 @@ const cards = [
     </div>
 
     {
+      program.data.name === 'Undergraduate Admissions Consulting' && (
+        <>
+          <div class="mt-12">
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {cards.map((card) => (
+                <ProgramInfoCard
+                  {...card}
+                  gradientColors={{
+                    bgColor: '#F5F5F7',
+                    iconBgColor: '#4F46E5',
+                    startColor: '#4F46E5',
+                    endColor: '#9333EA',
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+          <div class="tutor-content mt-12">
+            <Content />
+          </div>
+        </>
+      )
+    }
+
+    {
       program.data.name === 'Tutor Service Online/Offline' && (
-        <ProgramTutor program={program} />
+        <>
+          <ProgramTutor program={program} />
+          <div class="tutor-content mt-12">
+            <Content />
+          </div>
+        </>
       )
     }
 
     {
       program.data.name === 'Summer/Winter Camp' &&
         program.data.stemPrograms && (
-          <div class="overflow-x-auto">
-            <h2 class="py-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+          <div>
+            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:py-4">
               STEM Programs for Students
             </h2>
-            <table class="min-w-full divide-y divide-gray-200">
-              <thead class="bg-gray-50">
-                <tr>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >
-                    Program Name
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >
-                    Duration
-                  </th>
-                  <th
-                    scope="col"
-                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                  >
-                    Description
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-200 bg-white">
-                {program.data.stemPrograms.programs.map((prog) => (
-                  <tr>
-                    <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-                      {prog.name}
-                    </td>
-                    <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                      {prog.duration}
-                    </td>
-                    <td class="px-6 py-4 text-sm text-gray-500">
-                      {prog.description}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
 
-            
+            {/* Desktop view */}
+            <div class="hidden overflow-x-auto md:block">
+              <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                    >
+                      Program Name
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                    >
+                      Duration
+                    </th>
+                    <th
+                      scope="col"
+                      class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                    >
+                      Description
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  {program.data.stemPrograms.programs.map(
+                    (prog: StemProgram) => (
+                      <tr>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                          {prog.name}
+                        </td>
+                        <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                          {prog.duration}
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">
+                          {prog.description}
+                        </td>
+                      </tr>
+                    ),
+                  )}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile view */}
+            <div class="space-y-6 md:hidden">
+              {program.data.stemPrograms.programs.map((prog: StemProgram) => (
+                <div class="space-y-3 rounded-lg bg-white p-4 shadow-sm">
+                  <div class="font-medium text-gray-900">{prog.name}</div>
+                  <div class="text-sm text-gray-500">
+                    <span class="font-medium">Duration:</span> {prog.duration}
+                  </div>
+                  <div class="text-sm text-gray-500">
+                    <span class="font-medium">Description:</span>
+                    <br />
+                    {prog.description}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )
     }
-    {program.data.AdditionalSection && (
-      <div class="mt-12">
-        <div class="space-y-12">
-          <div>
-            <h3 class="text-2xl font-bold tracking-tight text-gray-900">
-              {program.data.AdditionalSection.headline1}
-            </h3>
-            <p class="mt-4 whitespace-pre-line text-gray-600">
-              {program.data.AdditionalSection.text1}
-            </p>
-          </div>
+    {
+      program.data.AdditionalSection && (
+        <div class="mt-12">
+          <div class="space-y-12">
+            <div>
+              <h3 class="text-2xl font-bold tracking-tight text-gray-900">
+                {program.data.AdditionalSection.headline1}
+              </h3>
+              <p class="mt-4 whitespace-pre-line text-gray-600 leading-relaxed text-lg space-y-6">
+                  {program.data.AdditionalSection.text1}
+              </p>
+            </div>
 
-          <div>
-            <h3 class="text-2xl font-bold tracking-tight text-gray-900">
-              {program.data.AdditionalSection.headline2}
-            </h3>
-            <p class="mt-4 whitespace-pre-line text-gray-600">
-              {program.data.AdditionalSection.text2}
-            </p>
+            <div>
+              <h3 class="text-2xl font-bold tracking-tight text-gray-900">
+                {program.data.AdditionalSection.headline2}
+              </h3>
+              <p class="mt-4 whitespace-pre-line text-gray-600">
+                {program.data.AdditionalSection.text2}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    )}
+      )
+    }
   </div>
 </section>
 
@@ -157,5 +219,21 @@ const cards = [
     box-shadow:
       0 4px 6px -1px rgba(0, 0, 0, 0.1),
       0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  .tutor-content {
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 700 !important;
+      color: rgb(17 24 39 / var(--tw-text-opacity, 1));
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: rgb(75 85 99 / var(--tw-text-opacity, 1));
+      white-space: pre-line;
+      margin-top: 1rem;
+    }
   }
 </style>

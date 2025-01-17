@@ -18,26 +18,26 @@ const programs: Program[] = await getCollection('programs')
       <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-3 xl:mt-0">
         <div class="md:grid md:grid-cols-2 md:gap-8">
           <div class="text-left">
-            <h3 class="text-sm font-semibold leading-6 text-gray-800">서비스</h3>
+            <h3 class="text-base font-semibold leading-6 text-gray-800 sm:text-sm">서비스</h3>
             <ul role="list" class="mt-6 space-y-4">
               {programs.map((program) => (
                 <li>
-                  <a href={program.data.hero.action.href} class="text-sm leading-6 text-gray-800 hover:text-white">{program.data.name}</a>
+                  <a href={program.data.hero.action.href} class="text-base leading-6 text-gray-800 hover:text-purple-600 transition-colors duration-200 sm:text-sm">{program.data.name}</a>
                 </li>
               ))}
             </ul>
           </div>
           <div class="mt-10 md:mt-0 text-left">
-            <h3 class="text-sm font-semibold leading-6 text-gray-800">문의하기</h3>
+            <h3 class="text-base font-semibold leading-6 text-gray-800 sm:text-sm">문의하기</h3>
             <ul role="list" class="mt-6 space-y-4">
               <li>
-                <p class="text-sm leading-6 text-gray-800">Email: {CONTACT.email}</p>
+                <p class="text-base leading-6 text-gray-800 sm:text-sm">Email: {CONTACT.email}</p>
               </li>
               <li>
-                <p class="text-sm leading-6 text-gray-800">Phone: {CONTACT.phone}</p>
+                <p class="text-base leading-6 text-gray-800 sm:text-sm">Phone: {CONTACT.phone}</p>
               </li>
               <li>
-                <p class="text-sm leading-6 text-gray-800">
+                <p class="text-base leading-6 text-gray-800 sm:text-sm">
                   월-금 9:00AM - 6:00PM [PST]<br />
                 </p>
               </li>
@@ -46,15 +46,7 @@ const programs: Program[] = await getCollection('programs')
         </div>
         <div class="md:grid md:grid-cols-2 md:gap-8">
           <div class="text-right">
-            <!-- <h3 class="text-sm font-semibold leading-6 text-white">자료 링크</h3> -->
-            <!-- <ul role="list" class="mt-6 space-y-4">
-              <li>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="text-sm leading-6 text-gray-300 hover:text-white">Youtube</a>
-              </li>
-              <li>
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="text-sm leading-6 text-gray-300 hover:text-white">Instagram</a>
-              </li>
-            </ul> -->
+            <!-- Social links can be added here if needed -->
           </div>
         </div>
       </div>
