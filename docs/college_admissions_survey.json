@@ -1,0 +1,173 @@
+{
+    "PersonalInformation": {
+        "Name": "",
+        "DateOfBirth": "",
+        "ContactNumber": "",
+        "EmailAddress": "",
+        "CurrentSchool": "",
+        "CareerAndGoals": "",
+        "DesiredMajor": "",
+        "UniversitiesOfInterest": "",
+        "ReasonsForStudyingInUS": "",
+        "GoalsThroughStudyingAbroad": "",
+        "PostGraduationPlans": "",
+        "PreferredLearningStyle": [
+            "Self-study",
+            "Group study",
+            "1:1 tutoring",
+            "Online lectures"
+        ],
+        "EnglishProficiency": [
+            "Beginner",
+            "Intermediate",
+            "Advanced"
+        ],
+        "UnderstandingOfUSAdmissions": [
+            "No knowledge",
+            "Little knowledge",
+            "Moderate knowledge",
+            "Strong knowledge"
+        ]
+    },
+    "StudentBackground": {
+        "CurrentGradeLevel": [
+            "9th Grade",
+            "10th Grade",
+            "11th Grade",
+            "12th Grade",
+            "Gap year"
+        ],
+        "SchoolType": [
+            "International School/Foreign School",
+            "Private School",
+            "Public School",
+            "Charter School/Homeschool"
+        ],
+        "ResidenceLocation": [
+            "City",
+            "Suburbs",
+            "Rural area"
+        ]
+    },
+    "AcademicsAndGrades": {
+        "GPA": [
+            "4.0 or higher",
+            "3.5-3.9",
+            "3.0-3.4",
+            "2.9 or lower"
+        ],
+        "SAT_ACT_Scores": [
+            "SAT 1500 or higher / ACT 34 or higher",
+            "SAT 1400-1490 / ACT 30-33",
+            "SAT 1300-1390 / ACT 27-29",
+            "SAT 1200-1290 / ACT 24-26",
+            "No scores"
+        ],
+        "TOEFLScore": "",
+        "AP_IB_Courses": {
+            "AP": [],
+            "IB": [],
+            "IBSubjects": [],
+            "CambridgeExamScores": "",
+            "AS_A_LevelSubjects": "",
+            "IGCSE": ""
+        },
+        "StrongestSubject": "",
+        "MostChallengingSubject": ""
+    },
+    "ExtracurricularActivitiesAndLeadership": {
+        "Activities": [
+            "Sports",
+            "Arts and Music",
+            "Clubs and Organizations",
+            "Volunteer work",
+            "Internships/Competitions/Work experience",
+            "Special talents or interests"
+        ],
+        "LeadershipExperience": {
+            "ClubPresident_VicePresident": "",
+            "TeamCaptain": "",
+            "OtherLeadershipRoles": "",
+            "NoLeadershipRoles": false
+        },
+        "MostImportantActivity": [
+            "Sports",
+            "Academic research",
+            "Community service",
+            "Creative arts"
+        ]
+    },
+    "PersonalGoalsAndInterests": {
+        "DesiredMajor": [
+            "STEM",
+            "Humanities",
+            "Arts and Design",
+            "Business and Economics",
+            "Other"
+        ],
+        "UniversityType": [
+            "Ivy League or top-tier university",
+            "Prestigious private university",
+            "State university",
+            "Public university"
+        ],
+        "MostImportantFactor": [
+            "Academic level",
+            "Campus environment",
+            "Research opportunities",
+            "Sports and club activities",
+            "Networking and career opportunities"
+        ],
+        "SpecialCircumstances": {
+            "Disability": "",
+            "SpecificReligious_CulturalNeeds": "",
+            "HealthIssues": "",
+            "Other": ""
+        }
+    },
+    "SelfReflectionQuestions": [
+        "What single word best describes you and why?",
+        "What words do you think others would use to describe you?",
+        "What are your greatest strengths and weaknesses?",
+        "What makes you different from others?",
+        "What values do you consider most important?",
+        "Who has had the greatest influence on you and why?",
+        "What excites you the most?",
+        "What are you most passionate about?",
+        "In what kind of environment do you feel most comfortable?",
+        "How do you cope with stress?",
+        "What have you learned from failure?",
+        "In what ways do you wish to grow?"
+    ],
+    "ExperienceQuestions": [
+        "What is your most memorable childhood experience?",
+        "When were you most proud of yourself?",
+        "What was your most challenging moment, and what did you learn from it?",
+        "If you have experience helping others, what did that experience mean to you?",
+        "If you have experience demonstrating leadership, what did you learn from it?",
+        "Describe an experience where you achieved a goal through teamwork.",
+        "Describe an experience where you had to adapt to a new environment.",
+        "What book, movie, or music has had the greatest impact on you and why?",
+        "What have you learned from traveling?",
+        "What did you gain from volunteering?"
+    ],
+    "FutureOrientedQuestions": [
+        "What is your dream?",
+        "What fields are you interested in?",
+        "What do you hope to learn in college?",
+        "What kind of work do you want to do after graduating from college?",
+        "How do you want to be remembered?",
+        "What kind of impact do you want to make on the world?"
+    ],
+    "AdditionalQuestions": {
+        "PhotoRepresentation": "",
+        "Motto": "",
+        "PrizedPossession": ""
+    },
+    "ImportantNotes": [
+        "These questions are for brainstorming purposes; you don't need to answer all of them.",
+        "Be honest and genuine in your responses.",
+        "Provide specific details and examples to make your story engaging and relatable.",
+        "Focus on questions relevant to your chosen essay topic."
+    ]
+}
