@@ -11,7 +11,7 @@ export const SITE: Site = {
 
 export const CONTACT: Contact = {
   address: '36, Banpo-daero 18-gil, Seocho-gu, Seoul',
-  phone: '(US)+1-310-717-1040 / (KR)+8210-3360-6558',
+  phone: '(US)+1-310-717-1040, (US)+1-213-369-7088 / (KR)+8210-3360-6558',
   email: 'bageledu@gmail.com',
 }
 
