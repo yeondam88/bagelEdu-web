@@ -161,7 +161,7 @@ const galleryCollection = defineCollection({
 
 const blogCollection = defineCollection({
   type: 'content',
-  schema: z.object({
+  schema: ({ image }) => z.object({
     title: z.object({
       en: z.string(),
       ko: z.string(),
@@ -169,7 +169,7 @@ const blogCollection = defineCollection({
     date: z.string(),
     author: z.string(),
     image: z.object({
-      src: z.any(),
+      src: image(),
       alt: z.string(),
     }),
     excerpt: z.object({
