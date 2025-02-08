@@ -8,10 +8,15 @@ interface Props {
   program: CollectionEntry<'programs'>
 }
 
+type LocalizedString = {
+  ko: string
+  en: string
+}
+
 interface StemProgram {
   name: string
   duration: string
-  description: string
+  description: LocalizedString
 }
 
 const { program } = Astro.props
@@ -192,8 +197,8 @@ const cards = [
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
-                  {program.data.stemPrograms.programs.map(
-                    (prog: StemProgram) => (
+                  {program.data.stemPrograms?.programs.map(
+                    (prog) => (
                       <tr>
                         <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
                           {prog.name}
@@ -213,7 +218,7 @@ const cards = [
 
             {/* Mobile view */}
             <div class="space-y-6 md:hidden">
-              {program.data.stemPrograms.programs.map((prog: StemProgram) => (
+              {program.data.stemPrograms?.programs.map((prog) => (
                 <div class="space-y-3 rounded-lg bg-white p-4 shadow-sm">
                   <div class="font-medium text-gray-900">{prog.name}</div>
                   <div class="text-sm text-gray-500">
@@ -222,7 +227,7 @@ const cards = [
                   <div class="text-sm text-gray-500">
                     <span class="font-medium" x-data x-text="$store.language === 'ko' ? '설명:' : 'Description:'"></span>
                     <br />
-                    {prog.description}
+                    <span x-data x-text={`$store.language === 'ko' ? ${JSON.stringify(prog.description.ko)} : ${JSON.stringify(prog.description.en)}`}></span>
                   </div>
                 </div>
               ))}

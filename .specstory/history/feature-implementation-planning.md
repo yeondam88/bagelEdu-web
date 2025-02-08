@@ -15239,6 +15239,333 @@ I'll help add translation logic to the Contact page. I'll modify the ContactHero
 
 _****_
 
+```diff
+          </h1>
+          <p class="mt-6 text-lg leading-8 text-gray-600">
+-           에 대한 궁금증부터, 성적 향상 및 합격 가능성 예상까지. 지금 바로
+-           무료로 상담 받으세요.
++           <span x-data x-text="$store.language === 'ko' 
++             ? '에 대한 궁금증부터, 성적 향상 및 합격 가능성 예상까지. 지금 바로 무료로 상담 받으세요.'
++             : 'From questions about BagelEdu to academic improvement and admission prospects. Get a free consultation now.'">
++           </span>
+          </p>
+          <ul class="text-md mt-6 list-inside list-disc space-y-2 text-gray-900">
+-           <li>첫 30분 무료 상담</li>
++           <li>
++             <span x-data x-text="$store.language === 'ko' ? '첫 30분 무료 상담' : 'First 30 minutes free consultation'"></span>
++           </li>
+            <li>
+-             유료 상담: 전화 혹은 zoom, 대면 상담 모두 30 이후 부터 1시간 5만원
+-             상담비
++             <span x-data x-text="$store.language === 'ko' 
++               ? '유료 상담: 전화 혹은 zoom, 대면 상담 모두 30 이후 부터 1시간 5만원 상담비'
++               : 'Paid consultation: ₩50,000 per hour after first 30 minutes for phone, zoom, or in-person consultations'">
++             </span>
+            </li>
+          </ul>
+          <p class="text-md mt-6 leading-8 text-gray-600">
+-           (프로그램 질문에 대한 상담, 학교와의 fit, 합격 가능성, 진로 고민, 미국
+-           학업 및 생활 등) * 상담 후 프로그램 계약 시, 상담비는 컨설팅비에
+-           포함되어 환불됩니다.
++           <span x-data x-text="$store.language === 'ko' 
++             ? '(프로그램 질문에 대한 상담, 학교와의 fit, 합격 가능성, 진로 고민, 미국 학업 및 생활 등) * 상담 후 프로그램 계약 시, 상담비는 컨설팅비에 포함되어 환불됩니다.'
++             : '(Consultation on program questions, school fit, admission chances, career concerns, U.S. academic life, etc.) * If you sign up for a program after consultation, the consultation fee will be included in the consulting fee and refunded.'">
++           </span>
+          </p>
+          <dl class="mt-10 space-y-4 text-base leading-7 text-gray-600">
+              <dt class="flex-none">
+                <span class="sr-only">Phone</span>
+-               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-call"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.05 2a9 9 0 0 1 8 7.94"/><path d="M14.05 6A5 5 0 0 1 18 10"/></svg> 
+-               
++               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-call"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.05 2a9 9 0 0 1 8 7.94"/><path d="M14.05 6A5 5 0 0 1 18 10"/></svg>
+              </dt>
+              <dd>
+              <dt class="flex-none">
+                <span class="sr-only">Email</span>
+-               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg> 
++               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </dt>
+              <dd>
+                  class="block text-sm font-semibold leading-6 text-gray-900"
+                >
+-                 이름 *
++                 <span x-data x-text="$store.language === 'ko' ? '이름 *' : 'Name *'"></span>
+                </label>
+                <input
+                  class="block text-sm font-semibold leading-6 text-gray-900"
+                >
+-                 이메일 *
++                 <span x-data x-text="$store.language === 'ko' ? '이메일 *' : 'Email *'"></span>
+                </label>
+                <input
+                  class="block text-sm font-semibold leading-6 text-gray-900"
+                >
+-                 전화번호 *
++                 <span x-data x-text="$store.language === 'ko' ? '전화번호 *' : 'Phone *'"></span>
+                </label>
+                <input
+                  class="block text-sm font-semibold leading-6 text-gray-900"
+                >
+-                 현재 학년 *
++                 <span x-data x-text="$store.language === 'ko' ? '현재 학년 *' : 'Current Grade *'"></span>
+                </label>
+                <input
+                  class="block text-sm font-semibold leading-6 text-gray-900"
+                >
+-                 관심 프로그램 *
++                 <span x-data x-text="$store.language === 'ko' ? '관심 프로그램 *' : 'Program of Interest *'"></span>
+                </label>
+                <select
+                  required
+                >
+-                 <option value="">프로그램을 선택해주세요</option>
+-                 <option value="Tutor Service Online/Offline"
+-                   >Tutor Service Online/Offline</option
+-                 >
++                 <option value="" x-data x-text="$store.language === 'ko' ? '프로그램을 선택해주세요' : 'Please select a program'"></option>
++                 <option value="Tutor Service Online/Offline">Tutor Service Online/Offline</option>
+                  <option value="Summer/Winter Camp">Summer/Winter Camp</option>
+-                 <option value="Undergraduate Admissions Consulting"
+-                   >Undergraduate Admissions Consulting</option
+-                 >
+-                 <option value="MBA Admissions Consulting"
+-                   >MBA Admissions Consulting</option
+-                 >
++                 <option value="Undergraduate Admissions Consulting">Undergraduate Admissions Consulting</option>
++                 <option value="MBA Admissions Consulting">MBA Admissions Consulting</option>
+                </select>
+              </div>
+                  class="block text-sm font-semibold leading-6 text-gray-900"
+                >
+-                 문의사항 *
++                 <span x-data x-text="$store.language === 'ko' ? '문의사항 *' : 'Message *'"></span>
+                </label>
+                <textarea
+                  name="message"
+                  id="message"
+                  rows="4"
+-                 placeholder="문의하실 내용을 입력해주세요..."
++                 placeholder={`${$store.language === 'ko' ? '문의하실 내용을 입력해주세요...' : 'Please enter your message...'}`}
+                  class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                  required></textarea>
+                class="rounded-md bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+              >
+-               문의하기
++               <span x-data x-text="$store.language === 'ko' ? '문의하기' : 'Submit'"></span>
+              </button>
+            </div>
+  
+        if (res.ok) {
+-         toast.success('메시지가 성공적으로 전송되었습니다.')
++         toast.success($store.language === 'ko' ? '메시지가 성공적으로 전송되었습니다.' : 'Message sent successfully.')
+          ;(e.target as HTMLFormElement).reset()
+        } else {
+-         toast.error('메시지 전송에 실패했습니다.')
++         toast.error($store.language === 'ko' ? '메시지 전송에 실패했습니다.' : 'Failed to send message.')
+        }
+      } catch (err) {
+-       toast.error('오류가 발생했습니다. 다시 시도해주세요.')
++       toast.error($store.language === 'ko' ? '오류가 발생했습니다. 다시 시도해주세요.' : 'An error occurred. Please try again.')
+        console.error(err)
+      }
+```
+
+---
+
+_****_
+
+
+
+I notice there are some linter errors related to `$store` not being found in the TypeScript context. Let me fix those by properly accessing the Alpine.js store:
+
+---
+
+_****_
+
+```diff
+  <script>
+    import toast from 'react-hot-toast'
++   import Alpine from 'alpinejs'
+  
+    const form = document.getElementById('contactForm')
+          body: new FormData(e.target as HTMLFormElement),
+        })
++ 
++       const language = Alpine.store('language')
+        
+        if (res.ok) {
+-         toast.success($store.language === 'ko' ? '메시지가 성공적으로 전송되었습니다.' : 'Message sent successfully.')
++         toast.success(language === 'ko' ? '메시지가 성공적으로 전송되었습니다.' : 'Message sent successfully.')
+          ;(e.target as HTMLFormElement).reset()
+        } else {
+-         toast.error($store.language === 'ko' ? '메시지 전송에 실패했습니다.' : 'Failed to send message.')
++         toast.error(language === 'ko' ? '메시지 전송에 실패했습니다.' : 'Failed to send message.')
+        }
+      } catch (err) {
+-       toast.error($store.language === 'ko' ? '오류가 발생했습니다. 다시 시도해주세요.' : 'An error occurred. Please try again.')
++       const language = Alpine.store('language')
++       toast.error(language === 'ko' ? '오류가 발생했습니다. 다시 시도해주세요.' : 'An error occurred. Please try again.')
+        console.error(err)
+      }
+```
+
+---
+
+_****_
+
+
+
+I see there's still one more linter error related to the placeholder text in the textarea. Let me fix that:
+
+---
+
+_****_
+
+```diff
+                  id="message"
+                  rows="4"
+-                 placeholder={`${$store.language === 'ko' ? '문의하실 내용을 입력해주세요...' : 'Please enter your message...'}`}
++                 x-data
++                 x-bind:placeholder="$store.language === 'ko' ? '문의하실 내용을 입력해주세요...' : 'Please enter your message...'"
+                  class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                  required></textarea>
+```
+
+---
+
+_****_
+
+
+
+I've made the following changes to add translation support to the contact page:
+
+1. Added bilingual support for all text content using Alpine.js's `x-text` directives
+2. Translated all form labels and placeholders
+3. Added translation for form submission messages and error notifications
+4. Fixed TypeScript errors by properly importing and using Alpine.js store
+5. Fixed the textarea placeholder to use Alpine.js binding
+
+The contact page now supports both Korean and English languages, with:
+- Bilingual headings and descriptions
+- Form labels in both languages
+- Proper error messages in both languages
+- Consistent language switching with the rest of the site
+
+All the content will now switch between Korean and English based on the selected language in the language toggle.
+
+Would you like me to make any additional adjustments to the translations or layout?
+
+---
+
+_**User**_
+
+For the code present, we get this error:
+```
+Argument of type '(prog: StemProgram) => any' is not assignable to parameter of type '(value: { name: string; description: { ko: string; en: string; }; duration: string; }, index: number, array: { name: string; description: { ko: string; en: string; }; duration: string; }[]) => any'.
+  Types of parameters 'prog' and 'value' are incompatible.
+```
+How can I resolve this? If you propose a fix, please make it concise.
+
+---
+
+_**Assistant**_
+
+I see the issue. The error occurs because there's a mismatch between the type definition of `StemProgram` and the actual data structure being used. Looking at the content config file, I can see that the schema defines the structure correctly.
+
+Let me fix this by updating the type definition:
+
+---
+
+_****_
+
+```diff
+    name: string
+    duration: string
+-   description: string
++   description: {
++     ko: string
++     en: string
++   }
+  }
+  
+```
+
+---
+
+_****_
+
+
+
+This change updates the `StemProgram` interface to match the actual data structure where `description` is an object with `ko` and `en` properties. This should resolve the TypeScript error you're seeing.
+
+Would you like me to make any additional adjustments to the type definition?
+
+---
+
+_**User**_
+
+Check we check all errors in problems tab and fix them all
+
+---
+
+_**Assistant**_
+
+I see there are two main errors to fix:
+
+1. The TypeScript error in `ProgramInformation.astro` about the `StemProgram` type
+2. The error about using `key` prop in `blog/index.astro`
+
+Let me fix both:
+
+1. First, let's fix the `ProgramInformation.astro` file:
+
+---
+
+_****_
+
+```diff
+                  </thead>
+                  <tbody class="divide-y divide-gray-200 bg-white">
+-                   {program.data.stemPrograms.programs.map(
+-                     (prog: StemProgram) => (
++                   {program.data.stemPrograms?.programs.map(
++                     (prog) => (
+                        <tr>
+                          <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+              {/* Mobile view */}
+              <div class="space-y-6 md:hidden">
+-               {program.data.stemPrograms.programs.map((prog: StemProgram) => (
++               {program.data.stemPrograms?.programs.map((prog) => (
+                  <div class="space-y-3 rounded-lg bg-white p-4 shadow-sm">
+                    <div class="font-medium text-gray-900">{prog.name}</div>
+```
+
+---
+
+_****_
+
+
+
+2. Now, let's fix the blog index file:
+
+---
+
+_****_
+
+
+
+---
+
+_****_
+
+
+
+Let me try the blog fix again with more specific changes:
+
+---
+
+_****_
+
 
 
 ---
