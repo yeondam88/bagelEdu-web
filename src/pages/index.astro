@@ -15,7 +15,7 @@ import AcceptanceStats from '@components/home/AcceptanceStats.astro'
 import { SITE } from '@config'
 ---
 
-<Layout title={`${SITE.title} - Creating a brighter future for your child`}>
+<Layout title={{ en: 'BagelEdu - Best Consulting for Ivy Leagues', ko: 'BagelEdu - 최고의 아이비 리그 컨설팅 서비스' }}>
   <HomeHero />
   {/* Gradient background transition */}
   <UniversityLogos />
@@ -27,12 +27,8 @@ import { SITE } from '@config'
   <Testimonials />
   <GlobalYouth />
   
-  
-  
   <ConsultingPackages />
-
   <Stats />
-  
   <BootcampCTA />
-  
+</Layout>
 </Layout>
