@@ -9,9 +9,9 @@ import { SITE } from '@config'
 import Analytics from '@vercel/analytics/astro'
 
 interface Props {
-  title?: string
+  title: { en: string; ko?: string };
   author?: string
-  description?: Record<string, string>
+  description?: { en: string; ko?: string };
   ogImage?: string
   canonicalURL?: string
 }
@@ -23,7 +23,7 @@ const {
   ogImage = SITE.ogImage,
   canonicalURL = new URL(Astro.url.pathname.replace(/\/$/, ''), Astro.site)
     .href,
-} = Astro.props
+} = Astro.props as Props
 
 const socialImageURL = new URL(ogImage ?? SITE.ogImage, Astro.url.origin).href
 
@@ -43,14 +43,14 @@ const metaDescription = typeof description === 'string'
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
     <!-- General Meta Tags -->
-    <title>{title}</title>
-    <meta name="title" content={title} />
+    <title>{typeof title === 'string' ? title : title.en}</title>
+    <meta name="title" content={typeof title === 'string' ? title : title.en} />
     <meta name="description" content={metaDescription} />
     <meta name="author" content={author} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={typeof title === 'string' ? title : title.en} />
     <meta property="og:description" content={metaDescription} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImageURL} />
@@ -58,7 +58,7 @@ const metaDescription = typeof description === 'string'
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
+    <meta property="twitter:title" content={typeof title === 'string' ? title : title.en} />
     <meta property="twitter:description" content={metaDescription} />
     <meta property="twitter:image" content={socialImageURL} />
 

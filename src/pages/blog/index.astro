@@ -7,7 +7,10 @@ const posts = await getCollection('blog')
 posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
 ---
 
-<Layout title="Blog">
+<Layout 
+  title={{ en: "Blog", ko: "블로그" }}
+  description={{ en: "Latest insights and updates", ko: "최신 인사이트 및 업데이트" }}
+>
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
     <h1 class="text-[2.5rem] font-semibold text-gray-900 mb-4 py-12">
       <span x-data x-text="$store.language === 'ko' ? '최신 인사이트' : 'Latest Insights'"></span>

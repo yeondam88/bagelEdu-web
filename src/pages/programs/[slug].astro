@@ -30,8 +30,8 @@ const ogImageUrl = typeof ogImage === 'string' ? ogImage : ogImage?.src
 ---
 
 <Layout
-  title={`${program.data.name.en} - ${SITE.title}`}
-  description={program.data.hero.text}
+  title={{ en: `${program.data.name.en} - ${SITE.title}`, ko: `${program.data.name.ko} - ${SITE.title}` }}
+  description={{ en: program.data.hero.text.en, ko: program.data.hero.text.ko }}
   ogImage={ogImageUrl}
 >
   <div class="relative py-16 sm:py-24">

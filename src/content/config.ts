@@ -160,20 +160,31 @@ const galleryCollection = defineCollection({
 })
 
 const blogCollection = defineCollection({
-  schema: ({ image }) => z.object({
-    title: LocalizedStringSchema,
+  type: 'content',
+  schema: z.object({
+    title: z.object({
+      en: z.string(),
+      ko: z.string(),
+    }),
     date: z.string(),
     author: z.string(),
     image: z.object({
-      src: image(),
-      alt: z.string()
+      src: z.any(),
+      alt: z.string(),
     }),
-    excerpt: LocalizedStringSchema.optional(),
-    category: z.string().optional(),
+    excerpt: z.object({
+      en: z.string(),
+      ko: z.string(),
+    }),
+    description: z.object({
+      en: z.string(),
+      ko: z.string(),
+    }).optional(),
+    category: z.string(),
     authorImage: z.string(),
     tags: z.array(z.string()).optional(),
   }),
-});
+})
 
 const admissionGuideCollection = defineCollection({
   schema: ({ image }) => z.object({
@@ -182,7 +193,7 @@ const admissionGuideCollection = defineCollection({
     image: image(),
     fullHeight: z.boolean().optional(),
   }),
-});
+})
 
 export const collections = {
   programs: programsCollection,

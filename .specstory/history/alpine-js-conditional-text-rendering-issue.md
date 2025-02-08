@@ -280,6 +280,139 @@ This concise adjustment resolves the error.
 
 ---
 
+_**User**_
+
+For the code present, we get this error:
+```
+Argument of type '(pkg: PricingPackage) => any' is not assignable to parameter of type '(value: { title: { ko: string; en: string; }; description: { ko: string; en: string; }; duration: { ko: string; en: string; }; price: { ko: string; en: string; }; }, index: number, array: { title: { ko: string; en: string; }; description: { ...; }; duration: { ...; }; price: { ...; }; }[]) => any'.
+  Types of parameters 'pkg' and 'value' are incompatible.
+```
+How can I resolve this? If you propose a fix, please make it concise.
+
+---
+
+_**Assistant**_
+
+The error occurs because your declared interface doesn't match the actual shape of data from `pricingSection.packages`. The data actually has localized fields (objects with `ko` and `en` strings) rather than simple strings.
+
+A concise fix is to update your `PricingPackage` interface to match the data shape. For example:
+
+```astro:src/components/programs/ProgramPricing.astro
+---
+interface LocalizedField {
+  ko: string;
+  en: string;
+}
+
+interface PricingPackage {
+  title: LocalizedField;
+  description: LocalizedField;
+  price: LocalizedField;
+  duration: LocalizedField;
+}
+
+const { program } = Astro.props;
+const pricingSection = program.data.pricingSection;
+
+if (!pricingSection) {
+  return null;
+}
+---
+```
+
+Then, when rendering content, select the appropriate language (e.g., using Alpine or directly in the template):
+
+```astro:src/components/programs/ProgramPricing.astro
+{pricingSection.packages.map((pkg: PricingPackage) => (
+  <div class="relative flex flex-col rounded-2xl bg-white border border-gray-100 hover:border-purple-100 transition-all duration-300 hover:shadow-xl group">
+    <div class="absolute inset-0 rounded-2xl bg-gradient-to-b from-purple-50/50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+    <div class="relative flex-1 p-8">
+      <div class="flex items-center space-x-4">
+        <h3 x-text="$store.language === 'ko' ? pkg.title.ko : pkg.title.en" class="text-2xl font-bold text-gray-900"></h3>
+      </div>
+      <!-- Other content -->
+    </div>
+  </div>
+))}
+```
+
+### Explanation
+
+- **Interface Update:**  
+  The `LocalizedField` type represents an object with `ko` and `en` strings. Now each property in `PricingPackage` correctly reflects the localized data structure.
+
+- **Rendering:**  
+  When you render the package, choose the appropriate language key (`pkg.title.ko` or `pkg.title.en`) based on `$store.language`.
+
+This concise change resolves the type error and ensures your data is correctly rendered.
+
+---
+
+_**User**_
+
+For the code present, we get this error:
+```
+Type '{ en: string; }' is not assignable to type 'string'.
+```
+How can I resolve this? If you propose a fix, please make it concise.
+
+---
+
+_**Assistant**_
+
+The error occurs because the `Layout` component’s `title` and `description` props are expected to be simple strings, but you’re passing an object (with an `en` key) instead.
+
+You have two concise fixes:
+
+---
+
+### **Option 1: Pass a String Instead**
+
+If the `Layout` component is only meant to receive a string for these props, simply change your usage to pass a string:
+
+```astro:src/pages/contact.astro
+<Layout
+  title={`Contact us - ${SITE.title}`}
+  description="Get in touch with Bright Preschool & Elementary - we're here to help! Find our contact information, location, and hours, or submit an inquiry."
+>
+```
+
+---
+
+### **Option 2: Update Layout's Prop Types to Accept Localized Objects**
+
+If you intend to support multiple languages (e.g., `en` and `ko`), update the `Layout` component’s prop types to accept an object. For example, in your `Layout.astro` file, change the frontmatter like so:
+
+```astro:src/layouts/Layout.astro
+---
+interface Props {
+  title: { en: string; ko?: string };
+  description: { en: string; ko?: string };
+  // Other props...
+}
+
+const { title, description } = Astro.props as Props;
+
+// Use your localized values, e.g.,
+// <h1>{ $store.language === 'ko' ? title.ko : title.en }</h1>
+---
+```
+
+And then your calling code remains:
+
+```astro:src/pages/contact.astro
+<Layout
+  title={{ en: `Contact us - ${SITE.title}` }}
+  description={{ en: "Get in touch with Bright Preschool & Elementary - we're here to help! Find our contact information, location, and hours, or submit an inquiry." }}
+>
+```
+
+---
+
+Choose the option that best fits your design. Option 1 is the most straightforward if you don't need to handle multiple languages in `Layout`. Option 2 is the way to go if you want localization support.
+
+---
+
 
 
 ---

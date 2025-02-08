@@ -20,7 +20,7 @@ if (!entry) throw new Error('No blog entry found')
 const { Content } = await entry.render()
 ---
 
-<Layout title={entry.data.title?.ko || entry.data.title?.en}>
+<Layout title={{ en: entry.data.title?.en, ko: entry.data.title?.ko }} description={{ en: entry.data.excerpt.en, ko: entry.data.excerpt.ko }}>
   <section class="relative bg-gray-50 sm:py-16">
     <div class="absolute inset-0 overflow-hidden">
       <div
