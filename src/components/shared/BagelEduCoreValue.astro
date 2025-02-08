@@ -1,4 +1,3 @@
-
     <div class="flex flex-col items-center font-sans relative">
       <div class="relative w-[960px] h-[960px]">
         <!-- SVG Arrows -->
@@ -18,32 +17,50 @@
         <!-- Excellence -->
         <div class="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-56 h-56 border-8 rounded-full flex flex-col items-center justify-center text-center p-5"
              style="border-image: linear-gradient(to bottom right, #87cefa, #ffb6c1) 1;">
-          <div class="font-bold text-xl mb-2">Excellence</div>
-          <div class="text-sm">최고의 품질에 대한 확실한 약속</div>
+          <div class="font-bold text-xl mb-2">
+            <span x-data x-text="$store.language === 'ko' ? '탁월성' : 'Excellence'"></span>
+          </div>
+          <div class="text-sm">
+            <span x-data x-text="$store.language === 'ko' ? '최고의 품질에 대한 확실한 약속' : 'Commitment to the highest quality'"></span>
+          </div>
         </div>
   
         <!-- Quality -->
         <div class="absolute top-1/2 right-[10%] transform -translate-y-1/2 w-56 h-56 border-8 rounded-full flex flex-col items-center justify-center text-center p-5"
              style="border-image: linear-gradient(to bottom right, #87cefa, #ffb6c1) 1;">
-          <div class="font-bold text-xl mb-2">Quality</div>
-          <div class="text-sm">원하는 결과를 향하는 최선의 과정에 집중</div>
+          <div class="font-bold text-xl mb-2">
+            <span x-data x-text="$store.language === 'ko' ? '품질' : 'Quality'"></span>
+          </div>
+          <div class="text-sm">
+            <span x-data x-text="$store.language === 'ko' ? '원하는 결과를 향하는 최선의 과정에 집중' : 'Focus on the best process towards desired results'"></span>
+          </div>
         </div>
   
         <!-- Result -->
         <div class="absolute bottom-[10%] left-1/2 transform -translate-x-1/2 w-56 h-56 border-8 rounded-full flex flex-col items-center justify-center text-center p-5"
              style="border-image: linear-gradient(to bottom right, #87cefa, #ffb6c1) 1;">
-          <div class="font-bold text-xl mb-2">Result</div>
-          <div class="text-sm">공급한 지도와 멘토링을 통한 확실한 선택</div>
+          <div class="font-bold text-xl mb-2">
+            <span x-data x-text="$store.language === 'ko' ? '결과' : 'Result'"></span>
+          </div>
+          <div class="text-sm">
+            <span x-data x-text="$store.language === 'ko' ? '공급한 지도와 멘토링을 통한 확실한 선택' : 'Definitive choices through provided guidance and mentoring'"></span>
+          </div>
         </div>
   
         <!-- Bonding -->
         <div class="absolute top-1/2 left-[10%] transform -translate-y-1/2 w-56 h-56 border-8 rounded-full flex flex-col items-center justify-center text-center p-5"
              style="border-image: linear-gradient(to bottom right, #87cefa, #ffb6c1) 1;">
-          <div class="font-bold text-xl mb-2">Bonding</div>
-          <div class="text-sm">목표를 향한 과정 속 우대</div>
+          <div class="font-bold text-xl mb-2">
+            <span x-data x-text="$store.language === 'ko' ? '유대감' : 'Bonding'"></span>
+          </div>
+          <div class="text-sm">
+            <span x-data x-text="$store.language === 'ko' ? '목표를 향한 과정 속 우대' : 'Preferential treatment in the journey towards goals'"></span>
+          </div>
         </div>
   
         <!-- Core Value Center -->
-        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl font-bold text-gray-700">Core Value</div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-3xl font-bold text-gray-700">
+          <span x-data x-text="$store.language === 'ko' ? '핵심 가치' : 'Core Value'"></span>
+        </div>
       </div>
     </div>

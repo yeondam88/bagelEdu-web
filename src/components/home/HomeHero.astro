@@ -3,31 +3,52 @@ import { Image } from 'astro:assets'
 import portraitImage from '@images/stock/jenny-sohn-no-bg.png'
 
 const stats = [
-  { name: '합격률', value: '100%' },
-  { name: '컨설팅 학생', value: '680+' },
-  { name: '아이비리그 합격', value: '26+' },
+  { 
+    name: {
+      en: 'Acceptance Rate',
+      ko: '합격률'
+    }, 
+    value: '100%' 
+  },
+  { 
+    name: {
+      en: 'Consulting Students',
+      ko: '컨설팅 학생'
+    }, 
+    value: '680+' 
+  },
+  { 
+    name: {
+      en: 'Ivy League Acceptances',
+      ko: '아이비리그 합격'
+    }, 
+    value: '26+' 
+  },
 ]
 ---
 
 <div class="relative isolate overflow-hidden bg-white">
   <div class="mx-auto max-w-7xl px-6 pt-16 lg:flex lg:px-8 lg:pt-24">
     <div class="mx-auto max-w-2xl px-4 sm:px-0 lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-48 mt-12">
-      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-6xl">
-        아이비리그 출신의 멘토와 <br>함께 하는 밀착형 대학 입시 컨설팅 및 영어 수업!!
+      <h1 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-6xl lg:text-5xl">
+        <span x-data x-text="$store.language === 'ko' ? '아이비리그 출신의 멘토와 함께 하는 밀착형 대학 입시 컨설팅 및 영어 수업!!' : 'Personalized College Admissions Consulting and English Lessons with Ivy League Mentors!'"></span>
       </h1>
       <div class="mt-6 sm:mt-10">
         <a
           href="/contact"
           class="inline-block w-auto px-6 py-2.5 text-base font-medium text-white rounded-full bg-gradient-to-r from-purple-600 to-purple-500 shadow-lg transition-all hover:from-purple-500 hover:to-purple-400"
-        >
-          상담 예약하기
-        </a>
+          x-data
+          x-text="$store.language === 'ko' ? '상담 예약하기' : 'Book a Consultation'"
+        ></a>
       </div>
       
       <div class="mt-12 sm:mt-16 grid grid-cols-3 gap-4 sm:gap-8 md:gap-12">
         {stats.map((stat) => (
           <div class="flex flex-col">
-            <dt class="text-sm sm:text-base font-semibold leading-7 text-purple-600">{stat.name}</dt>
+            <dt class="text-sm sm:text-base font-semibold leading-7 text-purple-600"
+                x-data={`{ stat: ${JSON.stringify(stat)} }`}
+                x-text="$store.language === 'ko' ? stat.name.ko : stat.name.en"
+            ></dt>
             <dd class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{stat.value}</dd>
           </div>
         ))}

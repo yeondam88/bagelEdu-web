@@ -1,43 +1,267 @@
 ---
-name: College Level Examination Program(CLEP)
-dropdownDescription: ''
+name:
+  en: "College Level Examination Program (CLEP)"
+  ko: "대학 수준 시험 프로그램 (CLEP)"
+dropdownDescription:
+  en: "Learn about CLEP exams that can help you earn college credits and save time and money in your college education"
+  ko: "대학 학점을 취득하고 시간과 비용을 절약할 수 있는 CLEP 시험에 대해 알아보세요"
 image: "@images/schools/concord_academy.jpg"
 fullHeight: true
 ---
 
-CLEP는 College-Level Examination Program의 약자로, 미국의 대학 교육을 대체할 수 있는 시험입니다. 학생들이 대학 과정에 필요한 학문적 능력을 입증하고, 대학에서의 학점 취득을 도와줍니다. CLEP 시험을 통해 학생들은 시간을 절약하고 비용을 줄일 수 있습니다.
+<div x-data>
+  <template x-if="$store.language !== 'ko'">
+    <div class="en-content">
+      <p>
+        CLEP (College-Level Examination Program) is a testing program that can substitute for U.S. college education. It helps students demonstrate their academic abilities required for college courses and earn college credits. Through CLEP exams, students can save both time and money.
+      </p>
 
-1967년 10개의 시험을 처음 제공한 이후, 현재 34개 과목의 CLEP 시험이 실시되고 있습니다. 18세부터 22세의 학생들과 고등학교 졸업자, 대학에 입학하려는 성인들이 CLEP 시험에 응시하고 있으며, 현재 2,900여개의 인가받은 교육 기관이 CLEP 취득을 인정하고 있습니다.
+      <p>
+        Since first offering 10 exams in 1967, CLEP now offers 34 subject exams. Students aged 18-22, high school graduates, and adults planning to enter college take CLEP exams, with approximately 2,900 accredited educational institutions currently accepting CLEP credits.
+      </p>
 
-# CLEP 주요 과목 예시 및 인정 학점
+      <h1>CLEP Major Subjects and Credit Examples</h1>
 
-| **과목**                 | **시험 내용**                       | **학점**    |
-|--------------------------|--------------------------------------|-------------|
-| College Algebra          | 대수학의 기본 개념과 계산            | 3학점       |
-| College Composition      | 작문 기술, 문법 및 에세이 작성 평가   | 6학점       |
-| Principles of Management | 경영학 기본 개념 및 이론             | 3학점       |
-| American History I       | 초기 미국 역사와 주요 사건 분석      | 3학점       |
-| Biology                  | 생물학 개념 및 과학적 사고           | 6학점       |
-| Spanish Language         | 스페인어 읽기, 듣기, 문법            | 최대 12학점 |
+      <table>
+        <thead>
+          <tr>
+            <th><strong>Subject</strong></th>
+            <th><strong>Exam Content</strong></th>
+            <th><strong>Credits</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>College Algebra</td>
+            <td>Basic concepts and calculations in algebra</td>
+            <td>3 credits</td>
+          </tr>
+          <tr>
+            <td>College Composition</td>
+            <td>Writing skills, grammar, and essay writing assessment</td>
+            <td>6 credits</td>
+          </tr>
+          <tr>
+            <td>Principles of Management</td>
+            <td>Basic management concepts and theories</td>
+            <td>3 credits</td>
+          </tr>
+          <tr>
+            <td>American History I</td>
+            <td>Early American history and major events analysis</td>
+            <td>3 credits</td>
+          </tr>
+          <tr>
+            <td>Biology</td>
+            <td>Biology concepts and scientific thinking</td>
+            <td>6 credits</td>
+          </tr>
+          <tr>
+            <td>Spanish Language</td>
+            <td>Spanish reading, listening, and grammar</td>
+            <td>Up to 12 credits</td>
+          </tr>
+        </tbody>
+      </table>
 
-시험 구조대 인터넷 기반 CLEP 시험은 약 90분간 진행되며, College Composition 시험은 약 120분간 진행됩니다. 
+      <p>Internet-based CLEP exams typically take about 90 minutes, while the College Composition exam takes approximately 120 minutes.</p>
 
-# CLEP 시험 상세 정보
+      <h1>CLEP Exam Details</h1>
 
-| **항목**            | **설명**                                                                                                                                 |
-|---------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
-| **시험 목적**        | 대학 과목에 대한 지식을 평가하여 학점을 취득 가능하게 함.                                                                                   |
-| **운영 기관**        | College Board                                                                                                                           |
-| **시험 대상**        | 고등학생, 대학생, 군인 등 - 시간과 비용을 절약해 학위를 빠르게 취득하고 싶은 사람.                                                              |
-| **과목 수**          | 34개 과목                                                                                                                               |
-| **시험 형식**        | 주로 객관식 문제 (Multiple-Choice) - 일부 과목은 에세이 및 작성 문제 포함.                                                                    |
-| **시험 시간**        | 약 90-120분                                                                                                                             |
-| **점수 체계**        | - 점수 범위: 20~80점 - 일반적으로 50점 이상이 합격으로 간주됨.                                                                            |
-| **시험 비용**        | $93 (2024 기준) + 테스트 센터 수수료 (추가 비용)                                                                                           |
-| **합격 시 학점 인정** | 과목당 약 3~12학점 (학교의 정책에 따라 다름)                                                                                               |
-| **시험 응시 가능 장소** | 공식 CLEP 테스트 센터 - 원격 온라인 시험 가능 (프로토콜 준수 필요).                                                                       |
-| **시험 준비 자료**    | 공식 CLEP 교재 - CLEP Practice Tests - College Board 웹사이트의 제공 학습 자료.                                                               |
-| **시험 과목 분야**    | 역사와 사회과학, 작문과 문학, 수학, 과학, 비즈니스, 외국어                                                                                   |
-| **합격률**           | 평균 합격률: 약 70% - 과목 및 준비 수준에 따라 다름.                                                                                         |
-| **장점**             | - 학비 절약 - 졸업 시기 단축 - 직업적 유연성 및 성과 증대 - 군인 대상 무료 제공.                                                    |
+      <table>
+        <thead>
+          <tr>
+            <th><strong>Item</strong></th>
+            <th><strong>Description</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Exam Purpose</strong></td>
+            <td>Evaluate knowledge of college subjects to earn credits</td>
+          </tr>
+          <tr>
+            <td><strong>Administering Organization</strong></td>
+            <td>College Board</td>
+          </tr>
+          <tr>
+            <td><strong>Target Audience</strong></td>
+            <td>High school students, college students, military personnel - Those seeking to earn degrees quickly while saving time and money</td>
+          </tr>
+          <tr>
+            <td><strong>Number of Subjects</strong></td>
+            <td>34 subjects</td>
+          </tr>
+          <tr>
+            <td><strong>Exam Format</strong></td>
+            <td>Primarily multiple-choice questions - Some subjects include essays and writing tasks</td>
+          </tr>
+          <tr>
+            <td><strong>Exam Duration</strong></td>
+            <td>Approximately 90-120 minutes</td>
+          </tr>
+          <tr>
+            <td><strong>Scoring System</strong></td>
+            <td>- Score range: 20-80 points - Generally, 50 points or higher is considered passing</td>
+          </tr>
+          <tr>
+            <td><strong>Exam Fee</strong></td>
+            <td>$93 (as of 2024) + Test center fee (additional cost)</td>
+          </tr>
+          <tr>
+            <td><strong>Credits Awarded</strong></td>
+            <td>About 3-12 credits per subject (varies by institution policy)</td>
+          </tr>
+          <tr>
+            <td><strong>Test Locations</strong></td>
+            <td>Official CLEP test centers - Remote online testing available (protocol compliance required)</td>
+          </tr>
+          <tr>
+            <td><strong>Study Materials</strong></td>
+            <td>Official CLEP textbooks - CLEP Practice Tests - Learning resources on College Board website</td>
+          </tr>
+          <tr>
+            <td><strong>Subject Areas</strong></td>
+            <td>History and Social Sciences, Composition and Literature, Mathematics, Science, Business, Foreign Languages</td>
+          </tr>
+          <tr>
+            <td><strong>Pass Rate</strong></td>
+            <td>Average pass rate: about 70% - Varies by subject and preparation level</td>
+          </tr>
+          <tr>
+            <td><strong>Benefits</strong></td>
+            <td>- Save tuition costs - Accelerate graduation - Enhance career flexibility and achievement - Free for military personnel</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </template>
+
+  <template x-if="$store.language === 'ko'">
+    <div class="ko-content">
+      <p>
+        CLEP는 College-Level Examination Program의 약자로, 미국의 대학 교육을 대체할 수 있는 시험입니다. 학생들이 대학 과정에 필요한 학문적 능력을 입증하고, 대학에서의 학점 취득을 도와줍니다. CLEP 시험을 통해 학생들은 시간을 절약하고 비용을 줄일 수 있습니다.
+      </p>
+
+      <p>
+        1967년 10개의 시험을 처음 제공한 이후, 현재 34개 과목의 CLEP 시험이 실시되고 있습니다. 18세부터 22세의 학생들과 고등학교 졸업자, 대학에 입학하려는 성인들이 CLEP 시험에 응시하고 있으며, 현재 2,900여개의 인가받은 교육 기관이 CLEP 취득을 인정하고 있습니다.
+      </p>
+
+      <h1>CLEP 주요 과목 예시 및 인정 학점</h1>
+
+      <table>
+        <thead>
+          <tr>
+            <th><strong>과목</strong></th>
+            <th><strong>시험 내용</strong></th>
+            <th><strong>학점</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>College Algebra</td>
+            <td>대수학의 기본 개념과 계산</td>
+            <td>3학점</td>
+          </tr>
+          <tr>
+            <td>College Composition</td>
+            <td>작문 기술, 문법 및 에세이 작성 평가</td>
+            <td>6학점</td>
+          </tr>
+          <tr>
+            <td>Principles of Management</td>
+            <td>경영학 기본 개념 및 이론</td>
+            <td>3학점</td>
+          </tr>
+          <tr>
+            <td>American History I</td>
+            <td>초기 미국 역사와 주요 사건 분석</td>
+            <td>3학점</td>
+          </tr>
+          <tr>
+            <td>Biology</td>
+            <td>생물학 개념 및 과학적 사고</td>
+            <td>6학점</td>
+          </tr>
+          <tr>
+            <td>Spanish Language</td>
+            <td>스페인어 읽기, 듣기, 문법</td>
+            <td>최대 12학점</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>인터넷 기반 CLEP 시험은 약 90분간 진행되며, College Composition 시험은 약 120분간 진행됩니다.</p>
+
+      <h1>CLEP 시험 상세 정보</h1>
+
+      <table>
+        <thead>
+          <tr>
+            <th><strong>항목</strong></th>
+            <th><strong>설명</strong></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>시험 목적</strong></td>
+            <td>대학 과목에 대한 지식을 평가하여 학점을 취득 가능하게 함</td>
+          </tr>
+          <tr>
+            <td><strong>운영 기관</strong></td>
+            <td>College Board</td>
+          </tr>
+          <tr>
+            <td><strong>시험 대상</strong></td>
+            <td>고등학생, 대학생, 군인 등 - 시간과 비용을 절약해 학위를 빠르게 취득하고 싶은 사람</td>
+          </tr>
+          <tr>
+            <td><strong>과목 수</strong></td>
+            <td>34개 과목</td>
+          </tr>
+          <tr>
+            <td><strong>시험 형식</strong></td>
+            <td>주로 객관식 문제 (Multiple-Choice) - 일부 과목은 에세이 및 작성 문제 포함</td>
+          </tr>
+          <tr>
+            <td><strong>시험 시간</strong></td>
+            <td>약 90-120분</td>
+          </tr>
+          <tr>
+            <td><strong>점수 체계</strong></td>
+            <td>- 점수 범위: 20~80점 - 일반적으로 50점 이상이 합격으로 간주됨</td>
+          </tr>
+          <tr>
+            <td><strong>시험 비용</strong></td>
+            <td>$93 (2024 기준) + 테스트 센터 수수료 (추가 비용)</td>
+          </tr>
+          <tr>
+            <td><strong>합격 시 학점 인정</strong></td>
+            <td>과목당 약 3~12학점 (학교의 정책에 따라 다름)</td>
+          </tr>
+          <tr>
+            <td><strong>시험 응시 가능 장소</strong></td>
+            <td>공식 CLEP 테스트 센터 - 원격 온라인 시험 가능 (프로토콜 준수 필요)</td>
+          </tr>
+          <tr>
+            <td><strong>시험 준비 자료</strong></td>
+            <td>공식 CLEP 교재 - CLEP Practice Tests - College Board 웹사이트의 제공 학습 자료</td>
+          </tr>
+          <tr>
+            <td><strong>시험 과목 분야</strong></td>
+            <td>역사와 사회과학, 작문과 문학, 수학, 과학, 비즈니스, 외국어</td>
+          </tr>
+          <tr>
+            <td><strong>합격률</strong></td>
+            <td>평균 합격률: 약 70% - 과목 및 준비 수준에 따라 다름</td>
+          </tr>
+          <tr>
+            <td><strong>장점</strong></td>
+            <td>- 학비 절약 - 졸업 시기 단축 - 직업적 유연성 및 성과 증대 - 군인 대상 무료 제공</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </template>
+</div>
 

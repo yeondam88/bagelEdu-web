@@ -1,18 +1,24 @@
-import { z, defineCollection } from 'astro:content'
+import { defineCollection, z } from 'astro:content'
+import type { LocalizedString } from '../types'
+
+const LocalizedStringSchema = z.object({
+  en: z.string(),
+  ko: z.string(),
+})
 
 const programsCollection = defineCollection({
   schema: ({ image }) =>
     z.object({
-      name: z.string(),
-      dropdownDescription: z.string(),
+      name: LocalizedStringSchema,
+      dropdownDescription: LocalizedStringSchema,
       featured: z.boolean(),
       image: image(),
       hero: z.object({
         tagline: z.string(),
-        headline: z.string(),
-        text: z.string(),
+        headline: LocalizedStringSchema,
+        text: LocalizedStringSchema,
         action: z.object({
-          label: z.string(),
+          label: LocalizedStringSchema,
           href: z.string(),
           icon: z.boolean(),
         }),
@@ -26,49 +32,49 @@ const programsCollection = defineCollection({
         })
       }),
       infoSection: z.object({
-        headline: z.string(),
-        text: z.string().optional(),
-        ages: z.string().optional(),
-        duration: z.string().optional(),
-        schedule: z.string().optional(),
-        classSize: z.string().optional(),
-        program1: z.string().optional(),
-        program2: z.string().optional(),
-        program3: z.string().optional(),
-        program4: z.string().optional(),
+        headline: LocalizedStringSchema.optional(),
+        text: LocalizedStringSchema.optional(),
+        ages: LocalizedStringSchema.optional(),
+        duration: LocalizedStringSchema.optional(),
+        schedule: LocalizedStringSchema.optional(),
+        classSize: LocalizedStringSchema.optional(),
+        program1: LocalizedStringSchema.optional(),
+        program2: LocalizedStringSchema.optional(),
+        program3: LocalizedStringSchema.optional(),
+        program4: LocalizedStringSchema.optional(),
         features: z.array(z.object({
           icon: z.string().optional(),
-          title: z.string(),
-          description: z.string(),
+          title: LocalizedStringSchema,
+          description: LocalizedStringSchema,
         })).optional(),
         benefits: z.array(z.object({
           icon: z.string().optional(),
-          title: z.string(),
-          description: z.string(),
+          title: LocalizedStringSchema,
+          description: LocalizedStringSchema,
         })).optional(),
       }),
       AdditionalSection: z.object({
-        headline1: z.string(),
-        text1: z.string(),
-        headline2: z.string(),
-        text2: z.string(),
+        headline1: LocalizedStringSchema.optional(),
+        text1: LocalizedStringSchema.optional(),
+        headline2: LocalizedStringSchema.optional(),
+        text2: LocalizedStringSchema.optional(),
       }),
       pricingSection: z.object({
-        headline: z.string(),
-        text: z.string(),
+        headline: LocalizedStringSchema,
+        text: LocalizedStringSchema,
         packages: z.array(z.object({
-          title: z.string(),
-          description: z.string(),
-          price: z.string(),
-          duration: z.string(),
+          title: LocalizedStringSchema,
+          description: LocalizedStringSchema,
+          price: LocalizedStringSchema,
+          duration: LocalizedStringSchema,
         })),
       }),
       stemPrograms: z.object({
-        title: z.string(),
+        title: LocalizedStringSchema,
         programs: z.array(z.object({
           name: z.string(),
           duration: z.string(),
-          description: z.string(),
+          description: LocalizedStringSchema,
         })),
       }).optional(),
 
@@ -97,8 +103,8 @@ const testimonialsCollection = defineCollection({
   type: 'data',
   schema: ({ image }) =>
     z.object({
-      name: z.string(),
-      testimonial: z.string(),
+      name: LocalizedStringSchema,
+      testimonial: LocalizedStringSchema,
       stars: z.number().min(1).max(5),
       image: image(),
     }),
@@ -107,7 +113,8 @@ const testimonialsCollection = defineCollection({
 const faqsCollection = defineCollection({
   schema: () =>
     z.object({
-      question: z.string()
+      question: LocalizedStringSchema,
+      answer: LocalizedStringSchema
     }),
 })
 
@@ -154,14 +161,14 @@ const galleryCollection = defineCollection({
 
 const blogCollection = defineCollection({
   schema: ({ image }) => z.object({
-    title: z.string(),
+    title: LocalizedStringSchema,
     date: z.string(),
     author: z.string(),
     image: z.object({
       src: image(),
       alt: z.string()
     }),
-    excerpt: z.string(),
+    excerpt: LocalizedStringSchema.optional(),
     category: z.string().optional(),
     authorImage: z.string(),
     tags: z.array(z.string()).optional(),
@@ -170,8 +177,8 @@ const blogCollection = defineCollection({
 
 const admissionGuideCollection = defineCollection({
   schema: ({ image }) => z.object({
-    name: z.string(),
-    dropdownDescription: z.string(),
+    name: LocalizedStringSchema,
+    dropdownDescription: LocalizedStringSchema,
     image: image(),
     fullHeight: z.boolean().optional(),
   }),

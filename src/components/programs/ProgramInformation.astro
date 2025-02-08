@@ -17,47 +17,96 @@ interface StemProgram {
 const { program } = Astro.props
 const { infoSection } = program.data
 const { Content } = await program.render()
+
 // Convert individual fields to card data
 const cards = [
   {
     icon: 'tabler:book',
-    title: 'GPA Premier Consulting and Extracurricular Profile',
-    description: infoSection.ages,
+    title: {
+      ko: 'GPA Premier Consulting and Extracurricular Profile',
+      en: 'GPA Premier Consulting and Extracurricular Profile'
+    },
+    description: {
+      ko: infoSection.ages?.ko || '',
+      en: infoSection.ages?.en || ''
+    }
   },
   {
     icon: 'tabler:calendar',
-    title: 'Tailored Academic Roadmap',
-    description: infoSection.duration,
+    title: {
+      ko: 'Tailored Academic Roadmap',
+      en: 'Tailored Academic Roadmap'
+    },
+    description: {
+      ko: infoSection.duration?.ko || '',
+      en: infoSection.duration?.en || ''
+    }
   },
   {
     icon: 'tabler:target',
-    title: 'Target college List & College applications',
-    description: infoSection.schedule,
+    title: {
+      ko: 'Target college List & College applications',
+      en: 'Target college List & College applications'
+    },
+    description: {
+      ko: infoSection.schedule?.ko || '',
+      en: infoSection.schedule?.en || ''
+    }
   },
   {
     icon: 'tabler:box',
-    title: 'Standardized Test Preparation',
-    description: infoSection.classSize,
+    title: {
+      ko: '표준화 시험 준비',
+      en: 'Standardized Test Preparation'
+    },
+    description: {
+      ko: infoSection.classSize?.ko || '',
+      en: infoSection.classSize?.en || ''
+    }
   },
   {
     icon: 'tabler:pencil',
-    title: 'Essay Writing Practice & Interview Training',
-    description: infoSection.program1,
+    title: {
+      ko: '에세이 작성 연습 및 인터뷰 트레이닝',
+      en: 'Essay Writing Practice & Interview Training'
+    },
+    description: {
+      ko: infoSection.program1?.ko || '',
+      en: infoSection.program1?.en || ''
+    }
   },
   {
     icon: 'tabler:sun',
-    title: 'Summer Activities Planning: Work Research, Summer Camp',
-    description: infoSection.program2,
+    title: {
+      ko: '여름 활동 계획: 연구, 여름 캠프',
+      en: 'Summer Activities Planning: Work Research, Summer Camp'
+    },
+    description: {
+      ko: infoSection.program2?.ko || '',
+      en: infoSection.program2?.en || ''
+    }
   },
   {
     icon: 'tabler:compass',
-    title: 'Career Counseling',
-    description: infoSection.program3,
+    title: {
+      ko: '진로 상담',
+      en: 'Career Counseling'
+    },
+    description: {
+      ko: infoSection.program3?.ko || '',
+      en: infoSection.program3?.en || ''
+    }
   },
   {
     icon: 'tabler:clock',
-    title: 'Motivation, Time Management & Strategies',
-    description: infoSection.program4,
+    title: {
+      ko: '동기부여, 시간 관리 및 전략',
+      en: 'Motivation, Time Management & Strategies'
+    },
+    description: {
+      ko: infoSection.program4?.ko || '',
+      en: infoSection.program4?.en || ''
+    }
   },
 ]
 ---
@@ -66,15 +115,15 @@ const cards = [
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col items-start gap-4 lg:mb-12">
       <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-        {infoSection.headline}
+        <span x-data={`{ headline: ${JSON.stringify(infoSection.headline)} }`} x-text="$store.language === 'ko' ? headline.ko : headline.en"></span>
       </h2>
       <p class="text-lg text-gray-600">
-        {infoSection.text}
+        <span x-data={`{ text: ${JSON.stringify(infoSection.text)} }`} x-text="$store.language === 'ko' ? text.ko : text.en"></span>
       </p>
     </div>
 
     {
-      program.data.name === 'Undergraduate Admissions Consulting' && (
+      program.data.name.en === 'Undergraduate Admissions Consulting' && (
         <>
           <div class="mt-12">
             <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -99,7 +148,7 @@ const cards = [
     }
 
     {
-      program.data.name === 'Tutor Service Online/Offline' && (
+      program.data.name.en === 'Tutor Service Online/Offline' && (
         <>
           <ProgramTutor program={program} />
           <div class="tutor-content mt-12">
@@ -110,11 +159,11 @@ const cards = [
     }
 
     {
-      program.data.name === 'Summer/Winter Camp' &&
+      program.data.name.en === 'Summer/Winter Camp' &&
         program.data.stemPrograms && (
           <div>
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl lg:py-4">
-              STEM Programs for Students
+              <span x-data x-text="$store.language === 'ko' ? 'STEM 프로그램' : 'STEM Programs for Students'"></span>
             </h2>
 
             {/* Desktop view */}
@@ -126,19 +175,19 @@ const cards = [
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                     >
-                      Program Name
+                      <span x-data x-text="$store.language === 'ko' ? '프로그램명' : 'Program Name'"></span>
                     </th>
                     <th
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                     >
-                      Duration
+                      <span x-data x-text="$store.language === 'ko' ? '기간' : 'Duration'"></span>
                     </th>
                     <th
                       scope="col"
                       class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                     >
-                      Description
+                      <span x-data x-text="$store.language === 'ko' ? '설명' : 'Description'"></span>
                     </th>
                   </tr>
                 </thead>
@@ -153,7 +202,7 @@ const cards = [
                           {prog.duration}
                         </td>
                         <td class="px-6 py-4 text-sm text-gray-500">
-                          {prog.description}
+                          <span x-data x-text={`$store.language === 'ko' ? ${JSON.stringify(prog.description.ko)} : ${JSON.stringify(prog.description.en)}`}></span>
                         </td>
                       </tr>
                     ),
@@ -168,10 +217,10 @@ const cards = [
                 <div class="space-y-3 rounded-lg bg-white p-4 shadow-sm">
                   <div class="font-medium text-gray-900">{prog.name}</div>
                   <div class="text-sm text-gray-500">
-                    <span class="font-medium">Duration:</span> {prog.duration}
+                    <span class="font-medium" x-data x-text="$store.language === 'ko' ? '기간:' : 'Duration:'"></span> {prog.duration}
                   </div>
                   <div class="text-sm text-gray-500">
-                    <span class="font-medium">Description:</span>
+                    <span class="font-medium" x-data x-text="$store.language === 'ko' ? '설명:' : 'Description:'"></span>
                     <br />
                     {prog.description}
                   </div>
@@ -187,19 +236,19 @@ const cards = [
           <div class="space-y-12">
             <div>
               <h3 class="text-2xl font-bold tracking-tight text-gray-900">
-                {program.data.AdditionalSection.headline1}
+                <span x-data={`{ headline: ${JSON.stringify(program.data.AdditionalSection.headline1)} }`} x-text="$store.language === 'ko' ? headline.ko : headline.en"></span>
               </h3>
               <p class="mt-4 whitespace-pre-line text-gray-600 leading-relaxed text-lg space-y-6">
-                  {program.data.AdditionalSection.text1}
+                <span x-data={`{ text: ${JSON.stringify(program.data.AdditionalSection.text1)} }`} x-text="$store.language === 'ko' ? text.ko : text.en"></span>
               </p>
             </div>
 
             <div>
               <h3 class="text-2xl font-bold tracking-tight text-gray-900">
-                {program.data.AdditionalSection.headline2}
+                <span x-data={`{ headline: ${JSON.stringify(program.data.AdditionalSection.headline2)} }`} x-text="$store.language === 'ko' ? headline.ko : headline.en"></span>
               </h3>
               <p class="mt-4 whitespace-pre-line text-gray-600">
-                {program.data.AdditionalSection.text2}
+                <span x-data={`{ text: ${JSON.stringify(program.data.AdditionalSection.text2)} }`} x-text="$store.language === 'ko' ? text.ko : text.en"></span>
               </p>
             </div>
           </div>

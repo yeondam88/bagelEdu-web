@@ -10,6 +10,7 @@ interface Props {
 const businessSchools = [
     {
         name: 'Harvard Business School',
+        nameKr: '하버드 경영대학원',
         applicationDeadlines: [
             'Round 1: Sep 4, 2024',
             'Round 2: Jan 6, 2025'
@@ -21,6 +22,7 @@ const businessSchools = [
     },
     {
         name: 'Wharton School',
+        nameKr: '와튼 스쿨',
         applicationDeadlines: [
             'Round 1: Sep 4, 2024',
             'Round 2: Jan 3, 2025',
@@ -34,6 +36,7 @@ const businessSchools = [
     },
     {
         name: 'Columbia Business School (August Entry)',
+        nameKr: '컬럼비아 경영대학원 (8월 입학)',
         applicationDeadlines: [
             'Round 1: Sep 10, 2024',
             'Round 2: Jan 7, 2025',
@@ -47,6 +50,7 @@ const businessSchools = [
     },
     {
         name: 'Kellogg School of Management',
+        nameKr: '켈로그 경영대학원',
         applicationDeadlines: [
             'Round 1: Sep 11, 2024',
             'Round 2: Jan 8, 2025',
@@ -60,6 +64,7 @@ const businessSchools = [
     },
     {
         name: 'Chicago Booth School of Business',
+        nameKr: '시카고 부스 경영대학원',
         applicationDeadlines: [
             'Round 1: Sep 19, 2024',
             'Round 2: Jan 7, 2025',
@@ -73,6 +78,7 @@ const businessSchools = [
     },
     {
         name: 'Dartmouth Tuck School of Business',
+        nameKr: '다트머스 턱 경영대학원',
         applicationDeadlines: [
             'Round 1: Sep 26, 2024',
             'Round 2: Jan 6, 2025',
@@ -86,6 +92,7 @@ const businessSchools = [
     },
     {
         name: 'Duke Fuqua School of Business',
+        nameKr: '듀크 푸쿠아 경영대학원',
         applicationDeadlines: [
             'Early Action: Sep 4, 2024',
             'Round 1: Oct 1, 2024',
@@ -101,6 +108,7 @@ const businessSchools = [
     },
     {
         name: 'Michigan Ross School of Business',
+        nameKr: '미시간 로스 경영대학원',
         applicationDeadlines: [
             'Round 1: Sep 9, 2024',
             'Round 2: Jan 6, 2025',
@@ -114,6 +122,7 @@ const businessSchools = [
     },
     {
         name: 'Virginia Darden',
+        nameKr: '버지니아 다든 경영대학원',
         applicationDeadlines: [
             'Early Action: Sep 5, 2024',
             'Round 1: Oct 2, 2024',
@@ -129,6 +138,7 @@ const businessSchools = [
     },
     {
         name: 'Vanderbilt Owen',
+        nameKr: '밴더빌트 오웬 경영대학원',
         applicationDeadlines: [
             'Round 1: Oct 8, 2024',
             'Round 2: Jan 8, 2025',
@@ -144,6 +154,7 @@ const businessSchools = [
     },
     {
         name: 'Stanford Graduate School of Business',
+        nameKr: '스탠포드 경영대학원',
         applicationDeadlines: [
             'Round 1: Sep 10, 2024',
             'Round 2: Jan 8, 2025',
@@ -157,6 +168,7 @@ const businessSchools = [
     },
     {
         name: 'NYU Stern',
+        nameKr: 'NYU 스턴 경영대학원',
         applicationDeadlines: [
             'Round 1: Sep 16, 2024',
             'Round 2: Oct 16, 2024',
@@ -172,6 +184,7 @@ const businessSchools = [
     },
     {
         name: 'INSEAD MBA January Intake 2024',
+        nameKr: 'INSEAD MBA 1월 입학 2024',
         applicationDeadlines: [
             'Round 1: Mar 11, 2025',
             'Round 2: Apr 22, 2025',
@@ -187,6 +200,7 @@ const businessSchools = [
     },
     {
         name: 'INSEAD MBA August Intake 2024',
+        nameKr: 'INSEAD MBA 8월 입학 2024',
         applicationDeadlines: [
             'Round 1: Sep 10, 2024',
             'Round 2: Nov 5, 2024',
@@ -202,6 +216,7 @@ const businessSchools = [
     },
     {
         name: 'Yale School of Management',
+        nameKr: '예일 경영대학원',
         applicationDeadlines: [
             'Round 1: Sep 10, 2024',
             'Round 2: Jan 7, 2025',
@@ -215,6 +230,7 @@ const businessSchools = [
     },
     {
         name: 'Cambridge Judge Business School',
+        nameKr: '케임브리지 저지 경영대학원',
         applicationDeadlines: [
             'Round 1: Aug 27, 2024',
             'Round 2: Oct 7, 2024',
@@ -234,32 +250,54 @@ const essayTips = [
   {
     id: 1,
     title: "인터뷰",
+    titleEn: "Interview",
     description: `
       이렇게 지원을 해서 서류가 통과가 되면, 인터뷰가 기다리고 있습니다.
       인터뷰는 직접 학교에 방문해서 인터뷰를 볼 수도 있고, 방법이 여의치 않은 경우 온라인으로 면접을 보거나, 혹은 한국 동문들이 면접을 보기도 합니다. 
       Duke, Kellogg, Berkeley, Chicago Booth 등이 한국 동문들이 면접을 보는 경우가 있었으며, Yale의 경우는 한국으로 학교에서 Interviewer를 보내서 면접을 진행하며, 
       Cornell과 UCLA의 경우는 SKYPE 면접을 봅니다.
+    `,
+    descriptionEn: `
+      After your application is accepted, an interview awaits.
+      Interviews can be conducted through campus visits, online meetings, or with Korean alumni.
+      Schools like Duke, Kellogg, Berkeley, and Chicago Booth often arrange interviews with Korean alumni, while Yale sends interviewers to Korea.
+      Cornell and UCLA conduct interviews via Skype.
     `
   },
   {
     id: 2,
     title: "GMAT 혹은 GRE",
+    titleEn: "GMAT or GRE",
     description: `
       아메리칸 MBA를 준비할 때 가장 신경써야 할 부분이 GMAT 시험이라고 할 수 있습니다.
       요즘은 GRE로 시험을 대체할 수 있는 학교도 많이 있는데, 이 부분에 대해서는 학교마다 다르기에 
       세심히 준비가 필요로 합니다. GMAT은 Graduate Management Admission Test로 모든 MBA 지원자가 
       학교 입학을 위해서 시험을 치워야 하는 필수 요건입니다. 시험의 유효 기간은 5년이며, 크게 4분야로 나뉩니다.
+    `,
+    descriptionEn: `
+      The GMAT exam is the most crucial aspect when preparing for an American MBA.
+      While many schools now accept GRE as an alternative, requirements vary by institution,
+      requiring careful preparation. The GMAT (Graduate Management Admission Test) is a mandatory
+      requirement for all MBA applicants. The test scores are valid for 5 years and cover four main areas.
     `
   },
   {
     id: 3,
     title: "TOEFL",
+    titleEn: "TOEFL",
     description: `
       TOEFL의 경우 GMAT과 함께 MBA를 준비하는데 중요한 시험 중 하나입니다.
       요즘 MBA 학교에서 적어도 영어 실력을 더욱 중요시하는 경향이 강해지다 보니, 
       TOEFL 점수도 점점 중요한 Factor 중 하나로 자리잡고 있는 추세입니다. 일부 학교의 경우 TOEFL 및 
       IELTS 점수 최소 지원 점수 제한이 있는 경우도 있습니다. 예를 들어 HBS의 경우 공식적으로 TOEFL 점수 109점, 
       IELTS 점수 7.5 점이 최소 지원 커트라인입니다.
+    `,
+    descriptionEn: `
+      TOEFL is another crucial exam alongside GMAT for MBA preparation.
+      As MBA programs increasingly emphasize English proficiency,
+      TOEFL scores are becoming an increasingly important factor. Some schools have minimum
+      score requirements for TOEFL and IELTS. For example, HBS officially requires a minimum
+      TOEFL score of 109 and an IELTS score of 7.5 for application eligibility.
     `
   }
 ];
@@ -267,30 +305,35 @@ const essayTips = [
 const gmatDetails = [
   {
     section: "Quantitative Reasoning",
+    sectionKr: "정량적 추론",
     time: "62 minutes",
     questions: "31 questions",
     score: "6 - 51"
   },
   {
     section: "Verbal Reasoning",
+    sectionKr: "언어 추론",
     time: "65 minutes",
     questions: "36 questions",
     score: "6 - 51"
   },
   {
     section: "Integrated Reasoning",
+    sectionKr: "통합 추론",
     time: "30 minutes",
     questions: "12 questions",
     score: "1 - 8"
   },
   {
     section: "Analytical Writing Assessment",
+    sectionKr: "분석적 작문 평가",
     time: "30 minutes",
     questions: "1 question",
     score: "0 - 6"
   },
   {
     section: "Total",
+    sectionKr: "총계",
     time: "3 hours 7 minutes",
     questions: "80 questions",
     score: "200 - 800"
@@ -301,7 +344,8 @@ const {
     program: {
         data: { AdditionalSection: data, name },
     },
-} = Astro.props
+} = Astro.props;
+
 ---
 
 <section class="relative w-full px-4 py-16 sm:px-6 sm:py-24 xl:px-8">
@@ -314,29 +358,37 @@ const {
             height={MBAAPPTimeline.height}
         />
         <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl text-center py-8">
-            MBA application deadlines and decision release dates for the <br />2024–2025 admissions cycle
+            <span x-data x-text="$store.language === 'ko' ? 'MBA 지원 마감일 및 결과 발표일 (2024-2025 입학전형)' : 'MBA application deadlines and decision release dates for the 2024–2025 admissions cycle'"></span>
         </h2>
 
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Business School</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Application Deadlines</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Decision Release Dates</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <span x-data x-text="$store.language === 'ko' ? '경영대학원' : 'Business School'"></span>
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <span x-data x-text="$store.language === 'ko' ? '지원 마감일' : 'Application Deadlines'"></span>
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            <span x-data x-text="$store.language === 'ko' ? '결과 발표일' : 'Decision Release Dates'"></span>
+                        </th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    {businessSchools.map((school) => (
+                    {businessSchools?.map((school) => (
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{school.name}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                <span x-data x-text={`$store.language === 'ko' ? '${school.nameKr}' : '${school.name}'`}></span>
+                            </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {school.applicationDeadlines.map((deadline) => (
+                                {school.applicationDeadlines?.map((deadline) => (
                                     <div>{deadline}</div>
                                 ))}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                {school.decisionReleaseDates.map((date) => (
+                                {school.decisionReleaseDates?.map((date) => (
                                     <div>{date}</div>
                                 ))}
                             </td>
@@ -348,17 +400,25 @@ const {
 
         <div class="mt-16">
             <h2 class="text-3xl font-bold tracking-tight text-gray-900 mb-8">
-                Essay Tips
+                <span x-data x-text="$store.language === 'ko' ? '에세이 팁' : 'Essay Tips'"></span>
             </h2>
             <div class="prose prose-lg max-w-none text-gray-500">
-                <p class="mb-6 lg:text-lg text-base text-gray-600">1) 직장 경력</p>
                 <p class="mb-6 lg:text-lg text-base text-gray-600">
-                    일반적으로는 최소 3년 정도의 직장 경력을 요구 합니다. 삼성전자, 유명 컨설팅, IB 등 해외에서도 모두 아는 직장 경력이 있다면 아무래도 유리할 수 있습니다. MBA 도 결국 졸업 후 취업이 잘 될 것 같은 사람을 뽑는데, 기존 직장 경력이 좋은 사람이 아무래도 MBA 이후 취업에 더 유리할 수 밖에 없기 때문입니다.
+                    <span x-data x-text="$store.language === 'ko' ? '1) 직장 경력' : '1) Work Experience'"></span>
+                </p>
+                <p class="mb-6 lg:text-lg text-base text-gray-600">
+                    <span x-data x-text="$store.language === 'ko' 
+                        ? '일반적으로는 최소 3년 정도의 직장 경력을 요구 합니다. 삼성전자, 유명 컨설팅, IB 등 해외에서도 모두 아는 직장 경력이 있다면 아무래도 유리할 수 있습니다. MBA 도 결국 졸업 후 취업이 잘 될 것 같은 사람을 뽑는데, 기존 직장 경력이 좋은 사람이 아무래도 MBA 이후 취업에 더 유리할 수 밖에 없기 때문입니다.'
+                        : 'Generally, a minimum of 3 years of work experience is required. Having experience at globally recognized companies like Samsung Electronics, prestigious consulting firms, or investment banks can be advantageous. MBA programs ultimately seek candidates with strong post-graduation employment prospects, and those with impressive work experience tend to have better job opportunities after MBA.'"></span>
                 </p>
                 
-                <p class="mb-6 lg:text-lg text-base text-gray-600">2) 이력서, 에세이, 추천서</p>
                 <p class="mb-6 lg:text-lg text-base text-gray-600">
-                    보통 GMAT과 토플 점수를 확보하게 되면, 실질적인 Application절차를 시작합니다. 이때 필요한 Package가 이력서 (Resume), 에세이 (Essay), 지원서 (Application Form), 추천서 (Recommendation Letter) 입니다. 이 4가지 지원 패키지를 학교별로 갖추는 데도 상당히 시간이 소요되기 때문에, GMAT과 토플은 늦어도 4월 이전에 끝내고, 5월 부터는 학교별 지원 패키지를 준비하는 데 시간을 쓰는 것을 추천 드립니다.
+                    <span x-data x-text="$store.language === 'ko' ? '2) 이력서, 에세이, 추천서' : '2) Resume, Essays, and Letters of Recommendation'"></span>
+                </p>
+                <p class="mb-6 lg:text-lg text-base text-gray-600">
+                    <span x-data x-text="$store.language === 'ko'
+                        ? '보통 GMAT과 토플 점수를 확보하게 되면, 실질적인 Application절차를 시작합니다. 이때 필요한 Package가 이력서 (Resume), 에세이 (Essay), 지원서 (Application Form), 추천서 (Recommendation Letter) 입니다. 이 4가지 지원 패키지를 학교별로 갖추는 데도 상당히 시간이 소요되기 때문에, GMAT과 토플은 늦어도 4월 이전에 끝내고, 5월 부터는 학교별 지원 패키지를 준비하는 데 시간을 쓰는 것을 추천 드립니다.'
+                        : 'Once you secure your GMAT and TOEFL scores, you can begin the actual application process. The required package includes a Resume, Essays, Application Form, and Letters of Recommendation. Since preparing these four application components for each school takes considerable time, we recommend completing GMAT and TOEFL by April at the latest and dedicating time from May onwards to prepare school-specific application packages.'"></span>
                 </p>
             </div>
         </div>
@@ -367,8 +427,12 @@ const {
             <div class="space-y-8">
                 {essayTips.map((tip) => (
                     <div class="bg-white p-6 rounded-lg shadow-sm">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">{tip.id}) {tip.title}</h3>
-                        <p class="text-gray-600 lg:text-lg text-md">{tip.description}</p>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-4">
+                            {tip.id}) <span x-data={`{ title: ${JSON.stringify(tip.title)}, titleEn: ${JSON.stringify(tip.titleEn)} }`} x-text="$store.language === 'ko' ? title : titleEn"></span>
+                        </h3>
+                        <p class="text-gray-600 lg:text-lg text-md">
+                            <span x-data={`{ description: ${JSON.stringify(tip.description)}, descriptionEn: ${JSON.stringify(tip.descriptionEn)} }`} x-text="$store.language === 'ko' ? description : descriptionEn"></span>
+                        </p>
                     </div>
                 ))}
             </div>
@@ -377,16 +441,26 @@ const {
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Exam Section</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Time Limit</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Questions</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Score Range</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <span x-data x-text="$store.language === 'ko' ? '시험 영역' : 'Exam Section'"></span>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <span x-data x-text="$store.language === 'ko' ? '시간 제한' : 'Time Limit'"></span>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <span x-data x-text="$store.language === 'ko' ? '문항 수' : 'Questions'"></span>
+                                </th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <span x-data x-text="$store.language === 'ko' ? '점수 범위' : 'Score Range'"></span>
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             {gmatDetails.map((detail) => (
                                 <tr>
-                                    <td class="px-6 py-4 whitespace-nowrap lg:text-lg text-md text-gray-900">{detail.section}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap lg:text-lg text-md text-gray-900">
+                                        <span x-data={`{ sectionKr: '${detail.sectionKr}', section: '${detail.section}' }`} x-text="$store.language === 'ko' ? sectionKr : section"></span>
+                                    </td>
                                     <td class="px-6 py-4 whitespace-nowrap lg:text-lg text-md text-gray-500">{detail.time}</td>
                                     <td class="px-6 py-4 whitespace-nowrap lg:text-lg text-md text-gray-500">{detail.questions}</td>
                                     <td class="px-6 py-4 whitespace-nowrap lg:text-lg text-md text-gray-500">{detail.score}</td>

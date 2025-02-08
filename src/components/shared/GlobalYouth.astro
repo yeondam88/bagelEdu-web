@@ -4,8 +4,15 @@
   <div class="max-w-5xl px-4 xl:px-0 py-10 lg:pt-20 lg:pb-20 mx-auto">
     <!-- Title -->
     <div class="max-w-3xl mb-10 lg:mb-14">
-      <h2 class="text-white font-semibold text-2xl md:text-4xl md:leading-tight">Global Youth 란 무엇인가요?</h2>
-      <p class="mt-1 text-neutral-400">Global Youth 란 청소년의 비판적 사고와 자기 성찰을 통한 개인의 아이덴티티에 맞는 역량을 찾아 셀프 브랜딩을 통하여 사회의 구성원으로서 성장하는 것을 목표로 하는 프로그램입니다. 스마트하고 전략적인 사고의 힘을 키워 사고 방식을 한 단계 향상할 수 있도록 돕고자 합니다.</p>
+      <h2 class="text-white font-semibold text-2xl md:text-4xl md:leading-tight">
+        <span x-data x-text="$store.language === 'ko' ? 'Global Youth 란 무엇인가요?' : 'What is Global Youth?'"></span>
+      </h2>
+      <p class="mt-1 text-neutral-400">
+        <span x-data x-text="$store.language === 'ko' 
+          ? 'Global Youth 란 청소년의 비판적 사고와 자기 성찰을 통한 개인의 아이덴티티에 맞는 역량을 찾아 셀프 브랜딩을 통하여 사회의 구성원으로서 성장하는 것을 목표로 하는 프로그램입니다. 스마트하고 전략적인 사고의 힘을 키워 사고 방식을 한 단계 향상할 수 있도록 돕고자 합니다.'
+          : 'Global Youth is a program that aims to help youth grow as members of society through critical thinking and self-reflection, finding capabilities that match their identity through self-branding. We aim to help elevate thinking patterns by developing smart and strategic thinking power.'">
+        </span>
+      </p>
     </div>
     <!-- End Title -->
 
@@ -21,7 +28,7 @@
         <!-- Heading -->
         <div class="mb-4">
           <h3 class="text-[#ff0] text-xs font-medium uppercase">
-            Steps
+            <span x-data x-text="$store.language === 'ko' ? '단계' : 'Steps'"></span>
           </h3>
         </div>
         <!-- End Heading -->
@@ -41,8 +48,11 @@
           <!-- Right Content -->
           <div class="grow pt-0.5 pb-8 sm:pb-12">
             <p class="text-sm lg:text-base text-neutral-400">
-              <span class="text-white text-xl font-semibold">Brainstorming</span>
-              <span class="block">주제를 가지고 브레인스토밍을 통하여 현재 사회적으로 어떤 문제들이 존재하는지, 세상에 어떤 영향들을 끼치는지, 그리고 그 문제들이 나에게는 어떤 의미가 있는지 탐구하는 시간입니다.</span>
+              <span class="text-white text-xl font-semibold" x-data x-text="$store.language === 'ko' ? 'Brainstorming' : 'Brainstorming'"></span>
+              <span class="block" x-data x-text="$store.language === 'ko' 
+                ? '주제를 가지고 브레인스토밍을 통하여 현재 사회적으로 어떤 문제들이 존재하는지, 세상에 어떤 영향들을 끼치는지, 그리고 그 문제들이 나에게는 어떤 의미가 있는지 탐구하는 시간입니다.'
+                : 'Through brainstorming on a topic, we explore what social problems exist, how they affect the world, and what these problems mean to you personally.'">
+              </span>
             </p>
           </div>
           <!-- End Right Content -->
@@ -64,8 +74,11 @@
           <!-- Right Content -->
           <div class="grow pt-0.5 pb-8 sm:pb-12">
             <p class="text-sm lg:text-base text-neutral-400">
-              <span class="text-white text-xl font-semibold">Critical Thinking</span>
-              <span class="block">범위를 좁혀낸 후 결정한 문제들에 대해 내가 기간내에 현실적으로 어떤 기여를 펼쳐 낼 수 있는지, 그리고 내 기여에 대한 수요와 공급을 분석합니다.</span>
+              <span class="text-white text-xl font-semibold" x-data x-text="$store.language === 'ko' ? 'Critical Thinking' : 'Critical Thinking'"></span>
+              <span class="block" x-data x-text="$store.language === 'ko' 
+                ? '범위를 좁혀낸 후 결정한 문제들에 대해 내가 기간내에 현실적으로 어떤 기여를 펼쳐 낼 수 있는지, 그리고 내 기여에 대한 수요와 공급을 분석합니다.'
+                : 'After narrowing down the scope, we analyze what realistic contributions you can make within the timeframe and assess the supply and demand for your contribution.'">
+              </span>
             </p>
           </div>
           <!-- End Right Content -->
@@ -87,8 +100,11 @@
           <!-- Right Content -->
           <div class="grow pt-0.5 pb-8 sm:pb-12">
             <p class="text-sm md:text-base text-neutral-400">
-              <span class="text-white text-xl font-semibold">Vision Road Map</span>
-              <span class="block">내가 기여할 수있는 문제와 나만의 솔루션을 체계적인 로드맵을 구축 시킵니다.</span>
+              <span class="text-white text-xl font-semibold" x-data x-text="$store.language === 'ko' ? 'Vision Road Map' : 'Vision Road Map'"></span>
+              <span class="block" x-data x-text="$store.language === 'ko' 
+                ? '내가 기여할 수있는 문제와 나만의 솔루션을 체계적인 로드맵을 구축 시킵니다.'
+                : 'We build a systematic roadmap for the problems you can contribute to and your unique solutions.'">
+              </span>
             </p>
           </div>
           <!-- End Right Content -->
@@ -110,8 +126,11 @@
           <!-- Right Content -->
           <div class="grow pt-0.5 pb-8 sm:pb-12">
             <p class="text-sm md:text-base text-neutral-400">
-              <span class="text-white text-xl font-semibold">Personal Statement</span>
-              <span class="block">프로그램을 통해 찾은 본인의 가치와 기여를 서술해 대학 입시 에세이로 사용 가능한 하나의 자기소개서로 쓰는 연습을 합니다.</span>
+              <span class="text-white text-xl font-semibold" x-data x-text="$store.language === 'ko' ? 'Personal Statement' : 'Personal Statement'"></span>
+              <span class="block" x-data x-text="$store.language === 'ko' 
+                ? '프로그램을 통해 찾은 본인의 가치와 기여를 서술해 대학 입시 에세이로 사용 가능한 하나의 자기소개서로 쓰는 연습을 합니다.'
+                : 'Practice writing a personal statement that can be used as a college admission essay by describing your values and contributions discovered through the program.'">
+              </span>
             </p>
           </div>
           <!-- End Right Content -->
@@ -133,8 +152,11 @@
           <!-- Right Content -->
           <div class="grow pt-0.5 pb-8 sm:pb-12">
             <p class="text-sm md:text-base text-neutral-400">
-              <span class="text-white text-xl font-semibold">Final Presentation</span>
-              <span class="block">멘토와 함께 구축시킨 비전 로드맵을 유연하고 명확하게 발표(Record)합니다.</span>
+              <span class="text-white text-xl font-semibold" x-data x-text="$store.language === 'ko' ? 'Final Presentation' : 'Final Presentation'"></span>
+              <span class="block" x-data x-text="$store.language === 'ko' 
+                ? '멘토와 함께 구축시킨 비전 로드맵을 유연하고 명확하게 발표(Record)합니다.'
+                : 'Present (Record) your vision roadmap, developed with your mentor, in a clear and flexible manner.'">
+              </span>
             </p>
           </div>
           <!-- End Right Content -->
@@ -143,7 +165,7 @@
 
         <a class="group inline-flex items-center gap-x-2 py-2 px-3 bg-[#ff0] font-medium text-sm text-neutral-800 rounded-full focus:outline-none" href="/contact">
           <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path><path class="opacity-0 group-hover:opacity-100 group-focus:opacity-100 group-hover:delay-100 transition" d="M14.05 2a9 9 0 0 1 8 7.94"></path><path class="opacity-0 group-hover:opacity-100 group-focus:opacity-100 transition" d="M14.05 6A5 5 0 0 1 18 10"></path></svg>
-          Schedule a call
+          <span x-data x-text="$store.language === 'ko' ? '상담 예약하기' : 'Schedule a call'"></span>
         </a>
       </div>
       <!-- End Timeline -->

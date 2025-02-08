@@ -1,0 +1,27 @@
+{
+  "common": {
+    "navigation": {
+      "home": "Home",
+      "programs": "Programs",
+      "contact": "Contact",
+      "blog": "Blog"
+    },
+    "actions": {
+      "learnMore": "Learn More",
+      "contactUs": "Contact Us",
+      "applyNow": "Apply Now"
+    },
+    "footer": {
+      "address": "Address",
+      "phone": "Phone",
+      "email": "Email",
+      "followUs": "Follow Us"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "WE ARE ELITE",
+      "subtitle": "Empowering Global Youth Through Education"
+    }
+  }
+} 

@@ -9,54 +9,71 @@ posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).get
 
 <Layout title="Blog">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-    <h1 class="text-[2.5rem] font-semibold text-gray-900 mb-4 py-12">Latest Insights</h1>
+    <h1 class="text-[2.5rem] font-semibold text-gray-900 mb-4 py-12">
+      <span x-data x-text="$store.language === 'ko' ? '최신 인사이트' : 'Latest Insights'"></span>
+    </h1>
     
     <div class="space-y-16">
-      {
-        posts.map((post) => (
-          <article class="group">
-            <a href={`/blog/${post.slug}`} class="grid md:grid-cols-2 gap-8 items-start">
-              <div class="relative aspect-[4/3] rounded-lg overflow-hidden">
-                <Image 
-                  src={post.data.image.src} 
-                  alt={post.data.image.alt}
-                  class="w-auto h-full object-cover"
-                  width={200}
-                  height={200}
-                />
+      {posts.length > 0 ? posts.map((post) => (
+        <article class="group" key={post.slug}>
+          <a href={`/blog/${post.slug}`} class="grid md:grid-cols-2 gap-8 items-start">
+            <div class="relative aspect-[4/3] rounded-lg overflow-hidden">
+              <Image 
+                src={post.data.image.src} 
+                alt={post.data.image.alt}
+                class="w-auto h-full object-cover"
+                width={200}
+                height={200}
+              />
+            </div>
+            <div class="flex flex-col">
+              <div class="flex items-center space-x-4 text-sm text-gray-600 mb-4">
+                <time datetime={post.data.date}>
+                  <span x-data x-init={`
+                    $el.textContent = new Date('${post.data.date}').toLocaleDateString(
+                      $store.language === 'ko' ? 'ko-KR' : 'en-US',
+                      { year: 'numeric', month: 'long', day: 'numeric' }
+                    )
+                  `}></span>
+                </time>
+                <span>•</span>
+                <span>{post.data.category}</span>
               </div>
-              <div class="flex flex-col">
-                <div class="flex items-center space-x-4 text-sm text-gray-600 mb-4">
-                  <time datetime={post.data.date}>
-                    {new Date(post.data.date).toLocaleDateString('en-US', { 
-                      year: 'numeric', 
-                      month: 'long', 
-                      day: 'numeric' 
-                    })}
-                  </time>
-                  <span>•</span>
-                  <span>{post.data.category}</span>
-                </div>
-                <h2 class="text-2xl font-semibold text-gray-900 mb-4 group-hover:text-gray-600 transition-colors">
-                  {post.data.title}
-                </h2>
-                <p class="text-gray-600 mb-6 line-clamp-2">{post.data.excerpt}</p>
-                <div class="flex items-center mt-auto">
-                  <img 
-                    src={post.data.authorImage} 
-                    alt={post.data.author}
-                    class="w-10 h-10 rounded-full mr-3"
-                  />
-                  <div>
-                    <div class="font-medium text-gray-900">{post.data.author}</div>
-                    <div class="text-sm text-gray-600">CEO / Founder</div>
+              <h2 class="text-2xl font-semibold text-gray-900 mb-4 group-hover:text-gray-600 transition-colors">
+                <span 
+                  x-data={`{ title: ${JSON.stringify(post.data.title)} }`}
+                  x-text="$store.language === 'ko' ? title.ko : title.en"
+                >
+                  {post.data.title?.en}
+                </span>
+              </h2>
+              <p class="text-gray-600 mb-6 line-clamp-2">
+                <span 
+                  x-data={`{ excerpt: ${JSON.stringify(post.data.excerpt)} }`}
+                  x-text="$store.language === 'ko' ? excerpt.ko : excerpt.en"
+                >
+                  {post.data.excerpt?.en}
+                </span>
+              </p>
+              <div class="flex items-center mt-auto">
+                <img 
+                  src={post.data.authorImage} 
+                  alt={post.data.author}
+                  class="w-10 h-10 rounded-full mr-3"
+                />
+                <div>
+                  <div class="font-medium text-gray-900">{post.data.author}</div>
+                  <div class="text-sm text-gray-600">
+                    <span x-data x-text="$store.language === 'ko' ? 'CEO / 설립자' : 'CEO / Founder'">
+                      CEO / Founder
+                    </span>
                   </div>
                 </div>
               </div>
-            </a>
-          </article>
-        ))
-      }
+            </div>
+          </a>
+        </article>
+      )) : <p>No insights found.</p>}
     </div>
   </div>
 </Layout>

@@ -1,4 +1,8 @@
-name: 미국 하버드 합격생 32살
-testimonial: 처음 갈수 있다고 기대하지도 않은 학교에 합격을 하게 되었습니다. 꼼꼼히 봐주시고 뛰어난 스토리를 잡아주시고 제 장점을 극대화할 수 있게 해주신 덕분입니다.
+name:
+  ko: "하버드 합격생"
+  en: "Harvard Admit"
+testimonial:
+  ko: "베이글에듀의 컨설팅은 제 하버드 합격에 결정적인 역할을 했습니다. 전문적인 가이드와 맞춤형 전략 덕분에 꿈을 이룰 수 있었습니다. 특히 에세이 작성과 인터뷰 준비 과정에서 받은 도움이 매우 컸습니다."
+  en: "BagelEdu's consulting played a crucial role in my Harvard acceptance. Thanks to their professional guidance and personalized strategy, I was able to achieve my dream. The help I received during essay writing and interview preparation was particularly valuable."
 stars: 5
-image: '@images/illustrations/male-2.png'
+image: '@images/illustrations/male-1.png'

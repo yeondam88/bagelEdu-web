@@ -14,6 +14,21 @@ const images = [
   { src: image4, alt: 'Child writing on board with teacher' },
   { src: image5, alt: 'Classroom' },
 ]
+
+const content = {
+  en: {
+    title: "Why BagelEdu",
+    subtitle: "To improve English skills, you need to engage in conversations with smart and sharp mentors on good topics, understand them, and work on correcting mistakes.",
+    paragraph1: "Students at prestigious British and American universities are trained to logically persuade and structure their thoughts in any situation through intense discussions and persuasion with professors and peers. These tutors from top universities and Ivy League schools share their thoughts directly in English and teach how to create sophisticated expressions and logical sentences that are actually used.",
+    paragraph2: "While many native speakers can help with English learning, we emphasize the importance of mentors who can go beyond everyday conversation to engage in business case analysis and in-depth discussions. Furthermore, beyond simple quantitative achievements in curricular and extracurricular activities, we provide customized career planning tailored to students' career aspirations, tendencies, and characteristics. Through this, we help students grow beyond being simply 'well-rounded' to become 'spiked' talents most preferred by universities."
+  },
+  ko: {
+    title: "Why BagelEdu",
+    subtitle: "영어 실력을 키우려면, 똑똑하고 예리한 멘토와 좋은 주제로 대화하고, 이해하고 틀린 부분을 고쳐 나가야 합니다.",
+    paragraph1: "영∙미 명문대 학생들은 교수와 동료와의 치열한 토론과 설득의 환경 속에서 어떤 상황에서도 논리적으로 설득하고 생각을 구조화할 수 있는 능력을 훈련받습니다. 이러한 명문대 및 아이비리그 출신 튜터들은 영어로 직접 사고를 나누며, 실제로 쓰이는 고급 표현과 논리적인 문장을 만드는 방법을 가르칩니다.",
+    paragraph2: "많은 원어민이 영어 학습을 도울 수 있지만, 우리는 단순히 일상 대화를 넘어 비즈니스 사례 분석과 깊이 있는 토론까지 함께할 수 있는 멘토의 중요성을 강조합니다. 또한, 교과 및 비교과 활동의 단순한 양적 성취를 넘어, 학생의 진로 희망과 성향, 특성에 맞춘 맞춤형 진로 설계를 제공합니다. 이를 통해 단순히 '균형 잡힌(well-rounded)' 학생을 넘어, 대학에서 가장 선호하는 '특화된(spiked)' 인재로 성장할 수 있도록 돕습니다."
+  }
+}
 ---
 
 <section class="bg-purple-25 px-4 pt-16 sm:px-6 lg:px-8">
@@ -21,19 +36,15 @@ const images = [
   <div class="mx-auto max-w-screen-xl">
     <!-- Page header -->
     <div class="relative">
-      <h2 class="h1 mx-auto max-w-3xl text-center text-purple-900 pt-24">
-        Why BagelEdu
+      <h2 class="h1 mx-auto max-w-3xl text-center text-purple-900 pt-24" x-data={`{ content: ${JSON.stringify(content)} }`}>
+        <span x-text="$store.language === 'ko' ? content.ko.title : content.en.title"></span>
       </h2>
-      <p
-        class="mx-auto mt-4 max-w-2xl text-center text-xl leading-relaxed text-purple-800 sm:mt-5"
-      >
-      영어 실력을 키우려면, 똑똑하고 예리한 멘토와 좋은 주제로 대화하고, 이해하고 틀린 부분을 고쳐 나가야 합니다.
+      <p class="mx-auto mt-4 max-w-2xl text-center text-xl leading-relaxed text-purple-800 sm:mt-5" x-data={`{ content: ${JSON.stringify(content)} }`}>
+        <span x-text="$store.language === 'ko' ? content.ko.subtitle : content.en.subtitle"></span>
       </p>
     </div>
     {/* School images grid */}
-    <div
-      class="mt-14 grid grid-flow-row-dense grid-cols-2 gap-2 sm:mt-16 sm:grid-cols-3 sm:gap-3 md:gap-4 lg:mt-24 lg:gap-6"
-    >
+    <div class="mt-14 grid grid-flow-row-dense grid-cols-2 gap-2 sm:mt-16 sm:grid-cols-3 sm:gap-3 md:gap-4 lg:mt-24 lg:gap-6">
       {
         images.map((image, index) => (
           <>
@@ -57,14 +68,12 @@ const images = [
       }
     </div>
     {/* About school */}
-    <div class="prose prose-lg mx-auto mt-14 sm:prose-xl sm:mt-16 lg:mt-24">
+    <div class="prose prose-lg mx-auto mt-14 sm:prose-xl sm:mt-16 lg:mt-24" x-data={`{ content: ${JSON.stringify(content)} }`}>
       <p>
-        영∙미 명문대 학생들은 교수와 동료와의 치열한 토론과 설득의 환경 속에서 어떤 상황에서도 논리적으로 설득하고 생각을 구조화할 수 있는 능력을 훈련받습니다. 이러한 명문대 및 아이비리그 출신 튜터들은 영어로 직접 사고를 나누며, 실제로 쓰이는 고급 표현과 논리적인 문장을 만드는 방법을 가르칩니다.
+        <span x-text="$store.language === 'ko' ? content.ko.paragraph1 : content.en.paragraph1"></span>
       </p>
       <p>
-        많은 원어민이 영어 학습을 도울 수 있지만, 우리는 단순히 일상 대화를 넘어 비즈니스 사례 분석과 깊이 있는 토론까지 함께할 수 있는 멘토의 중요성을 강조합니다.
-또한, 교과 및 비교과 활동의 단순한 양적 성취를 넘어, 학생의 진로 희망과 성향, 특성에 맞춘 맞춤형 진로 설계를 제공합니다. 이를 통해 단순히 ‘균형 잡힌(well-rounded)’ 학생을 넘어, 대학에서 가장 선호하는 ‘특화된(spiked)’ 인재로 성장할 수 있도록 돕습니다.
-
+        <span x-text="$store.language === 'ko' ? content.ko.paragraph2 : content.en.paragraph2"></span>
       </p>
     </div>
   </div>

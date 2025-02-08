@@ -1,4 +1,8 @@
-name: Hudson Sung - NYU
-testimonial: I thought I was ordinary, but Min discovered unique traits that set me apart. Min’s commitment and unique aspirations ensured high level quality. I was able to succeed because of her dedication and knowledge that she had. Thanks a lot to her. 
+name:
+  ko: "허드슨"
+  en: "Hudson"
+testimonial:
+  ko: "베이글에듀의 맞춤형 교육 덕분에 제가 원하는 대학에 합격할 수 있었습니다. 특히 에세이 작성과 인터뷰 준비 과정에서 받은 도움이 정말 큰 힘이 되었습니다."
+  en: "Thanks to BagelEdu's personalized education, I was able to get accepted to my desired university. The help I received during essay writing and interview preparation was especially valuable."
 stars: 5
-image: '@images/illustrations/female-1.png'
+image: '@images/illustrations/male-2.png'

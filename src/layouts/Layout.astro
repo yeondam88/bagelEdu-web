@@ -11,7 +11,7 @@ import Analytics from '@vercel/analytics/astro'
 interface Props {
   title?: string
   author?: string
-  description?: string
+  description?: Record<string, string>
   ogImage?: string
   canonicalURL?: string
 }
@@ -26,6 +26,11 @@ const {
 } = Astro.props
 
 const socialImageURL = new URL(ogImage ?? SITE.ogImage, Astro.url.origin).href
+
+// Default to Korean description, fallback to English if Korean is not available
+const metaDescription = typeof description === 'string' 
+  ? description 
+  : (description?.ko || description?.en || '')
 ---
 
 <!doctype html>
@@ -40,13 +45,13 @@ const socialImageURL = new URL(ogImage ?? SITE.ogImage, Astro.url.origin).href
     <!-- General Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />
-    <meta name="description" content={description} />
+    <meta name="description" content={metaDescription} />
     <meta name="author" content={author} />
     <link rel="sitemap" href="/sitemap-index.xml" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={metaDescription} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:image" content={socialImageURL} />
 
@@ -54,15 +59,35 @@ const socialImageURL = new URL(ogImage ?? SITE.ogImage, Astro.url.origin).href
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={canonicalURL} />
     <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
+    <meta property="twitter:description" content={metaDescription} />
     <meta property="twitter:image" content={socialImageURL} />
 
     <ViewTransitions />
+
+    <!-- Global Alpine initialization -->
+    <script>
+      import Alpine from 'alpinejs'
+      window.Alpine = Alpine
+
+      document.addEventListener('alpine:init', () => {
+        const savedLang = localStorage.getItem('preferred-language')
+        Alpine.store('language', (savedLang as string) || 'ko')
+      })
+
+      document.addEventListener('alpine:initialized', () => {
+        Alpine.effect(() => {
+          const currentLang = Alpine.store('language') as string
+          localStorage.setItem('preferred-language', currentLang)
+          document.documentElement.lang = currentLang
+        })
+      })
+
+      Alpine.start()
+    </script>
   </head>
   <body class="overflow-x-hidden">
     <Header />
     <slot />
-    <!-- <CallToAction /> -->
     <Footer />
     <Analytics mode="auto" debug={true} />
   </body>
