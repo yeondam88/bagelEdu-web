@@ -1,4 +1,8 @@
-name: Richard Kim, 경기고 학생
-testimonial: 보스톤에서 부모님과 6 년 살때보다, 한국 돌아와서 튜터 1년 2개월 함께 해서 스피킹 실력이 더 늘었습니다!
+name:
+  ko: "리처드 김"
+  en: "Richard Kim"
+testimonial:
+  ko: "베이글에듀의 튜터들은 정말 전문적이고 열정적입니다. 제 학업 목표를 달성하는데 큰 도움을 주었고, 특히 영어 말하기와 작문 실력이 크게 향상되었습니다."
+  en: "BagelEdu's tutors are truly professional and passionate. They helped me achieve my academic goals, and especially improved my English speaking and writing skills significantly."
 stars: 5
 image: '@images/illustrations/male-2.png'

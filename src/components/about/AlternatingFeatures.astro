@@ -14,22 +14,50 @@ import blockImage3 from '@images/bageledu/bagelEdu-7.jpeg'
 const bgBlobs = [lightYellowBlob, lightPurpleBlob, lightRoseBlob]
 const blocks = [
   {
-    tagline: 'Smart. Kind. Global.',
-    headline: 'Kelly 한 , c-gate 학생 어머님',
-    text: `저희 아이는 영유를 다닐 적에 영어 거부감이 심하게 왔었는데, 베이글에듀 튜터쌤을 만나 다시 영어에 대한 흥미를 갖게 되었어요. 약 1년동안 일반 유치원으로 옮기고 , 그동한 튜터쌤과  차근차근 레벨테스트를 준비 한 덕분에 지금은 원하는 곳에서 재미있게 다니고 있답니다. 
+    tagline: {
+      ko: '똑똑하고 친절하며 글로벌한',
+      en: 'Smart. Kind. Global.'
+    },
+    headline: {
+      ko: 'Kelly 한, c-gate 학생 어머님',
+      en: 'Kelly Han, c-gate student parent'
+    },
+    text: {
+      ko: `저희 아이는 영유를 다닐 적에 영어 거부감이 심하게 왔었는데, 베이글에듀 튜터쌤을 만나 다시 영어에 대한 흥미를 갖게 되었어요. 약 1년동안 일반 유치원으로 옮기고 , 그동한 튜터쌤과  차근차근 레벨테스트를 준비 한 덕분에 지금은 원하는 곳에서 재미있게 다니고 있답니다. 
 미국인 튜터 쌤 께서 영어 발음이 정확하여 아이 영어 speaking/ 인터뷰 대비 수업에 굉장히 도움이 많이 되었어요.`,
+      en: `My child had a strong aversion to English while attending English kindergarten, but after meeting the BagelEdu tutor, they regained interest in English. After moving to a regular kindergarten for about a year and preparing for the level test step by step with the tutor, they are now happily attending their desired school.
+The American tutor's accurate English pronunciation was extremely helpful for my child's English speaking and interview preparation classes.`
+    },
     image: { src: blockImage1, alt: 'Child covered in paint' },
   },
   {
-    tagline: 'Pod environment',
-    headline: '박재상 Cornell University 합격자',
-    text: `밤낮 가릴거 없이 저를 파악 하시기 위해 최선을 다하시는 티나쌤(컨설턴트) 를 보고 저도 다시 마음을 다잡고 공부 하기로 마음먹고 실천 중입니다. 저희 부모님도 힘들어 하셨는데, 티나쌤은 제가 어떤 사람인지, 어떤 가치를 가지고  있는지를 명확하게 파악하여 저를 브랜딩 하시더라고요. 솔직히 저의 강점화 흥미를 빠르게 파악하여 저의 가치를 200% 올려주셔서 너무 감사했어요.`,
+    tagline: {
+      ko: '포드 환경',
+      en: 'Pod environment'
+    },
+    headline: {
+      ko: '박재상 Cornell University 합격자',
+      en: 'Jaesang Park, Cornell University Admit'
+    },
+    text: {
+      ko: `밤낮 가릴거 없이 저를 파악 하시기 위해 최선을 다하시는 티나쌤(컨설턴트) 를 보고 저도 다시 마음을 다잡고 공부 하기로 마음먹고 실천 중입니다. 저희 부모님도 힘들어 하셨는데, 티나쌤은 제가 어떤 사람인지, 어떤 가치를 가지고  있는지를 명확하게 파악하여 저를 브랜딩 하시더라고요. 솔직히 저의 강점화 흥미를 빠르게 파악하여 저의 가치를 200% 올려주셔서 너무 감사했어요.`,
+      en: `Seeing Tina (consultant) doing her best to understand me day and night, I also decided to refocus on my studies and am putting it into practice. My parents were also struggling, but Tina clearly understood who I am and what values I have, and branded me accordingly. Honestly, I'm very grateful that she quickly identified my strengths and interests, increasing my value by 200%.`
+    },
     image: { src: blockImage2, alt: 'Child painting' },
   },
   {
-    tagline: 'Personalized learning.',
-    headline: 'New York University, Hudson Sung 합격자',
-    text: `I thought I was ordinary, but Min discovered unique traits that set me apart. Min’s commitment and unique aspirations ensured high level quality. I was able to succeed because of her dedication and knowledge that she had. Thanks a lot to her.`,
+    tagline: {
+      ko: '개인 맞춤형 학습',
+      en: 'Personalized learning'
+    },
+    headline: {
+      ko: 'New York University, Hudson Sung 합격자',
+      en: 'Hudson Sung, New York University Admit'
+    },
+    text: {
+      ko: `저는 평범한 학생이라고 생각했지만, Min 선생님은 저를 특별하게 만드는 독특한 특성을 발견해주셨습니다. Min 선생님의 헌신과 독특한 포부 덕분에 높은 수준의 결과를 얻을 수 있었습니다. 선생님의 헌신과 지식 덕분에 성공할 수 있었습니다. 정말 감사드립니다.`,
+      en: `I thought I was ordinary, but Min discovered unique traits that set me apart. Min's commitment and unique aspirations ensured high level quality. I was able to succeed because of her dedication and knowledge that she had. Thanks a lot to her.`
+    },
     image: { src: blockImage3, alt: 'Child working on workbook' },
   },
 ]
@@ -41,7 +69,7 @@ const blocks = [
     {/* Section header */}
     <div class="px-4 text-center sm:px-6 lg:px-8">
       <h3 class="h2 text-purple-900">
-        <span class="block">학부모 및 학생들의 생생한 후기</span>
+        <span class="block" x-data x-text="$store.language === 'ko' ? '학부모 및 학생들의 생생한 후기' : 'Parents and Students Reviews'"></span>
         {/* Underlined text */}
         <span class="relative block">
           <span class="relative">
@@ -50,7 +78,7 @@ const blocks = [
               src={highlight}
               alt=""
             />
-            <span class="relative">Students Reviews</span>
+            <span class="relative" x-data x-text="$store.language === 'ko' ? '후기' : 'Reviews'"></span>
           </span>
         </span>
       </h3>
@@ -67,16 +95,13 @@ const blocks = [
             ]}
           >
             <div>
-              <span class="inline-block -rotate-1 rounded-full bg-purple-200 px-4 py-2 font-medium text-purple-700 shadow-md">
-                {block.tagline}
+              <span class="inline-block -rotate-1 rounded-full bg-purple-200 px-4 py-2 font-medium text-purple-700 shadow-md" x-data={`{ block: ${JSON.stringify(block)} }`} x-text="$store.language === 'ko' ? block.tagline.ko : block.tagline.en">
               </span>
             </div>
             <div>
-              <h3 class="h4 mt-3.5 font-bold text-purple-900">
-                {block.headline}
+              <h3 class="h4 mt-3.5 font-bold text-purple-900" x-data={`{ block: ${JSON.stringify(block)} }`} x-text="$store.language === 'ko' ? block.headline.ko : block.headline.en">
               </h3>
-              <p class="mt-3 max-w-xl text-lg text-purple-800 sm:text-xl sm:leading-relaxed">
-                {block.text}
+              <p class="mt-3 max-w-xl text-lg text-purple-800 sm:text-xl sm:leading-relaxed" x-data={`{ block: ${JSON.stringify(block)} }`} x-text="$store.language === 'ko' ? block.text.ko : block.text.en">
               </p>
             </div>
           </div>

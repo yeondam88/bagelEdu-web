@@ -7,39 +7,94 @@ import portraitImage1 from '@images/stock/tina-portrait.jpg'
 import squareImage1 from '@images/stock/ucla-img.jpg'
 
 const features = [
-  'Personalized',
-  'Small classes',
-  'CLEP, SAT college credit',
-  'STEM focused',
-  'Hands-on approach',
-  'Diverse teachers & students',
-  'Experienced staff',
+  {
+    ko: '맞춤형 교육',
+    en: 'Personalized',
+  },
+  {
+    ko: '소규모 수업',
+    en: 'Small classes',
+  },
+  {
+    ko: 'CLEP, SAT 대학 학점',
+    en: 'CLEP, SAT college credit',
+  },
+  {
+    ko: 'STEM 중심',
+    en: 'STEM focused',
+  },
+  {
+    ko: '실습 중심 접근',
+    en: 'Hands-on approach',
+  },
+  {
+    ko: '다양한 교사진과 학생',
+    en: 'Diverse teachers & students',
+  },
+  {
+    ko: '아이비리그 튜터',
+    en: 'Experienced staff',
+  },
 ]
 
 const blocks = [
   {
-    tagline: 'CEO 이력',
-    // headline: "CEO 이력",
-    text: `지난 8년 동안 학업과 지식 기반 기업에서 종사하며 자부심과 책임감을 가지고 쉼 없이 도전하고 달려왔습니다. 결국, 모든 사람들이 자신이 좋아하는 일을 하고, 자신의 가치를 추구하며, 스스로 독립적이고 자유로우며 지속 가능한 경제 주체가 되는 커뮤니티와 사회를 만들어가는 것이 중요하다고 생각합니다.
+    tagline: {
+      ko: 'CEO 이력',
+      en: 'CEO Profile',
+    },
+    text: {
+      ko: `지난 8년 동안 학업과 지식 기반 기업에서 종사하며 자부심과 책임감을 가지고 쉼 없이 도전하고 달려왔습니다. 결국, 모든 사람들이 자신이 좋아하는 일을 하고, 자신의 가치를 추구하며, 스스로 독립적이고 자유로우며 지속 가능한 경제 주체가 되는 커뮤니티와 사회를 만들어가는 것이 중요하다고 생각합니다.
 선택과 집중을 통해 교육 사업에 몰두하면서 많은 경험과 배움을 얻었고, 이를 바탕으로 저와 함께 나아가는 한 분 한 분의 소명을 지지하며 단단한 발판이 되어 드리겠습니다. 감사합니다.`,
+      en: `For the past 8 years, I have been working in academia and knowledge-based enterprises with pride and responsibility, continuously challenging myself and moving forward. Ultimately, I believe it is important to create a community and society where everyone can do what they love, pursue their values, and become independent, free, and sustainable economic agents.
+Through focus and dedication to education, I have gained much experience and learning, and based on this, I will support the calling of each person moving forward with me and provide a solid foundation. Thank you.`,
+    },
     texts: [
-      '현) USC 석사 재학중',
-      '전) UCLA 및 서울대학교 MBA 졸업',
-      '전) Jakarta International School 졸업',
-      '전) 미국 대학 입시 학습 트레이닝 전문 강사',
-      '전) 서울 외국인학교 담임교사',
-      '전) 크레버스 CMS 영재관 강사',
-      '전) 청담 에이프릴 영어강사',
+      {
+        ko: '현) USC 석사 재학중',
+        en: "Current: Pursuing Master's at USC",
+      },
+      {
+        ko: '전) UCLA 및 서울대학교 MBA 졸업',
+        en: 'Former: MBA from UCLA and Seoul National University',
+      },
+      {
+        ko: '전) Jakarta International School 졸업',
+        en: 'Former: Jakarta International School Graduate',
+      },
+      {
+        ko: '전) 미국 대학 입시 학습 트레이닝 전문 강사',
+        en: 'Former: US College Admissions Training Specialist',
+      },
+      {
+        ko: '전) 서울 외국인학교 담임교사',
+        en: 'Former: Homeroom Teacher at Seoul Foreign School',
+      },
+      {
+        ko: '전) 크레버스 CMS 영재관 강사',
+        en: 'Former: Instructor at Creverse CMS Gifted Academy',
+      },
+      {
+        ko: '전) 청담 에이프릴 영어강사',
+        en: 'Former: English Instructor at Chungdam April',
+      },
     ],
-    action: { label: 'Learn more', href: '/about', icon: true },
+    action: {
+      label: {
+        ko: '더 알아보기',
+        en: 'Learn more',
+      },
+      href: '/about',
+      icon: true,
+    },
     portraitImage: { src: portraitImage1, alt: 'Kid stacking blocks' },
     squareImage: { src: squareImage1, alt: 'Children writing on workbook' },
-  }
+  },
 ]
 ---
 
 <section
-  class="overflow-hidden bg-gradient-to-br from-purple-50 to-white px-4 pb-16 sm:px-6 sm:pb-24 lg:px-8 pt-24"
+  class="overflow-hidden bg-gradient-to-br from-purple-50 to-white px-4 pb-16 pt-24 sm:px-6 sm:pb-24 lg:px-8"
 >
   {/* Container */}
   <div class="mx-auto max-w-screen-xl">
@@ -47,14 +102,24 @@ const blocks = [
     <div class="relative">
       {/* Block title and subtext */}
       <h2 class="h2 mx-auto max-w-4xl text-center text-purple-900">
-        영어 실력 향상과 대학 진학을 위한 자신감 <br/>넘치는 학습 환경을 제공합니다.
+        <span
+          x-data
+          x-text="$store.language === 'ko' 
+          ? '영어 실력 향상과 대학 진학을 위한 자신감 넘치는 학습 환경을 제공합니다.'
+          : 'A change in your life with a team of college admission experts, hands-on approach counseling that delivers trusted outcomes.'"
+        >
+        </span>
       </h2>
       <p
         class="mx-auto mt-4 max-w-3xl text-center text-xl leading-relaxed text-purple-800"
       >
-      제가 찾은 답은 이것입니다. 완벽을 목표로 하기보다 완성을 목표로 공부합니다. 모르는 것은 튜터에게 물어보자! 알게 된 사실은 기록하자!
-      어려운 결정은 즐기자 - 학업 방향을 결정해야 비로소 변화가 찾아옵니다.
-      함께 성장하자 - 멈춰 있지만 않으면 괜찮습니다.
+        <span
+          x-data
+          x-text="$store.language === 'ko'
+          ? '제가 찾은 답은 이것입니다. 완벽을 목표로 하기보다 완성을 목표로 공부합니다. 모르는 것은 튜터에게 물어보자! 알게 된 사실은 기록하자! 어려운 결정은 즐기자 - 학업 방향을 결정해야 비로소 변화가 찾아옵니다. 함께 성장하자 - 멈춰 있지만 않으면 괜찮습니다.'
+          : 'Here is the answer I found. Study with completion in mind rather than perfection. Ask tutors when you don\'t know something! Record what you\'ve learned! Embrace difficult decisions - change comes when you decide your academic direction. Let\'s grow together - it\'s okay as long as you keep moving forward.'"
+        >
+        </span>
       </p>
       {/* Feature list */}
       <div class="mx-auto mt-12 max-w-3xl">
@@ -69,7 +134,10 @@ const blocks = [
                   src={checkmark}
                   alt=""
                 />
-                <span>{feature}</span>
+                <span
+                  x-data={`{ feature: ${JSON.stringify(feature)} }`}
+                  x-text="$store.language === 'ko' ? feature.ko : feature.en"
+                />
               </li>
             ))
           }
@@ -134,23 +202,32 @@ const blocks = [
           >
             <div>
               <span class="inline-block -rotate-1 rounded-full bg-purple-200 px-4 py-2 font-medium text-purple-700 shadow-md">
-                {block.tagline}
+                <span
+                  x-data={`{ tagline: ${JSON.stringify(block.tagline)} }`}
+                  x-text="$store.language === 'ko' ? tagline.ko : tagline.en"
+                />
               </span>
             </div>
-            {/* <h3 class="h3 mt-4 text-purple-900 sm:mt-5">{block.headline}</h3> */}
-            <p class="mt-1 mb-4 max-w-2xl text-lg leading-loose text-purple-800">
-              {block.text}
+            <p class="mb-4 mt-1 max-w-2xl text-lg leading-loose text-purple-800">
+              <span
+                x-data={`{ text: ${JSON.stringify(block.text)} }`}
+                x-text="$store.language === 'ko' ? text.ko : text.en"
+              />
             </p>
-            {
-              block.texts.map((text) => (
-                <p class="max-w-2xl text-md leading-[2] text-purple-800">
-                  {text}
-                </p>
-              ))
-            }
+            {block.texts.map((text) => (
+              <p class="text-md max-w-2xl leading-[2] text-purple-800">
+                <span
+                  x-data={`{ text: ${JSON.stringify(text)} }`}
+                  x-text="$store.language === 'ko' ? text.ko : text.en"
+                />
+              </p>
+            ))}
             <div class="mt-6">
               <Button href={block.action.href} variant="accent" size="sm">
-                {block.action.label}
+                <span
+                  x-data={`{ label: ${JSON.stringify(block.action.label)} }`}
+                  x-text="$store.language === 'ko' ? label.ko : label.en"
+                />
                 {block.action.icon && (
                   <Icon
                     name="tabler:arrow-narrow-right"

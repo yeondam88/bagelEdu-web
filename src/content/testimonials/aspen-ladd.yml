@@ -1,4 +1,8 @@
-name: Celine Lee ,Dulwich College Seoul 학생 어머님
-testimonial: 아이가 튜터쌤이랑 공부하는 모습을 지켜 보면서 저 또한 어떻게 영어를 쉽게 배우는지 드디어 이해가 됬어요. 베이글에듀 튜터쌤이 영어는 문장을 이해 해야 된다고 하셨어요. 문법과 단어를 가장 효율적으로 공부하는 방법은, 문장을 통해 이해하는 것이더라고요.  이유는 바로 문법 개념도, 단어도, 단독으로는 쓸 수가 없기 때문인거죠.
+name:
+  ko: "애스펜 래드"
+  en: "Aspen Ladd"
+testimonial:
+  ko: "베이글에듀의 프로그램은 제 기대 이상이었습니다. 체계적인 커리큘럼과 전문적인 선생님들의 지도 덕분에 영어로 의사소통하는 것이 훨씬 자연스러워졌습니다."
+  en: "BagelEdu's program exceeded my expectations. Thanks to the systematic curriculum and professional guidance from teachers, communicating in English has become much more natural for me."
 stars: 5
-image: '@images/illustrations/female-2.png'
+image: '@images/illustrations/female-1.png'

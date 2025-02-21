@@ -30,8 +30,8 @@ const ogImageUrl = typeof ogImage === 'string' ? ogImage : ogImage?.src
 ---
 
 <Layout
-  title={`${program.data.name} - ${SITE.title}`}
-  description={program.data.hero.text}
+  title={{ en: `${program.data.name.en} - ${SITE.title}`, ko: `${program.data.name.ko} - ${SITE.title}` }}
+  description={{ en: program.data.hero.text.en, ko: program.data.hero.text.ko }}
   ogImage={ogImageUrl}
 >
   <div class="relative py-16 sm:py-24">
@@ -45,16 +45,16 @@ const ogImageUrl = typeof ogImage === 'string' ? ogImage : ogImage?.src
     </div>
 
     <div class="relative px-4 pt-20 lg:pt-32 lg:pb-32 max-w-7xl mx-auto">
-      <div class="max-w-2xl md:mx-0">
+      <div class="max-w-2xl md:mx-0" x-data={`{ program: ${JSON.stringify(program.data)} }`}>
         <h1 class="text-5xl md:text-6xl font-bold tracking-tight text-gray-900 mb-6 text-center md:text-left">
-          {program.data.hero.headline}
+          <span x-text="$store.language === 'ko' ? program.hero.headline.ko : program.hero.headline.en"></span>
         </h1>
         <p class="text-xl text-gray-600 mb-8 text-wrap text-center md:text-left">
-          {program.data.hero.text} 
+          <span x-text="$store.language === 'ko' ? program.hero.text.ko : program.hero.text.en"></span>
         </p>
         <div class="flex items-center justify-center md:justify-start gap-4">
           <a href="#" class="inline-flex items-center justify-center px-6 py-3 text-lg font-medium rounded-lg text-white bg-black hover:bg-gray-900">
-            {program.data.hero.action.label}
+            <span x-text="$store.language === 'ko' ? program.hero.action.label.ko : program.hero.action.label.en"></span>
           </a>
         </div>
       </div>
@@ -88,8 +88,7 @@ const ogImageUrl = typeof ogImage === 'string' ? ogImage : ogImage?.src
 
   <div class="relative space-y-32">
     <ProgramInformation program={program} />
-    {program.data.name === 'MBA Admissions Consulting' && (
-      
+    {program.data.name.en === 'MBA Admissions Consulting' && (
       <ProgramMBA program={program} />
     )}
   </div>

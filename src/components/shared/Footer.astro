@@ -4,6 +4,21 @@ import { getCollection } from 'astro:content'
 import type { Program } from '@types'
 
 const programs: Program[] = await getCollection('programs')
+
+const footerSections = {
+  services: {
+    en: 'Services',
+    ko: '서비스'
+  },
+  contact: {
+    en: 'Contact',
+    ko: '문의하기'
+  },
+  hours: {
+    en: 'Mon-Fri 9:00AM - 11:00 PM [PST (UTC -8)]',
+    ko: '월요일-일요일 6:00 AM- 4:00 PM [KST (UTC+9)]'
+  }
+}
 ---
 
 <footer class="bg-gradient-to-br from-purple-50 to-white">
@@ -18,28 +33,40 @@ const programs: Program[] = await getCollection('programs')
       <div class="mt-16 grid grid-cols-2 gap-8 xl:col-span-3 xl:mt-0">
         <div class="md:grid md:grid-cols-2 md:gap-8">
           <div class="text-left">
-            <h3 class="text-base font-semibold leading-6 text-gray-800 sm:text-sm">서비스</h3>
+            <h3 class="text-base font-semibold leading-6 text-gray-800 sm:text-sm">
+              <span x-data x-text="$store.language === 'ko' ? '서비스' : 'Services'"></span>
+            </h3>
             <ul role="list" class="mt-6 space-y-4">
               {programs.map((program) => (
                 <li>
-                  <a href={program.data.hero.action.href} class="text-base leading-6 text-gray-800 hover:text-purple-600 transition-colors duration-200 sm:text-sm">{program.data.name}</a>
+                  <a 
+                    href={program.data.hero.action.href} 
+                    class="text-base leading-6 text-gray-800 hover:text-purple-600 transition-colors duration-200 sm:text-sm"
+                  >
+                    <span x-data={`{ name: ${JSON.stringify(program.data.name)} }`} x-text="$store.language === 'ko' ? name.ko : name.en"></span>
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
           <div class="mt-10 md:mt-0 text-left">
-            <h3 class="text-base font-semibold leading-6 text-gray-800 sm:text-sm">문의하기</h3>
+            <h3 class="text-base font-semibold leading-6 text-gray-800 sm:text-sm">
+              <span x-data x-text="$store.language === 'ko' ? '문의하기' : 'Contact'"></span>
+            </h3>
             <ul role="list" class="mt-6 space-y-4">
               <li>
-                <p class="text-base leading-6 text-gray-800 sm:text-sm">Email: {CONTACT.email}</p>
-              </li>
-              <li>
-                <p class="text-base leading-6 text-gray-800 sm:text-sm">Phone: {CONTACT.phone}</p>
+                <p class="text-base leading-6 text-gray-800 sm:text-sm">
+                  <span x-data x-text="$store.language === 'ko' ? '이메일' : 'Email'"></span>: {CONTACT.email}
+                </p>
               </li>
               <li>
                 <p class="text-base leading-6 text-gray-800 sm:text-sm">
-                  Mon- Fri 9:00AM - 11:00 PM [PST (UTC -8)] <br />
-                  월요일- 일요일 6:00 AM- 4:00 PM [KST (UTC+9)]
+                  <span x-data x-text="$store.language === 'ko' ? '전화' : 'Phone'"></span>: {CONTACT.phone}
+                </p>
+              </li>
+              <li>
+                <p class="text-base leading-6 text-gray-800 sm:text-sm">
+                  <span x-data x-text="$store.language === 'ko' ? '월요일-일요일 6:00 AM- 4:00 PM [KST (UTC+9)]' : 'Mon-Fri 9:00AM - 11:00 PM [PST (UTC -8)]'"></span>
                 </p>
               </li>
             </ul>
@@ -54,3 +81,13 @@ const programs: Program[] = await getCollection('programs')
     </div>
   </div>
 </footer>
+
+<script>
+  import Alpine from 'alpinejs'
+  import { useLanguage } from '../../components/shared/LanguageProvider'
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    const { language } = useLanguage()
+    Alpine.store('language', language)
+  })
+</script>

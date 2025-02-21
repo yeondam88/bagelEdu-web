@@ -1,0 +1,27 @@
+{
+  "common": {
+    "navigation": {
+      "home": "홈",
+      "programs": "프로그램",
+      "contact": "문의하기",
+      "blog": "블로그"
+    },
+    "actions": {
+      "learnMore": "자세히 보기",
+      "contactUs": "문의하기",
+      "applyNow": "지원하기"
+    },
+    "footer": {
+      "address": "주소",
+      "phone": "전화",
+      "email": "이메일",
+      "followUs": "팔로우"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "WE ARE ELITE",
+      "subtitle": "글로벌 인재 양성을 위한 교육"
+    }
+  }
+} 

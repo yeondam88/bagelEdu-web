@@ -1,4 +1,8 @@
-name: Zoel 학생, Chadwick 송도 합격생
-testimonial: 미국 튜터쌤 덕분에 인터뷰때 자연스러운 대화를 거침없이 이어나갈수 있었습니다 !
+name:
+  ko: "조엘"
+  en: "Zoel"
+testimonial:
+  ko: "베이글에듀와 함께한 시간은 제 인생의 터닝포인트였습니다. 선생님들의 열정적인 지도와 체계적인 학습 방법 덕분에 영어 실력이 크게 향상되었고, 자신감도 많이 생겼습니다."
+  en: "My time with BagelEdu was a turning point in my life. Thanks to the passionate guidance of the teachers and systematic learning methods, my English skills improved significantly, and I gained a lot of confidence."
 stars: 5
 image: '@images/illustrations/male-1.png'

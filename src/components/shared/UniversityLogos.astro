@@ -50,11 +50,16 @@ const bottomRow = [
   <div class="mx-auto max-w-7xl px-6 lg:px-8">
     <div class="mx-auto max-w-4xl text-center">
       <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-        아래 대학들은 저희와 함께한 <br /> 학생들이 <span class="text-emerald-600">100%</span>
-        합격한 대학교들 입니다.
+        <span x-data x-text="$store.language === 'ko' 
+          ? '아래 대학들은 저희와 함께한 학생들이 100% 합격한 대학교들 입니다.'
+          : 'Our students have achieved 100% acceptance rate to these universities.'">
+        </span>
       </h2>
       <p class="mt-6 text-lg leading-8 text-gray-600">
-        원하는 학교 합격은 인생의 첫 성공 경험이자, 더 큰 미래를 여는 열쇠입니다.
+        <span x-data x-text="$store.language === 'ko'
+          ? '원하는 학교 합격은 인생의 첫 성공 경험이자, 더 큰 미래를 여는 열쇠입니다.'
+          : 'Getting accepted to your dream school is your first success and the key to a greater future.'">
+        </span>
       </p>
     </div>
 

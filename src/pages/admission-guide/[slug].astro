@@ -18,13 +18,16 @@ const { admissionGuide } = Astro.props;
 const { Content } = await admissionGuide.render();
 ---
 
-<Layout title={`${admissionGuide.data.name} | Bright`}>
+<Layout 
+  title={{ en: admissionGuide.data.name.en, ko: admissionGuide.data.name.ko }}
+  description={{ en: admissionGuide.data.dropdownDescription.en, ko: admissionGuide.data.dropdownDescription.ko }}
+>
   <main class="container mx-auto px-4 py-12 max-w-4xl">
 
     <article class="my-24">
       <Image 
         src={admissionGuide.data.image} 
-        alt={admissionGuide.data.name} 
+        alt={admissionGuide.data.name.en} 
         width={1200}
         height={400}
         class={`w-full ${admissionGuide.data.fullHeight ? 'h-full' : 'h-[400px]'} object-cover rounded-xl mb-8`}

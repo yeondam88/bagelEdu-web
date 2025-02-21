@@ -3,69 +3,69 @@ import type { CollectionEntry } from 'astro:content'
 
 export interface Feature {
   icon: string
-  title: string
-  description: string
+  title: LocalizedString
+  description: LocalizedString
 }
 
 export interface Benefit {
   icon: string
-  title: string
-  description: string
+  title: LocalizedString
+  description: LocalizedString
 }
 
 export interface Package {
   icon: string
-  title: string
-  description: string
-  price: string
-  duration: string
-  features: string[]
+  title: LocalizedString
+  description: LocalizedString
+  price: LocalizedString
+  duration: LocalizedString
+  features: LocalizedString[]
 }
 
 export interface InfoSection {
-  headline: string
-  text: string
-  ages?: string
-  duration?: string
-  schedule?: string
-  classSize?: string
-  program1?: string
-  program2?: string
-  program3?: string
-  program4?: string
+  headline: LocalizedString
+  text: LocalizedString
+  ages?: LocalizedString
+  duration?: LocalizedString
+  schedule?: LocalizedString
+  classSize?: LocalizedString
+  program1?: LocalizedString
+  program2?: LocalizedString
+  program3?: LocalizedString
+  program4?: LocalizedString
   features?: Feature[]
   benefits?: Benefit[]
 }
 
 export interface DescriptionSection {
-  headline: string
-  text: string
+  headline: LocalizedString
+  text: LocalizedString
   portraitImage?: ImageMetadata
   squareImages?: ImageMetadata[]
 }
 
 export interface AdditionalSection {
-  headline: string
-  text: string
+  headline: LocalizedString
+  text: LocalizedString
   features?: Feature[]
 }
 
 export interface PricingSection {
-  headline: string
-  text: string
+  headline: LocalizedString
+  text: LocalizedString
   packages?: Package[]
 }
 
 export interface ProgramData {
-  name: string
-  dropdownDescription: string
+  name: LocalizedString
+  dropdownDescription: LocalizedString
   featured: boolean
   hero: {
-    headline: string
-    text: string
+    headline: LocalizedString
+    text: LocalizedString
     image: ImageMetadata
     action: {
-      label: string
+      label: LocalizedString
       href: string
       icon?: string
     }
@@ -112,10 +112,15 @@ export type GalleryEntry = CollectionEntry<'gallery'>
 export type StaffMember = CollectionEntry<'staff'>
 export type Testimonial = CollectionEntry<'testimonials'>
 
+export type LocalizedString = {
+  en: string
+  ko: string
+}
+
 export type Site = {
   website: string
   author: string
-  description: string
+  description: LocalizedString
   title: string
   ogImage: string
 }

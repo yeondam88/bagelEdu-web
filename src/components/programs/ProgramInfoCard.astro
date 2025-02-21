@@ -3,17 +3,33 @@ import { Icon } from 'astro-icon/components'
 
 interface Props {
   icon: string
-  title: string
-  gradientColors: {
+  title: {
+    ko: string
+    en: string
+  }
+  description?: {
+    ko: string
+    en: string
+  }
+  gradientColors?: {
     bgColor: string
     iconBgColor: string
     startColor: string
     endColor: string
   }
-  description: string | undefined
 }
 
-const { icon, title, gradientColors, description } = Astro.props
+const {
+  icon,
+  title,
+  description,
+  gradientColors = {
+    bgColor: '#F5F5F7',
+    iconBgColor: '#4F46E5',
+    startColor: '#4F46E5',
+    endColor: '#9333EA',
+  },
+} = Astro.props
 ---
 
 <div
@@ -33,7 +49,7 @@ const { icon, title, gradientColors, description } = Astro.props
     </div>
 
     <h4 class="mt-6 text-center text-2xl font-bold tracking-tight text-gray-900">
-      {title}
+      <span x-data={`{ title: ${JSON.stringify(title)} }`} x-text="$store.language === 'ko' ? title.en : title.en"></span>
     </h4>
 
     <div class="relative mt-4 h-0.5 w-16 overflow-hidden rounded-full bg-gray-100">
@@ -46,9 +62,11 @@ const { icon, title, gradientColors, description } = Astro.props
     class="relative mt-6 text-center text-lg text-gray-800 transition-all duration-700 ease-in-out"
     :class="expanded ? 'max-h-[500px]' : 'max-h-[4.5rem] overflow-hidden'"
   >
-    <p class="transition-all duration-500">
-      {description}
-    </p>
+    {description && (
+      <p class="transition-all duration-500">
+        <span x-data={`{ description: ${JSON.stringify(description)} }`} x-text="$store.language === 'ko' ? description.ko : description.en"></span>
+      </p>
+    )}
 
     <!-- Fade gradient at the bottom when not expanded -->
     <div 
