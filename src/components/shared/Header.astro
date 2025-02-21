@@ -1,32 +1,35 @@
 ---
 import { getCollection } from 'astro:content'
 import { Fragment } from 'react'
-import { 
-  ReaderIcon, 
-  Pencil2Icon, 
-  ChatBubbleIcon, 
-  BackpackIcon, 
+import {
+  ReaderIcon,
+  Pencil2Icon,
+  ChatBubbleIcon,
+  BackpackIcon,
   PersonIcon,
   ChevronDownIcon,
   Cross2Icon,
-  HamburgerMenuIcon
+  HamburgerMenuIcon,
 } from '@radix-ui/react-icons'
 import type { CollectionEntry } from 'astro:content'
 
 // 각 프로그램 타입별 아이콘 매핑
 const programIcons = {
   'early-preparation': ReaderIcon,
-  'essay': Pencil2Icon,
-  'interview': ChatBubbleIcon,
-  'package': BackpackIcon,
-  'default': PersonIcon
+  essay: Pencil2Icon,
+  interview: ChatBubbleIcon,
+  package: BackpackIcon,
+  default: PersonIcon,
 }
 
 const navigation = [
   { label: { en: 'Home', ko: '홈' }, href: '/' },
   { label: { en: 'About', ko: '회사 소개' }, href: '/about' },
   { label: { en: 'Our Services', ko: '서비스' }, href: '/programs' },
-  { label: { en: 'Admission Guide', ko: '입학 가이드' }, href: '/admission-guide' },
+  {
+    label: { en: 'Admission Guide', ko: '입학 가이드' },
+    href: '/admission-guide',
+  },
   { label: { en: 'Blog & News', ko: '블로그 & 뉴스' }, href: '/blog' },
 ]
 
@@ -37,24 +40,29 @@ const allBlogPosts = await getCollection('blog')
 
 // 최신 블로그 포스트 3개 가져오기
 const recentBlogPosts = allBlogPosts
-  .sort((a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) => 
-    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  .sort(
+    (a: CollectionEntry<'blog'>, b: CollectionEntry<'blog'>) =>
+      new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
   )
   .slice(0, 3)
 
 // Group programs by category
-const featuredPrograms = programs.filter((p: { data: { featured: any } }) => p.data.featured)
-const regularPrograms = programs.filter((p: { data: { featured: any } }) => !p.data.featured)
+const featuredPrograms = programs.filter(
+  (p: { data: { featured: any } }) => p.data.featured,
+)
+const regularPrograms = programs.filter(
+  (p: { data: { featured: any } }) => !p.data.featured,
+)
 
 // 프로그램 타입에 따른 아이콘 이름 가져오기
 const getProgramIcon = (program: any) => {
   let type: keyof typeof programIcons = 'default'
-  
+
   const name = {
     en: program.data.name.en.toLowerCase(),
-    ko: program.data.name.ko.toLowerCase()
+    ko: program.data.name.ko.toLowerCase(),
   }
-  
+
   if (name.en.includes('tutor') || name.ko.includes('튜터')) {
     type = 'early-preparation'
   } else if (name.en.includes('mba') || name.ko.includes('mba')) {
@@ -64,7 +72,7 @@ const getProgramIcon = (program: any) => {
   } else if (name.en.includes('package') || name.ko.includes('패키지')) {
     type = 'package'
   }
-  
+
   return programIcons[type]
 }
 ---
@@ -74,302 +82,375 @@ const getProgramIcon = (program: any) => {
 <div x-data="{ mobileMenuOpen: false }" class="relative">
   <!-- Remove debug text -->
   <!-- Background guides -->
-  <div class="absolute inset-0 pointer-events-none">
-    <div class="max-w-screen-xl mx-auto h-full">
-      <div class="grid grid-cols-1 md:grid-cols-12 h-full">
-        {Array.from({ length: 12 }).map(() => (
-          <div class="hidden md:block border-x border-gray-100/20"></div>
-        ))}
+  <div class="pointer-events-none absolute inset-0">
+    <div class="mx-auto h-full max-w-screen-xl">
+      <div class="grid h-full grid-cols-1 md:grid-cols-12">
+        {
+          Array.from({ length: 12 }).map(() => (
+            <div class="hidden border-x border-gray-100/20 md:block" />
+          ))
+        }
       </div>
     </div>
   </div>
 
-  <nav class="bg-white backdrop-blur-sm fixed w-full z-20 top-0 start-0 border-b border-gray-200">
-    <div class="max-w-screen-xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between px-4 py-4">
-      <div class="flex items-center justify-between w-full md:w-auto">
+  <nav
+    class="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-white backdrop-blur-sm"
+  >
+    <div
+      class="mx-auto flex max-w-screen-xl flex-col px-4 py-4 md:flex-row md:items-center md:justify-between"
+    >
+      <div class="flex w-full items-center justify-between md:w-auto">
         <a href="/" class="flex items-center">
-          <img src="/images/bageledu/BagelEducation6.png" alt="BagelEdu" class="h-8 w-auto" />
+          <img
+            src="/images/bageledu/BagelEducation6.png"
+            alt="BagelEdu"
+            class="h-8 w-auto"
+          />
         </a>
-        <button 
-          type="button" 
-          class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        <button
+          type="button"
+          class="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden"
           @click="mobileMenuOpen = !mobileMenuOpen"
-          aria-controls="navbar-sticky" 
+          aria-controls="navbar-sticky"
           aria-expanded="false"
         >
           <span class="sr-only">메뉴 열기</span>
-          <HamburgerMenuIcon className="w-5 h-5" x-show="!mobileMenuOpen" />
-          <Cross2Icon className="w-5 h-5" x-show="mobileMenuOpen" />
+          <HamburgerMenuIcon className="h-5 w-5" x-show="!mobileMenuOpen" />
+          <Cross2Icon className="h-5 w-5" x-show="mobileMenuOpen" />
         </button>
       </div>
-      
-      <div class="hidden md:flex items-center justify-between w-full md:w-auto" id="navbar-sticky">
-        <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white">
-          {navigation.map((link) => (
-            <li class="flex items-center">
-              {link.label.en === 'Our Services' ? (
-                <div class="relative group" x-data="{ open: false }">
-                  <button 
-                    class="flex items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 group"
-                    @click="open = !open"
-                    @click.away="open = false"
-                  >
-                    <span class="relative" x-data>
-                      <span 
-                        data-label-ko={link.label.ko} 
-                        data-label-en={link.label.en}
-                        x-text="$store.language === 'ko'
+
+      <div
+        class="hidden w-full items-center justify-between md:flex md:w-auto"
+        id="navbar-sticky"
+      >
+        <ul
+          class="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0"
+        >
+          {
+            navigation.map((link) => (
+              <li class="flex items-center">
+                {link.label.en === 'Our Services' ? (
+                  <div class="group relative" x-data="{ open: false }">
+                    <button
+                      class="group flex items-center rounded px-3 py-2 text-gray-900 hover:bg-gray-100 md:p-0 md:hover:bg-transparent"
+                      @click="open = !open"
+                      @click.away="open = false"
+                    >
+                      <span class="relative" x-data>
+                        <span
+                          data-label-ko={link.label.ko}
+                          data-label-en={link.label.en}
+                          x-text="$store.language === 'ko'
                                 ? $el.getAttribute('data-label-ko')
-                                : $el.getAttribute('data-label-en')">
+                                : $el.getAttribute('data-label-en')"
+                        />
+                        <span class="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 transform bg-purple-600 transition-transform group-hover:scale-x-100" />
                       </span>
-                      <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-purple-600 origin-left transform scale-x-0 transition-transform group-hover:scale-x-100"></span>
-                    </span>
-                    <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" />
-                  </button>
-                  <div 
-                    x-show="open"
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 translate-y-1"
-                    x-transition:enter-end="opacity-100 translate-y-0"
-                    x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100 translate-y-0"
-                    x-transition:leave-end="opacity-0 translate-y-1"
-                    class="absolute left-1/2 transform -translate-x-1/2 mt-2 w-screen max-w-[60rem] rounded-xl bg-white shadow-lg border border-gray-100 md:block hidden"
-                    @click.away="open = false"
-                  >
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 p-8">
-                      <div class="md:col-span-2">
-                        <div class="mb-6">
-                          <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Featured Programs</h3>
-                          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {featuredPrograms.map((program: { slug: any; data: { name: any; dropdownDescription: any } }) => (
-                              <a 
-                                href={`/programs/${program.slug}`} 
-                                class:list={[
-                                  "group block rounded-lg p-4 hover:bg-purple-50 transition-all duration-200",
-                                  pathname === `/programs/${program.slug}` && "bg-purple-50"
-                                ]}
-                              >
-                                <div class="flex items-start">
-                                  <div class="flex-shrink-0 mr-4">
-                                    <div class="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
-                                      {(() => {
-                                        const Icon = getProgramIcon(program)
-                                        return <Icon className="w-5 h-5 text-purple-600" />
-                                      })()}
+                      <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" />
+                    </button>
+                    <div
+                      x-show="open"
+                      x-transition:enter="transition ease-out duration-200"
+                      x-transition:enter-start="opacity-0 translate-y-1"
+                      x-transition:enter-end="opacity-100 translate-y-0"
+                      x-transition:leave="transition ease-in duration-150"
+                      x-transition:leave-start="opacity-100 translate-y-0"
+                      x-transition:leave-end="opacity-0 translate-y-1"
+                      class="absolute left-1/2 mt-2 hidden w-screen max-w-[60rem] -translate-x-1/2 transform rounded-xl border border-gray-100 bg-white shadow-lg md:block"
+                      @click.away="open = false"
+                    >
+                      <div class="grid grid-cols-1 gap-8 p-8 md:grid-cols-3">
+                        <div class="md:col-span-2">
+                          <div class="mb-6">
+                            <h3 class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                              Featured Programs
+                            </h3>
+                            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                              {featuredPrograms.map(
+                                (program: {
+                                  slug: any
+                                  data: { name: any; dropdownDescription: any }
+                                }) => (
+                                  <a
+                                    href={`/programs/${program.slug}`}
+                                    class:list={[
+                                      'group block rounded-lg p-4 transition-all duration-200 hover:bg-purple-50',
+                                      pathname ===
+                                        `/programs/${program.slug}` &&
+                                        'bg-purple-50',
+                                    ]}
+                                  >
+                                    <div class="flex items-start">
+                                      <div class="mr-4 flex-shrink-0">
+                                        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-100">
+                                          {(() => {
+                                            const Icon = getProgramIcon(program)
+                                            return (
+                                              <Icon className="w-5 h-5 text-purple-600" />
+                                            )
+                                          })()}
+                                        </div>
+                                      </div>
+                                      <div>
+                                        <h4
+                                          class="text-base font-medium text-gray-900 transition-colors duration-200 group-hover:text-purple-600"
+                                          data-name-ko={program.data.name.ko}
+                                          data-name-en={program.data.name.en}
+                                          x-text="$store.language === 'ko' ? $el.getAttribute('data-name-ko') : $el.getAttribute('data-name-en')"
+                                        />
+                                        {program.data.dropdownDescription
+                                          .ko && (
+                                          <p
+                                            class="mt-1 line-clamp-2 text-sm text-gray-500"
+                                            data-desc-ko={
+                                              program.data.dropdownDescription
+                                                .ko
+                                            }
+                                            data-desc-en={
+                                              program.data.dropdownDescription
+                                                .en
+                                            }
+                                            x-text="$store.language === 'ko' ? $el.getAttribute('data-desc-ko') : $el.getAttribute('data-desc-en')"
+                                          />
+                                        )}
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div>
-                                    <h4 
-                                      class="text-base font-medium text-gray-900 group-hover:text-purple-600 transition-colors duration-200"
-                                      data-name-ko={program.data.name.ko}
-                                      data-name-en={program.data.name.en}
-                                      x-text="$store.language === 'ko' ? $el.getAttribute('data-name-ko') : $el.getAttribute('data-name-en')"
-                                    ></h4>
-                                    {program.data.dropdownDescription.ko && (
-                                      <p 
-                                        class="mt-1 text-sm text-gray-500 line-clamp-2"
-                                        data-desc-ko={program.data.dropdownDescription.ko}
-                                        data-desc-en={program.data.dropdownDescription.en}
-                                        x-text="$store.language === 'ko' ? $el.getAttribute('data-desc-ko') : $el.getAttribute('data-desc-en')"
-                                      ></p>
-                                    )}
-                                  </div>
-                                </div>
-                              </a>
-                            ))}
-                          </div>
-                        </div>
-                        
-                        <div>
-                          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            {regularPrograms.map((program: { slug: any; data: { name: any } }) => (
-                              <a 
-                                href={`/programs/${program.slug}`} 
-                                class:list={[
-                                  "group flex items-center p-3 rounded-lg hover:bg-purple-50 transition-all duration-200",
-                                  pathname === `/programs/${program.slug}` && "bg-purple-50"
-                                ]}
-                              >
-                                <div class="flex-shrink-0 mr-3">
-                                  <div class="w-6 h-6 rounded bg-purple-100 flex items-center justify-center">
-                                    {(() => {
-                                      const Icon = getProgramIcon(program)
-                                      return <Icon className="w-4 h-4 text-purple-600" />
-                                    })()}
-                                  </div>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                  <p 
-                                    class="text-sm font-medium text-gray-900 group-hover:text-purple-600 transition-colors duration-200 truncate"
-                                    data-name-ko={program.data.name.ko}
-                                    data-name-en={program.data.name.en}
-                                    x-text="$store.language === 'ko' ? $el.getAttribute('data-name-ko') : $el.getAttribute('data-name-en')"
-                                  ></p>
-                                </div>
-                              </a>
-                            ))}
+                                  </a>
+                                ),
+                              )}
+                            </div>
                           </div>
 
-                          <div class="mt-6">
-                            <h3 
-                              class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4"
-                              x-text="$store.language === 'ko' ? '빠른 링크' : 'Quick Links'"
-                            ></h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              <a href="/blog" class="block group">
-                                <p 
-                                  class="text-sm font-medium text-gray-900 group-hover:text-purple-600 transition-colors duration-200"
-                                  x-text="$store.language === 'ko' ? '블로그 & 뉴스' : 'Blog & News'"
-                                ></p>
-                                <p 
-                                  class="mt-1 text-sm text-gray-500"
-                                  x-text="$store.language === 'ko' ? '최신 소식과 업데이트를 확인하세요' : 'Read our latest articles and updates'"
-                                ></p>
+                          <div>
+                            <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                              {regularPrograms.map(
+                                (program: {
+                                  slug: any
+                                  data: { name: any }
+                                }) => (
+                                  <a
+                                    href={`/programs/${program.slug}`}
+                                    class:list={[
+                                      'group flex items-center rounded-lg p-3 transition-all duration-200 hover:bg-purple-50',
+                                      pathname ===
+                                        `/programs/${program.slug}` &&
+                                        'bg-purple-50',
+                                    ]}
+                                  >
+                                    <div class="mr-3 flex-shrink-0">
+                                      <div class="flex h-6 w-6 items-center justify-center rounded bg-purple-100">
+                                        {(() => {
+                                          const Icon = getProgramIcon(program)
+                                          return (
+                                            <Icon className="w-4 h-4 text-purple-600" />
+                                          )
+                                        })()}
+                                      </div>
+                                    </div>
+                                    <div class="min-w-0 flex-1">
+                                      <p
+                                        class="truncate text-sm font-medium text-gray-900 transition-colors duration-200 group-hover:text-purple-600"
+                                        data-name-ko={program.data.name.ko}
+                                        data-name-en={program.data.name.en}
+                                        x-text="$store.language === 'ko' ? $el.getAttribute('data-name-ko') : $el.getAttribute('data-name-en')"
+                                      />
+                                    </div>
+                                  </a>
+                                ),
+                              )}
+                            </div>
+
+                            <div class="mt-6">
+                              <h3
+                                class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400"
+                                x-text="$store.language === 'ko' ? '빠른 링크' : 'Quick Links'"
+                              />
+                              <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+                                <a href="/blog" class="group block">
+                                  <p
+                                    class="text-sm font-medium text-gray-900 transition-colors duration-200 group-hover:text-purple-600"
+                                    x-text="$store.language === 'ko' ? '블로그 & 뉴스' : 'Blog & News'"
+                                  />
+                                  <p
+                                    class="mt-1 text-sm text-gray-500"
+                                    x-text="$store.language === 'ko' ? '최신 소식과 업데이트를 확인하세요' : 'Read our latest articles and updates'"
+                                  />
+                                </a>
+                                <a href="/contact" class="group block">
+                                  <p
+                                    class="text-sm font-medium text-gray-900 transition-colors duration-200 group-hover:text-purple-600"
+                                    x-text="$store.language === 'ko' ? '문의하기' : 'Contact us'"
+                                  />
+                                  <p
+                                    class="mt-1 text-sm text-gray-500"
+                                    x-text="$store.language === 'ko' ? '입학 상담팀에 문의하세요' : 'Get in touch with our admissions team'"
+                                  />
+                                </a>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="border-t border-gray-100 pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0">
+                          <div>
+                            <div class="mb-4 flex items-center justify-between">
+                              <h3 class="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                                Latest Updates
+                              </h3>
+                              <a
+                                href="/blog"
+                                class="text-sm font-medium text-purple-600 hover:text-purple-700"
+                              >
+                                View all
+                                <span class="sr-only">blog posts</span>
                               </a>
-                              <a href="/contact" class="block group">
-                                <p 
-                                  class="text-sm font-medium text-gray-900 group-hover:text-purple-600 transition-colors duration-200"
-                                  x-text="$store.language === 'ko' ? '문의하기' : 'Contact us'"
-                                ></p>
-                                <p 
-                                  class="mt-1 text-sm text-gray-500"
-                                  x-text="$store.language === 'ko' ? '입학 상담팀에 문의하세요' : 'Get in touch with our admissions team'"
-                                ></p>
-                              </a>
+                            </div>
+                            <div class="space-y-6">
+                              {recentBlogPosts.map((post) => (
+                                <a
+                                  href={`/blog/${post.slug}`}
+                                  class="group block rounded-lg p-3 transition-all duration-200 hover:bg-purple-50"
+                                >
+                                  <p
+                                    class="line-clamp-1 text-sm font-medium text-gray-900 transition-colors duration-200 group-hover:text-purple-600"
+                                    data-title-ko={post.data.title.ko}
+                                    data-title-en={post.data.title.en}
+                                    x-text="$store.language === 'ko' ? $el.getAttribute('data-title-ko') : $el.getAttribute('data-title-en')"
+                                  />
+                                  {post.data.excerpt && (
+                                    <p
+                                      class="mt-1 line-clamp-2 text-sm text-gray-500 group-hover:text-gray-600"
+                                      data-excerpt-ko={post.data.excerpt.ko}
+                                      data-excerpt-en={post.data.excerpt.en}
+                                      x-text="$store.language === 'ko' ? $el.getAttribute('data-excerpt-ko') : $el.getAttribute('data-excerpt-en')"
+                                    />
+                                  )}
+                                  <p
+                                    class="mt-2 text-xs text-gray-400"
+                                    x-data
+                                    x-text="new Date('${post.data.date}').toLocaleDateString($store.language === 'ko' ? 'ko-KR' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })"
+                                  />
+                                </a>
+                              ))}
                             </div>
                           </div>
                         </div>
                       </div>
-                      
-                      <div class="border-t md:border-t-0 md:border-l border-gray-100 pt-6 md:pt-0 md:pl-8">
-                        <div>
-                          <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider">Latest Updates</h3>
-                            <a href="/blog" class="text-sm font-medium text-purple-600 hover:text-purple-700">
-                              View all
-                              <span class="sr-only">blog posts</span>
+                    </div>
+                  </div>
+                ) : link.label.en === 'Admission Guide' ? (
+                  <div class="group relative" x-data="{ open: false }">
+                    <button
+                      class="group flex items-center rounded px-3 py-2 text-gray-900 hover:bg-gray-100 md:p-0 md:hover:bg-transparent"
+                      @click="open = !open"
+                      @click.away="open = false"
+                    >
+                      <span class="relative" x-data>
+                        <span
+                          data-label-ko={link.label.ko}
+                          data-label-en={link.label.en}
+                          x-text="$store.language === 'ko'
+                                ? $el.getAttribute('data-label-ko')
+                                : $el.getAttribute('data-label-en')"
+                        />
+                        <span class="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 transform bg-purple-600 transition-transform group-hover:scale-x-100" />
+                      </span>
+                      <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" />
+                    </button>
+                    <div
+                      x-show="open"
+                      x-transition:enter="transition ease-out duration-200"
+                      x-transition:enter-start="opacity-0 translate-y-1"
+                      x-transition:enter-end="opacity-100 translate-y-0"
+                      x-transition:leave="transition ease-in duration-150"
+                      x-transition:leave-start="opacity-100 translate-y-0"
+                      x-transition:leave-end="opacity-0 translate-y-1"
+                      class="absolute left-0 mt-2 hidden w-screen max-w-[30rem] rounded-xl border border-gray-100 bg-white shadow-lg md:block"
+                      @click.away="open = false"
+                    >
+                      <div class="p-6">
+                        <h3 class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+                          Admission Resources
+                        </h3>
+                        <div class="space-y-4">
+                          {admissionGuide.map((item) => (
+                            <a
+                              href={`/admission-guide/${item.slug}`}
+                              class:list={[
+                                'group block rounded-lg p-3 transition-all duration-200 hover:bg-purple-50',
+                                pathname === `/admission-guide/${item.slug}` &&
+                                  'bg-purple-50',
+                              ]}
+                            >
+                              <p
+                                class="text-sm font-medium text-gray-900 transition-colors duration-200 group-hover:text-purple-600"
+                                data-name-ko={item.data.name.ko}
+                                data-name-en={item.data.name.en}
+                                x-text="$store.language === 'ko' ? $el.getAttribute('data-name-ko') : $el.getAttribute('data-name-en')"
+                              />
+                              {item.data.dropdownDescription && (
+                                <p
+                                  class="mt-1 text-sm text-gray-500"
+                                  data-desc-ko={
+                                    item.data.dropdownDescription.ko
+                                  }
+                                  data-desc-en={
+                                    item.data.dropdownDescription.en
+                                  }
+                                  x-text="$store.language === 'ko' ? $el.getAttribute('data-desc-ko') : $el.getAttribute('data-desc-en')"
+                                />
+                              )}
                             </a>
-                          </div>
-                          <div class="space-y-6">
-                            {recentBlogPosts.map((post) => (
-                              <a href={`/blog/${post.slug}`} class="block group hover:bg-purple-50 rounded-lg p-3 transition-all duration-200">
-                                <p class="text-sm font-medium text-gray-900 group-hover:text-purple-600 transition-colors duration-200 line-clamp-1"
-                                   data-title-ko={post.data.title.ko}
-                                   data-title-en={post.data.title.en}
-                                   x-text="$store.language === 'ko' ? $el.getAttribute('data-title-ko') : $el.getAttribute('data-title-en')"
-                                ></p>
-                                {post.data.excerpt && (
-                                  <p class="mt-1 text-sm text-gray-500 line-clamp-2 group-hover:text-gray-600"
-                                     data-excerpt-ko={post.data.excerpt.ko}
-                                     data-excerpt-en={post.data.excerpt.en}
-                                     x-text="$store.language === 'ko' ? $el.getAttribute('data-excerpt-ko') : $el.getAttribute('data-excerpt-en')"
-                                  ></p>
-                                )}
-                                <p class="mt-2 text-xs text-gray-400"
-                                   x-data
-                                   x-text="new Date('${post.data.date}').toLocaleDateString($store.language === 'ko' ? 'ko-KR' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })"
-                                ></p>
-                              </a>
-                            ))}
-                          </div>
+                          ))}
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ) : link.label.en === 'Admission Guide' ? (
-                <div class="relative group" x-data="{ open: false }">
-                  <button 
-                    class="flex items-center py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0 group"
-                    @click="open = !open"
-                    @click.away="open = false"
-                  >
-                    <span class="relative" x-data>
-                      <span 
-                        data-label-ko={link.label.ko} 
-                        data-label-en={link.label.en}
-                        x-text="$store.language === 'ko'
-                                ? $el.getAttribute('data-label-ko')
-                                : $el.getAttribute('data-label-en')">
-                      </span>
-                      <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-purple-600 origin-left transform scale-x-0 transition-transform group-hover:scale-x-100"></span>
-                    </span>
-                    <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" />
-                  </button>
-                  <div 
-                    x-show="open"
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 translate-y-1"
-                    x-transition:enter-end="opacity-100 translate-y-0"
-                    x-transition:leave="transition ease-in duration-150"
-                    x-transition:leave-start="opacity-100 translate-y-0"
-                    x-transition:leave-end="opacity-0 translate-y-1"
-                    class="absolute left-0 mt-2 w-screen max-w-[30rem] rounded-xl bg-white shadow-lg border border-gray-100 md:block hidden"
-                    @click.away="open = false"
-                  >
-                    <div class="p-6">
-                      <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">Admission Resources</h3>
-                      <div class="space-y-4">
-                        {admissionGuide.map((item) => (
-                          <a 
-                            href={`/admission-guide/${item.slug}`} 
-                            class:list={[
-                              "group block rounded-lg p-3 hover:bg-purple-50 transition-all duration-200",
-                              pathname === `/admission-guide/${item.slug}` && "bg-purple-50"
-                            ]}
-                          >
-                            <p 
-                              class="text-sm font-medium text-gray-900 group-hover:text-purple-600 transition-colors duration-200"
-                              data-name-ko={item.data.name.ko}
-                              data-name-en={item.data.name.en}
-                              x-text="$store.language === 'ko' ? $el.getAttribute('data-name-ko') : $el.getAttribute('data-name-en')"
-                            ></p>
-                            {item.data.dropdownDescription && (
-                              <p 
-                                class="mt-1 text-sm text-gray-500"
-                                data-desc-ko={item.data.dropdownDescription.ko}
-                                data-desc-en={item.data.dropdownDescription.en}
-                                x-text="$store.language === 'ko' ? $el.getAttribute('data-desc-ko') : $el.getAttribute('data-desc-en')"
-                              ></p>
-                            )}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <a
-                  href={link.href}
-                  class="block text-base font-medium text-gray-900 hover:text-purple-600"
-                  data-label-ko={link.label.ko}
-                  data-label-en={link.label.en}
-                  x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
-                >
-                </a>
-              )}
-            </li>
-          ))}
+                ) : (
+                  <a
+                    href={link.href}
+                    class="block text-base font-medium text-gray-900 hover:text-purple-600"
+                    data-label-ko={link.label.ko}
+                    data-label-en={link.label.en}
+                    x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                  />
+                )}
+              </li>
+            ))
+          }
         </ul>
       </div>
 
-      <div class="hidden md:flex items-center space-x-4">
+      <div class="hidden items-center space-x-4 md:flex">
         <!-- Desktop Language Toggle using the global $store.language -->
         <button
           @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
-          class="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-purple-600 hover:border-purple-600 focus:outline-none border rounded-md transition-colors duration-200"
+          class="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 hover:border-purple-600 hover:text-purple-600 focus:outline-none"
         >
-          <span x-show="$store.language === 'ko'" class="w-5 h-5 rounded-full overflow-hidden">
+          <span
+            x-show="$store.language === 'ko'"
+            class="h-5 w-5 overflow-hidden rounded-full"
+          >
             🇺🇸
           </span>
-          <span x-show="$store.language === 'en'" class="w-5 h-5 rounded-full overflow-hidden">
+          <span
+            x-show="$store.language === 'en'"
+            class="h-5 w-5 overflow-hidden rounded-full"
+          >
             🇰🇷
           </span>
-          <span x-text="$store.language === 'ko' ? 'EN' : 'KO'" class="uppercase"></span>
+          <span
+            x-text="$store.language === 'ko' ? 'English' : '한국어'"
+            class="uppercase"></span>
         </button>
-        <a href="/contact" class="text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-4 py-2 text-center">
-          <span x-text="$store.language === 'ko' ? '상담 문의' : 'Contact Us'"></span>
+        <a
+          href="/contact"
+          class="rounded-lg bg-purple-600 px-4 py-2 text-center text-sm font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300"
+        >
+          <span x-text="$store.language === 'ko' ? '상담 문의' : 'Contact Us'"
+          ></span>
         </a>
       </div>
     </div>
@@ -388,99 +469,121 @@ const getProgramIcon = (program: any) => {
     @click.away="mobileMenuOpen = false"
   >
     <div class="relative min-h-screen">
-      <div class="px-4 pt-5 pb-6">
+      <div class="px-4 pb-6 pt-5">
         <div class="flex items-center justify-between">
           <div>
-            <img src="/images/bageledu/bageledu-mobile-logo.png" alt="BagelEdu" class="h-8 w-auto" />
+            <img
+              src="/images/bageledu/bageledu-mobile-logo.png"
+              alt="BagelEdu"
+              class="h-8 w-auto"
+            />
           </div>
           <div class="-mr-2">
-            <button 
-              type="button" 
-              class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100"
+            <button
+              type="button"
+              class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
               @click="mobileMenuOpen = false"
             >
               <span class="sr-only">Close menu</span>
-              <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              <svg
+                class="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             </button>
           </div>
         </div>
         <div class="mt-6">
           <nav class="grid gap-y-4">
-            {navigation.map((link) => (
-              <div>
-                {link.label.en === 'Our Services' || link.label.en === 'Admission Guide' ? (
-                  <div x-data="{ open: false }">
-                    <button
-                      class="flex items-center justify-between w-full text-base font-medium text-gray-900"
-                      @click="open = !open"
-                    >
-                      <span 
-                        data-label-ko={link.label.ko} 
-                        data-label-en={link.label.en}
-                        x-text="$store.language === 'ko'
+            {
+              navigation.map((link) => (
+                <div>
+                  {link.label.en === 'Our Services' ||
+                  link.label.en === 'Admission Guide' ? (
+                    <div x-data="{ open: false }">
+                      <button
+                        class="flex w-full items-center justify-between text-base font-medium text-gray-900"
+                        @click="open = !open"
+                      >
+                        <span
+                          data-label-ko={link.label.ko}
+                          data-label-en={link.label.en}
+                          x-text="$store.language === 'ko'
                                 ? $el.getAttribute('data-label-ko')
-                                : $el.getAttribute('data-label-en')">
-                      </span>
-                      <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" />
-                    </button>
-                    <div 
-                      x-show="open"
-                      x-transition:enter="transition ease-out duration-100"
-                      x-transition:enter-start="transform opacity-0 scale-95"
-                      x-transition:enter-end="transform opacity-100 scale-100"
-                      class="mt-2 space-y-2"
-                    >
-                      {(link.label.en === 'Our Services' ? programs : admissionGuide).map((item) => (
-                        link.label.en === 'Our Services' ? (
-                          <a
-                            href={`/programs/${item.slug}`}
-                            class="block pl-4 py-2 text-base text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
-                            data-label-ko={item.data.name.ko}
-                            data-label-en={item.data.name.en}
-                            x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
-                          ></a>
-                        ) : (
-                          <a
-                            href={`/admission-guide/${item.slug}`}
-                            class="block pl-4 py-2 text-base text-gray-500 hover:text-gray-900 hover:bg-gray-50 rounded-lg"
-                            data-label-ko={item.data.name.ko}
-                            data-label-en={item.data.name.en}
-                            x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
-                          ></a>
-                        )
-                      ))}
+                                : $el.getAttribute('data-label-en')"
+                        />
+                        <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" />
+                      </button>
+                      <div
+                        x-show="open"
+                        x-transition:enter="transition ease-out duration-100"
+                        x-transition:enter-start="transform opacity-0 scale-95"
+                        x-transition:enter-end="transform opacity-100 scale-100"
+                        class="mt-2 space-y-2"
+                      >
+                        {(link.label.en === 'Our Services'
+                          ? programs
+                          : admissionGuide
+                        ).map((item) =>
+                          link.label.en === 'Our Services' ? (
+                            <a
+                              href={`/programs/${item.slug}`}
+                              class="block rounded-lg py-2 pl-4 text-base text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                              data-label-ko={item.data.name.ko}
+                              data-label-en={item.data.name.en}
+                              x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                            />
+                          ) : (
+                            <a
+                              href={`/admission-guide/${item.slug}`}
+                              class="block rounded-lg py-2 pl-4 text-base text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                              data-label-ko={item.data.name.ko}
+                              data-label-en={item.data.name.en}
+                              x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                            />
+                          ),
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  <a
-                    href={link.href}
-                    class="block text-base font-medium text-gray-900 hover:text-purple-600"
-                    data-label-ko={link.label.ko}
-                    data-label-en={link.label.en}
-                    x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
-                  >
-                  </a>
-                )}
-              </div>
-            ))}
+                  ) : (
+                    <a
+                      href={link.href}
+                      class="block text-base font-medium text-gray-900 hover:text-purple-600"
+                      data-label-ko={link.label.ko}
+                      data-label-en={link.label.en}
+                      x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                    />
+                  )}
+                </div>
+              ))
+            }
           </nav>
         </div>
-        <div class="mt-6 pt-6 border-t border-gray-200 space-y-4">
+        <div class="mt-6 space-y-4 border-t border-gray-200 pt-6">
           <!-- Mobile Language Toggle using the global $store.language -->
           <button
             @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
-            class="block w-full px-4 py-2 text-center font-medium text-gray-700 hover:text-purple-600 rounded-lg"
+            class="block w-full rounded-lg px-4 py-2 text-center font-medium text-gray-700 hover:text-purple-600"
           >
-            <span x-text="$store.language === 'ko' ? 'Switch to English' : '한국어로 전환'"></span>
+            <span
+              x-text="$store.language === 'ko' ? 'Switch to English' : '한국어로 전환'"
+            ></span>
           </button>
 
           <a
             href="/contact"
-            class="block w-full px-4 py-2 text-center font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-lg"
+            class="block w-full rounded-lg bg-purple-600 px-4 py-2 text-center font-medium text-white hover:bg-purple-700"
           >
-            <span x-text="$store.language === 'ko' ? '상담 문의' : 'Contact Us'"></span>
+            <span x-text="$store.language === 'ko' ? '상담 문의' : 'Contact Us'"
+            ></span>
           </a>
         </div>
       </div>

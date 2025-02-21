@@ -1,0 +1,25 @@
+---
+// No need for client directive or React imports in Astro component
+---
+
+<button
+  x-data="{ language: $store.language }"
+  @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
+  class="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 hover:border-purple-600 hover:text-purple-600 focus:outline-none"
+>
+  <span
+    x-show="$store.language === 'ko'"
+    class="h-5 w-5 overflow-hidden rounded-full"
+  >
+    🇺🇸
+  </span>
+  <span
+    x-show="$store.language === 'en'"
+    class="h-5 w-5 overflow-hidden rounded-full"
+  >
+    🇰🇷
+  </span>
+  <span
+    x-text="$store.language === 'ko' ? 'English' : '한국어'"
+    class="uppercase"></span>
+</button>
