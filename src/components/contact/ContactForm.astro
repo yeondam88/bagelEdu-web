@@ -1,3 +1,7 @@
+---
+import { Toaster } from 'react-hot-toast'
+---
+
 <div class="flex min-h-screen items-center justify-center pb-24">
   <div class="w-full max-w-2xl px-4">
     <form
@@ -167,3 +171,48 @@
     </form>
   </div>
 </div>
+
+<Toaster client:load />
+
+<script>
+  import toast from 'react-hot-toast'
+  import Alpine from 'alpinejs'
+
+  const form = document.getElementById('contactForm')
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault()
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        body: new FormData(e.target as HTMLFormElement),
+      })
+
+      const language = Alpine.store('language')
+
+      if (res.ok) {
+        toast.success(
+          language === 'ko'
+            ? '메시지가 성공적으로 전송되었습니다.'
+            : 'Message sent successfully.',
+        )
+        ;(e.target as HTMLFormElement).reset()
+      } else {
+        toast.error(
+          language === 'ko'
+            ? '메시지 전송에 실패했습니다.'
+            : 'Failed to send message.',
+        )
+      }
+    } catch (err) {
+      const language = Alpine.store('language')
+      toast.error(
+        language === 'ko'
+          ? '오류가 발생했습니다. 다시 시도해주세요.'
+          : 'An error occurred. Please try again.',
+      )
+      console.error(err)
+    }
+  })
+</script>
