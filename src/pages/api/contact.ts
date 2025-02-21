@@ -113,6 +113,16 @@ export const POST: APIRoute = async ({ request }) => {
                     color: #666;
                     font-size: 14px;
                     font-weight: 500;
+                  ">High School Graduation Year</p>
+                  <p style="margin: 0; color: #1a1a1a; font-size: 16px;">${formData.get('highSchoolGraduationYear')}</p>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                  <p style="
+                    margin: 0 0 8px;
+                    color: #666;
+                    font-size: 14px;
+                    font-weight: 500;
                   ">Program Name</p>
                   <p style="margin: 0; color: #1a1a1a; font-size: 16px;">${formData.get('program-name')}</p>
                 </div>

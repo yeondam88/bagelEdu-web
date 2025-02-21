@@ -26,7 +26,7 @@ import { CONTACT } from '@config'
 
   <!-- Main Content -->
   <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-    <div class="grid gap-x-8 gap-y-16 lg:grid-cols-2 lg:gap-y-20 py-16">
+    <div class="grid gap-x-8 gap-y-16 py-16 lg:grid-cols-2 lg:gap-y-20">
       <!-- Left Column - Contact Info -->
       <div class="lg:pr-8">
         <h1 class="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
@@ -43,40 +43,93 @@ import { CONTACT } from '@config'
           </span>
         </h1>
         <p class="mt-6 text-lg leading-8 text-gray-600">
-          <span x-data x-text="$store.language === 'ko' 
+          <span
+            x-data
+            x-text="$store.language === 'ko' 
             ? '에 대한 궁금증부터, 성적 향상 및 합격 가능성 예상까지. 지금 바로 무료로 상담 받으세요.'
-            : 'From questions about BagelEdu to academic improvement and admission prospects. Get a free consultation now.'">
+            : 'From questions about BagelEdu to academic improvement and admission prospects. Get a free consultation now.'"
+          >
           </span>
         </p>
         <ul class="text-md mt-6 list-inside list-disc space-y-2 text-gray-900">
           <li>
-            <span x-data x-text="$store.language === 'ko' ? '첫 30분 무료 상담' : 'First 30 minutes free consultation'"></span>
+            <span
+              x-data
+              x-text="$store.language === 'ko' ? '첫 30분 무료 상담' : 'First 30 minutes free consultation'"
+            ></span>
           </li>
           <li>
-            <span x-data x-text="$store.language === 'ko' 
+            <span
+              x-data
+              x-text="$store.language === 'ko' 
               ? '유료 상담: 전화 혹은 zoom, 대면 상담 모두 30 이후 부터 1시간 5만원 상담비'
-              : 'Paid consultation: ₩50,000 per hour after first 30 minutes for phone, zoom, or in-person consultations'">
+              : 'Paid consultation: ₩50,000 per hour after first 30 minutes for phone, zoom, or in-person consultations'"
+            >
             </span>
           </li>
         </ul>
         <p class="text-md mt-6 leading-8 text-gray-600">
-          <span x-data x-text="$store.language === 'ko' 
+          <span
+            x-data
+            x-text="$store.language === 'ko' 
             ? '(프로그램 질문에 대한 상담, 학교와의 fit, 합격 가능성, 진로 고민, 미국 학업 및 생활 등) * 상담 후 프로그램 계약 시, 상담비는 컨설팅비에 포함되어 환불됩니다.'
-            : '(Consultation on program questions, school fit, admission chances, career concerns, U.S. academic life, etc.) * If you sign up for a program after consultation, the consultation fee will be included in the consulting fee and refunded.'">
+            : '(Consultation on program questions, school fit, admission chances, career concerns, U.S. academic life, etc.) * If you sign up for a program after consultation, the consultation fee will be included in the consulting fee and refunded.'"
+          >
+          </span>
+        </p>
+
+        <p class="text-md mt-6 leading-8 text-gray-600">
+          <span
+            x-data
+            x-text="$store.language === 'ko' 
+            ? '* 상담 시, 부모 또는 보호자가 참여해야 합니다.'
+            : '* Please note that a parent or guardian must be on the consultation.'"
+          >
           </span>
         </p>
         <dl class="mt-10 space-y-4 text-base leading-7 text-gray-600">
           <div class="flex gap-x-4">
             <dt class="flex-none">
               <span class="sr-only">Address</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building-2"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-building-2"
+                ><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"
+                ></path><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"
+                ></path><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"
+                ></path><path d="M10 6h4"></path><path d="M10 10h4"></path><path
+                  d="M10 14h4"></path><path d="M10 18h4"></path></svg
+              >
             </dt>
             <dd>{CONTACT.address}</dd>
           </div>
           <div class="flex gap-x-4">
             <dt class="flex-none">
               <span class="sr-only">Phone</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone-call"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.05 2a9 9 0 0 1 8 7.94"/><path d="M14.05 6A5 5 0 0 1 18 10"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-phone-call"
+                ><path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                ></path><path d="M14.05 2a9 9 0 0 1 8 7.94"></path><path
+                  d="M14.05 6A5 5 0 0 1 18 10"></path></svg
+              >
             </dt>
             <dd>
               <a class="hover:text-gray-900" href="tel:+82-2-1234-5678">
@@ -87,7 +140,20 @@ import { CONTACT } from '@config'
           <div class="flex gap-x-4">
             <dt class="flex-none">
               <span class="sr-only">Email</span>
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-mail"
+                ><rect width="20" height="16" x="2" y="4" rx="2"></rect><path
+                  d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg
+              >
             </dt>
             <dd>
               <a class="hover:text-gray-900" href="mailto:info@bageledu.com">
@@ -110,13 +176,16 @@ import { CONTACT } from '@config'
                 for="name"
                 class="block text-sm font-semibold leading-6 text-gray-900"
               >
-                <span x-data x-text="$store.language === 'ko' ? '이름 *' : 'Name *'"></span>
+                <span
+                  x-data
+                  x-text="$store.language === 'ko' ? '이름 *' : 'Name *'"
+                ></span>
               </label>
               <input
                 type="text"
                 name="name"
                 id="name"
-                placeholder="홍길동"
+                placeholder="John Doe"
                 class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                 required
               />
@@ -126,7 +195,10 @@ import { CONTACT } from '@config'
                 for="email"
                 class="block text-sm font-semibold leading-6 text-gray-900"
               >
-                <span x-data x-text="$store.language === 'ko' ? '이메일 *' : 'Email *'"></span>
+                <span
+                  x-data
+                  x-text="$store.language === 'ko' ? '이메일 *' : 'Email *'"
+                ></span>
               </label>
               <input
                 type="email"
@@ -142,7 +214,10 @@ import { CONTACT } from '@config'
                 for="phone"
                 class="block text-sm font-semibold leading-6 text-gray-900"
               >
-                <span x-data x-text="$store.language === 'ko' ? '전화번호 *' : 'Phone *'"></span>
+                <span
+                  x-data
+                  x-text="$store.language === 'ko' ? '전화번호 *' : 'Phone *'"
+                ></span>
               </label>
               <input
                 type="tel"
@@ -158,7 +233,29 @@ import { CONTACT } from '@config'
                 for="grade"
                 class="block text-sm font-semibold leading-6 text-gray-900"
               >
-                <span x-data x-text="$store.language === 'ko' ? '현재 학년 *' : 'Current Grade *'"></span>
+                <span
+                  x-data
+                  x-text="$store.language === 'ko' ? '고등학교 졸업 연도 *' : 'High School Graduation Year *'"
+                ></span>
+              </label>
+              <input
+                type="text"
+                name="highSchoolGraduationYear"
+                id="highSchoolGraduationYear"
+                placeholder="2025"
+                class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="grade"
+                class="block text-sm font-semibold leading-6 text-gray-900"
+              >
+                <span
+                  x-data
+                  x-text="$store.language === 'ko' ? '현재 학년 *' : 'Current Grade *'"
+                ></span>
               </label>
               <input
                 type="text"
@@ -174,7 +271,10 @@ import { CONTACT } from '@config'
                 for="program-name"
                 class="block text-sm font-semibold leading-6 text-gray-900"
               >
-                <span x-data x-text="$store.language === 'ko' ? '관심 프로그램 *' : 'Program of Interest *'"></span>
+                <span
+                  x-data
+                  x-text="$store.language === 'ko' ? '관심 프로그램 *' : 'Program of Interest *'"
+                ></span>
               </label>
               <select
                 id="program-name"
@@ -182,11 +282,21 @@ import { CONTACT } from '@config'
                 class="focus:ring-primary mt-2.5 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset sm:text-sm sm:leading-6"
                 required
               >
-                <option value="" x-data x-text="$store.language === 'ko' ? '프로그램을 선택해주세요' : 'Please select a program'"></option>
-                <option value="Tutor Service Online/Offline">Tutor Service Online/Offline</option>
+                <option
+                  value=""
+                  x-data
+                  x-text="$store.language === 'ko' ? '프로그램을 선택해주세요' : 'Please select a program'"
+                ></option>
+                <option value="Tutor Service Online/Offline"
+                  >Tutor Service Online/Offline</option
+                >
                 <option value="Summer/Winter Camp">Summer/Winter Camp</option>
-                <option value="Undergraduate Admissions Consulting">Undergraduate Admissions Consulting</option>
-                <option value="MBA Admissions Consulting">MBA Admissions Consulting</option>
+                <option value="Undergraduate Admissions Consulting"
+                  >Undergraduate Admissions Consulting</option
+                >
+                <option value="MBA Admissions Consulting"
+                  >MBA Admissions Consulting</option
+                >
               </select>
             </div>
             <div>
@@ -194,7 +304,10 @@ import { CONTACT } from '@config'
                 for="message"
                 class="block text-sm font-semibold leading-6 text-gray-900"
               >
-                <span x-data x-text="$store.language === 'ko' ? '문의사항 *' : 'Message *'"></span>
+                <span
+                  x-data
+                  x-text="$store.language === 'ko' ? '문의사항 *' : 'Message *'"
+                ></span>
               </label>
               <textarea
                 name="message"
@@ -211,7 +324,10 @@ import { CONTACT } from '@config'
               type="submit"
               class="rounded-md bg-black px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
             >
-              <span x-data x-text="$store.language === 'ko' ? '문의하기' : 'Submit'"></span>
+              <span
+                x-data
+                x-text="$store.language === 'ko' ? '문의하기' : 'Submit'"
+              ></span>
             </button>
           </div>
         </div>
@@ -238,16 +354,28 @@ import { CONTACT } from '@config'
       })
 
       const language = Alpine.store('language')
-      
+
       if (res.ok) {
-        toast.success(language === 'ko' ? '메시지가 성공적으로 전송되었습니다.' : 'Message sent successfully.')
+        toast.success(
+          language === 'ko'
+            ? '메시지가 성공적으로 전송되었습니다.'
+            : 'Message sent successfully.',
+        )
         ;(e.target as HTMLFormElement).reset()
       } else {
-        toast.error(language === 'ko' ? '메시지 전송에 실패했습니다.' : 'Failed to send message.')
+        toast.error(
+          language === 'ko'
+            ? '메시지 전송에 실패했습니다.'
+            : 'Failed to send message.',
+        )
       }
     } catch (err) {
       const language = Alpine.store('language')
-      toast.error(language === 'ko' ? '오류가 발생했습니다. 다시 시도해주세요.' : 'An error occurred. Please try again.')
+      toast.error(
+        language === 'ko'
+          ? '오류가 발생했습니다. 다시 시도해주세요.'
+          : 'An error occurred. Please try again.',
+      )
       console.error(err)
     }
   })
