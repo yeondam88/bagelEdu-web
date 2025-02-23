@@ -74,61 +74,51 @@ const metaDescription =
 
     <ViewTransitions />
 
-    <!-- Global Alpine initialization -->
-    <script>
-      // Only initialize Alpine if it hasn't been initialized yet
-      if (typeof window.Alpine === 'undefined') {
-        import('alpinejs').then((module) => {
-          const Alpine = module.default
-          window.Alpine = Alpine
+    <!-- Add defer to ensure proper loading -->
+    <script defer src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js"
+    ></script>
 
-          // Initialize language store with saved preference or detect from location
-          const initializeLanguage = async () => {
-            // First check if we have a saved preference
-            const savedLang = localStorage.getItem('preferred-language')
-            if (savedLang && (savedLang === 'en' || savedLang === 'ko')) {
-              return savedLang
-            }
+    <!-- Initialize Alpine store -->
+    <script is:inline>
+      // Make Alpine global
+      window.Alpine = window.Alpine || {}
 
-            try {
-              // Try to get location from IP
-              const response = await fetch('https://ipapi.co/json/')
-              const data = await response.json()
+      // Initialize store before Alpine loads
+      document.addEventListener('alpine:init', () => {
+        Alpine.store(
+          'language',
+          localStorage.getItem('preferred-language') || 'en',
+        )
+      })
 
-              // If in Korea, default to Korean
-              if (data.country_code === 'KR') {
-                return 'ko'
-              }
-
-              // For all other countries, check browser language
-              const [browserLang] = navigator.language.split('-')
-              return browserLang === 'ko' ? 'ko' : 'en'
-            } catch (error) {
-              console.error('Error detecting location:', error)
-              return 'en'
-            }
-          }
-
-          // Initialize the store with a default value
-          Alpine.store('language', 'en')
-
-          // Initialize language after DOM is loaded
-          document.addEventListener('DOMContentLoaded', async () => {
-            const detectedLang = await initializeLanguage()
-            Alpine.store('language', detectedLang)
-          })
-
-          // Watch for language changes and persist them
-          Alpine.effect(() => {
-            const currentLang = Alpine.store('language') as 'en' | 'ko'
+      // Handle language changes
+      document.addEventListener('alpine:initialized', () => {
+        // Watch for language changes and update localStorage
+        Alpine.effect(() => {
+          const currentLang = Alpine.store('language')
+          if (currentLang) {
             localStorage.setItem('preferred-language', currentLang)
             document.documentElement.lang = currentLang
-          })
-
-          // Start Alpine
-          Alpine.start()
+          }
         })
-      }
+
+        // Detect language if no preference is saved
+        const detectLanguage = async () => {
+          if (!localStorage.getItem('preferred-language')) {
+            try {
+              const response = await fetch('https://ipapi.co/json/')
+              const data = await response.json()
+              const detectedLang = data.country_code === 'KR' ? 'ko' : 'en'
+              Alpine.store('language', detectedLang)
+            } catch (error) {
+              console.error('Error detecting location:', error)
+              Alpine.store('language', 'en')
+            }
+          }
+        }
+
+        detectLanguage()
+      })
     </script>
   </head>
   <body class="overflow-x-hidden">

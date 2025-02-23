@@ -1099,6 +1099,330 @@ _**User**_
 
 ---
 
+_**Assistant**_
+
+Header.astro의 언어 변경 버튼을 수정하겠습니다. 데스크톱과 모바일 메뉴의 언어 토글 버튼을 다음과 같이 수정해주세요:
+
+```astro:src/components/shared/Header.astro
+<!-- Desktop Language Toggle (네비게이션 바에 있는 버튼) -->
+<div class="hidden items-center space-x-4 md:flex">
+  <button
+    @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
+    class="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 hover:border-purple-600 hover:text-purple-600 focus:outline-none"
+  >
+    <template x-if="$store.language === 'ko'">
+      <span class="h-5 w-5 overflow-hidden rounded-full">🇺🇸</span>
+    </template>
+    <template x-if="$store.language === 'en'">
+      <span class="h-5 w-5 overflow-hidden rounded-full">🇰🇷</span>
+    </template>
+    <span x-text="$store.language === 'ko' ? 'English' : '한국어'"></span>
+  </button>
+  <!-- ... 나머지 버튼들 ... -->
+</div>
+
+<!-- Mobile Language Toggle (모바일 메뉴에 있는 버튼) -->
+<div class="mt-6 space-y-4 border-t border-gray-200 pt-6">
+  <button
+    @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
+    class="block w-full rounded-lg px-4 py-2 text-center font-medium text-gray-700 hover:text-purple-600"
+  >
+    <template x-if="$store.language === 'ko'">
+      <span>Switch to English</span>
+    </template>
+    <template x-if="$store.language === 'en'">
+      <span>한국어로 전환</span>
+    </template>
+  </button>
+  <!-- ... 나머지 버튼들 ... -->
+</div>
+```
+
+주요 변경사항:
+1. `x-show`를 `template`과 `x-if`로 변경
+2. 텍스트 표시 방식을 `x-text`에서 `template`과 `x-if`를 사용하는 방식으로 변경
+3. 불필요한 중첩된 `span` 태그 제거
+
+이제 헤더의 언어 토글 버튼이 데스크톱과 모바일 모두에서 제대로 작동할 것입니다.
+
+---
+
+_**User**_
+
+hmm after deploy this code, language button is not working and also i missing flags as well why is that?
+
+---
+
+_**Assistant**_
+
+The issue might be related to how Alpine.js is being loaded and initialized in the production environment. Let's modify the `Layout.astro` to ensure Alpine.js is properly loaded and initialized:
+
+```astro:src/layouts/Layout.astro
+<!-- In the head section -->
+<head>
+  <!-- ... other head content ... -->
+  
+  <!-- Add defer to ensure proper loading -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <!-- Move Alpine initialization to a separate script -->
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.store('language', 'en')
+
+      const initializeLanguage = async () => {
+        const savedLang = localStorage.getItem('preferred-language')
+        if (savedLang && (savedLang === 'en' || savedLang === 'ko')) {
+          Alpine.store('language', savedLang)
+          return
+        }
+
+        try {
+          const response = await fetch('https://ipapi.co/json/')
+          const data = await response.json()
+          const lang = data.country_code === 'KR' ? 'ko' : 'en'
+          Alpine.store('language', lang)
+        } catch (error) {
+          console.error('Error detecting location:', error)
+          Alpine.store('language', 'en')
+        }
+      }
+
+      initializeLanguage()
+    })
+
+    // Watch for language changes
+    document.addEventListener('alpine:init', () => {
+      Alpine.effect(() => {
+        const currentLang = Alpine.store('language')
+        localStorage.setItem('preferred-language', currentLang)
+        document.documentElement.lang = currentLang
+      })
+    })
+  </script>
+</head>
+```
+
+And let's update the language toggle button in `Header.astro`:
+
+```astro:src/components/shared/Header.astro
+<!-- Desktop Language Toggle -->
+<div class="hidden items-center space-x-4 md:flex">
+  <button
+    x-data
+    @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
+    class="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 hover:border-purple-600 hover:text-purple-600 focus:outline-none"
+  >
+    <span x-show="$store.language === 'ko'" class="h-5 w-5 overflow-hidden rounded-full">🇺🇸</span>
+    <span x-show="$store.language === 'en'" class="h-5 w-5 overflow-hidden rounded-full">🇰🇷</span>
+    <span x-text="$store.language === 'ko' ? 'English' : '한국어'"></span>
+  </button>
+  <!-- ... rest of the buttons ... -->
+</div>
+
+<!-- Mobile Language Toggle -->
+<div class="mt-6 space-y-4 border-t border-gray-200 pt-6">
+  <button
+    x-data
+    @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
+    class="block w-full rounded-lg px-4 py-2 text-center font-medium text-gray-700 hover:text-purple-600"
+  >
+    <span x-show="$store.language === 'ko'">Switch to English 🇺🇸</span>
+    <span x-show="$store.language === 'en'">한국어로 전환 🇰🇷</span>
+  </button>
+  <!-- ... rest of the buttons ... -->
+</div>
+```
+
+주요 변경사항:
+1. Alpine.js를 CDN에서 직접 로드
+2. `alpine:init` 이벤트를 사용하여 store 초기화
+3. 언어 토글 버튼에 `x-data` 추가
+4. `template` 대신 `x-show` 사용
+5. 국기 이모지를 직접 텍스트로 포함
+
+이렇게 수정하면 배포 환경에서도 언어 전환과 국기가 제대로 표시되어야 합니다.
+
+---
+
+_**User**_
+
+Language button is not working still
+
+---
+
+_**Assistant**_
+
+Let's fix the Alpine.js initialization and type issues. Update your `Layout.astro` file like this:
+
+```astro:src/layouts/Layout.astro
+<!-- In the head section -->
+<head>
+  <!-- ... other head content ... -->
+
+  <!-- Add Alpine.js from CDN with defer -->
+  <script defer src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js"></script>
+
+  <!-- Initialize Alpine with proper type declaration -->
+  <script>
+    declare global {
+      interface Window {
+        Alpine: any;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize the store
+      window.Alpine.store('language', localStorage.getItem('preferred-language') || 'en')
+
+      // Initialize language detection
+      const detectLanguage = async () => {
+        try {
+          const response = await fetch('https://ipapi.co/json/')
+          const data = await response.json()
+          const detectedLang = data.country_code === 'KR' ? 'ko' : 'en'
+          window.Alpine.store('language', detectedLang)
+        } catch (error) {
+          console.error('Error detecting location:', error)
+        }
+      }
+
+      // Watch for language changes
+      window.Alpine.effect(() => {
+        const currentLang = window.Alpine.store('language')
+        localStorage.setItem('preferred-language', currentLang)
+        document.documentElement.lang = currentLang
+      })
+
+      // Only detect language if no preference is saved
+      if (!localStorage.getItem('preferred-language')) {
+        detectLanguage()
+      }
+    })
+  </script>
+</head>
+```
+
+And update the language toggle buttons in `Header.astro`:
+
+```astro:src/components/shared/Header.astro
+<!-- Desktop Language Toggle -->
+<div class="hidden items-center space-x-4 md:flex">
+  <button
+    @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
+    class="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 hover:border-purple-600 hover:text-purple-600 focus:outline-none"
+  >
+    <span x-show="$store.language === 'ko'" class="h-5 w-5">🇺🇸</span>
+    <span x-show="$store.language === 'en'" class="h-5 w-5">🇰🇷</span>
+    <span x-text="$store.language === 'ko' ? 'English' : '한국어'"></span>
+  </button>
+</div>
+
+<!-- Mobile Language Toggle -->
+<div class="mt-6 space-y-4 border-t border-gray-200 pt-6">
+  <button
+    @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
+    class="block w-full rounded-lg px-4 py-2 text-center font-medium text-gray-700 hover:text-purple-600"
+  >
+    <span x-show="$store.language === 'ko'">Switch to English 🇺🇸</span>
+    <span x-show="$store.language === 'en'">한국어로 전환 🇰🇷</span>
+  </button>
+</div>
+```
+
+주요 변경사항:
+1. Alpine.js의 특정 버전(3.13.5)을 명시
+2. `window.Alpine`을 사용하여 타입 에러 해결
+3. `DOMContentLoaded` 이벤트에서 초기화 수행
+4. 불필요한 중첩된 이벤트 리스너 제거
+5. 언어 토글 버튼 단순화
+6. 불필요한 `x-data` 디렉티브 제거
+
+이렇게 하면 언어 전환 버튼이 제대로 작동하고 국기도 표시될 것입니다.
+
+---
+
+_**User**_
+
+Language button is not working on initial load, but after navigate to other page it works but refresh the page is not working
+
+---
+
+_**Assistant**_
+
+Let's fix the Alpine.js initialization to ensure it works on initial load and persists through page refreshes. I'll update the `Layout.astro` file:
+
+```astro:src/layouts/Layout.astro
+<!-- In the head section -->
+<head>
+  <!-- ... other head content ... -->
+
+  <!-- Add Alpine.js from CDN with defer -->
+  <script defer src="https://unpkg.com/alpinejs@3.13.5/dist/cdn.min.js"></script>
+
+  <!-- Initialize Alpine store -->
+  <script is:inline>
+    // Make Alpine global
+    window.Alpine = window.Alpine || {};
+    
+    // Initialize store before Alpine loads
+    document.addEventListener('alpine:init', () => {
+      Alpine.store('language', localStorage.getItem('preferred-language') || 'en');
+    });
+
+    // Handle language changes
+    document.addEventListener('alpine:initialized', () => {
+      // Watch for language changes and update localStorage
+      Alpine.effect(() => {
+        const currentLang = Alpine.store('language');
+        if (currentLang) {
+          localStorage.setItem('preferred-language', currentLang);
+          document.documentElement.lang = currentLang;
+        }
+      });
+
+      // Detect language if no preference is saved
+      const detectLanguage = async () => {
+        if (!localStorage.getItem('preferred-language')) {
+          try {
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
+            const detectedLang = data.country_code === 'KR' ? 'ko' : 'en';
+            Alpine.store('language', detectedLang);
+          } catch (error) {
+            console.error('Error detecting location:', error);
+            Alpine.store('language', 'en');
+          }
+        }
+      };
+
+      detectLanguage();
+    });
+  </script>
+</head>
+```
+
+주요 변경사항:
+1. `is:inline` 속성 추가하여 스크립트가 항상 실행되도록 함
+2. Alpine을 전역 객체로 설정
+3. `alpine:init` 이벤트에서 store 초기화
+4. `alpine:initialized` 이벤트에서 언어 감지 및 변경 감지 로직 실행
+5. TypeScript 관련 코드 제거하고 순수 JavaScript로 변경
+
+이렇게 하면:
+1. 초기 로드시 언어 설정이 작동
+2. 페이지 새로고침 후에도 언어 설정이 유지
+3. 다른 페이지로 이동 후에도 언어 설정이 유지
+4. 브라우저를 닫았다 열어도 마지막 선택한 언어가 유지
+
+---
+
+_**User**_
+
+fix this layout. in Header.astro
+
+---
+
 
 
 ---

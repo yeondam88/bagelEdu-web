@@ -424,17 +424,33 @@ const getProgramIcon = (program: any) => {
       </div>
 
       <div class="hidden items-center space-x-4 md:flex">
-        <!-- Desktop Language Toggle (네비게이션 바에 있는 버튼) -->
+        <!-- Desktop Language Toggle -->
         <button
           @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
           class="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 hover:border-purple-600 hover:text-purple-600 focus:outline-none"
         >
-          <template x-if="$store.language === 'ko'">
-            <span class="h-5 w-5 overflow-hidden rounded-full">🇺🇸</span>
-          </template>
-          <template x-if="$store.language === 'en'">
-            <span class="h-5 w-5 overflow-hidden rounded-full">🇰🇷</span>
-          </template>
+          <!-- Korean Flag -->
+          <span
+            x-show="$store.language === 'ko'"
+            class="flex h-5 w-5 items-center"
+          >
+            <img
+              src="/images/flags/us.svg"
+              alt="English"
+              class="h-4 w-4 rounded-full"
+            />
+          </span>
+          <!-- US Flag -->
+          <span
+            x-show="$store.language === 'en'"
+            class="flex h-5 w-5 items-center"
+          >
+            <img
+              src="/images/flags/kr.svg"
+              alt="Korean"
+              class="h-4 w-4 rounded-full"
+            />
+          </span>
           <span x-text="$store.language === 'ko' ? 'English' : '한국어'"></span>
         </button>
         <a
@@ -560,17 +576,35 @@ const getProgramIcon = (program: any) => {
           </nav>
         </div>
         <div class="mt-6 space-y-4 border-t border-gray-200 pt-6">
-          <!-- Mobile Language Toggle (모바일 메뉴에 있는 버튼) -->
           <button
             @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
-            class="block w-full rounded-lg px-4 py-2 text-center font-medium text-gray-700 hover:text-purple-600"
+            class="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-center font-medium text-gray-700 hover:text-purple-600"
           >
-            <template x-if="$store.language === 'ko'">
-              <span>Switch to English</span>
-            </template>
-            <template x-if="$store.language === 'en'">
-              <span>한국어로 전환</span>
-            </template>
+            <!-- Korean Flag -->
+            <span
+              x-show="$store.language === 'ko'"
+              class="flex h-5 w-5 items-center"
+            >
+              <img
+                src="/images/flags/us.svg"
+                alt="English"
+                class="h-4 w-4 rounded-full"
+              />
+            </span>
+            <!-- US Flag -->
+            <span
+              x-show="$store.language === 'en'"
+              class="flex h-5 w-5 items-center"
+            >
+              <img
+                src="/images/flags/kr.svg"
+                alt="Korean"
+                class="h-4 w-4 rounded-full"
+              />
+            </span>
+            <span
+              x-text="$store.language === 'ko' ? 'Switch to English' : '한국어로 전환'"
+            ></span>
           </button>
 
           <a
