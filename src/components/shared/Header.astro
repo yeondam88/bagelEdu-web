@@ -77,9 +77,17 @@ const getProgramIcon = (program: any) => {
 }
 ---
 
-<!-- The top-level x-data here provides Alpine context (including mobileMenuOpen) to the entire header.
-     Global language functionality is referenced via $store.language (which is defined in Layout.astro). -->
-<div x-data="{ mobileMenuOpen: false }" class="relative">
+<!-- The top-level x-data here provides Alpine context -->
+<div 
+  x-data="{ 
+    mobileMenuOpen: false,
+    toggleMobileMenu() {
+      this.mobileMenuOpen = !this.mobileMenuOpen;
+      document.body.style.overflow = this.mobileMenuOpen ? 'hidden' : '';
+    }
+  }" 
+  class="relative"
+>
   <!-- Remove debug text -->
   <!-- Background guides -->
   <div class="pointer-events-none absolute inset-0">
@@ -111,19 +119,20 @@ const getProgramIcon = (program: any) => {
         <button
           type="button"
           class="inline-flex h-10 w-10 items-center justify-center rounded-lg p-2 text-sm text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 md:hidden"
-          @click="mobileMenuOpen = !mobileMenuOpen"
-          aria-controls="navbar-sticky"
-          aria-expanded="false"
+          @click="toggleMobileMenu()"
+          aria-controls="mobile-menu"
+          :aria-expanded="mobileMenuOpen"
         >
-          <span class="sr-only">메뉴 열기</span>
+          <span class="sr-only" x-text="mobileMenuOpen ? 'Close menu' : 'Open menu'"></span>
           <HamburgerMenuIcon className="h-5 w-5" x-show="!mobileMenuOpen" />
           <Cross2Icon className="h-5 w-5" x-show="mobileMenuOpen" />
         </button>
       </div>
 
       <div
-        class="hidden w-full items-center justify-between md:flex md:w-auto"
-        id="navbar-sticky"
+        class="w-full items-center justify-between md:flex md:w-auto"
+        :class="{ 'hidden': !mobileMenuOpen, 'block': mobileMenuOpen }"
+        id="mobile-menu"
       >
         <ul
           class="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium md:mt-0 md:flex-row md:space-x-8 md:border-0 md:bg-white md:p-0"
@@ -148,7 +157,7 @@ const getProgramIcon = (program: any) => {
                         />
                         <span class="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 transform bg-purple-600 transition-transform group-hover:scale-x-100" />
                       </span>
-                      <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" />
+                      <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': open }" />
                     </button>
                     <div
                       x-show="open"
@@ -357,7 +366,7 @@ const getProgramIcon = (program: any) => {
                         />
                         <span class="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 transform bg-purple-600 transition-transform group-hover:scale-x-100" />
                       </span>
-                      <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" />
+                      <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': open }" />
                     </button>
                     <div
                       x-show="open"
@@ -412,6 +421,7 @@ const getProgramIcon = (program: any) => {
                   <a
                     href={link.href}
                     class="block text-base font-medium text-gray-900 hover:text-purple-600"
+                    @click="toggleMobileMenu()"
                     data-label-ko={link.label.ko}
                     data-label-en={link.label.en}
                     x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
@@ -464,163 +474,144 @@ const getProgramIcon = (program: any) => {
     </div>
   </nav>
 
-  <!-- Mobile menu -->
+  <!-- Replace the mobile menu section with this updated version -->
   <div
+    x-cloak
     x-show="mobileMenuOpen"
-    x-transition:enter="transition ease-out duration-200"
-    x-transition:enter-start="opacity-0 transform -translate-y-2"
-    x-transition:enter-end="opacity-100 transform translate-y-0"
-    x-transition:leave="transition ease-in duration-150"
-    x-transition:leave-start="opacity-100 transform translate-y-0"
-    x-transition:leave-end="opacity-0 transform -translate-y-2"
-    class="fixed inset-0 z-50 overflow-y-auto bg-white md:hidden"
-    @click.away="mobileMenuOpen = false"
+    x-transition.opacity.duration.200ms
+    class="fixed inset-0 z-40 bg-black bg-opacity-25"
+    @click="toggleMobileMenu()"
+  ></div>
+
+  <div
+    x-cloak
+    x-show="mobileMenuOpen"
+    x-transition:enter="transform transition ease-in-out duration-300"
+    x-transition:enter-start="-translate-y-full"
+    x-transition:enter-end="translate-y-0"
+    x-transition:leave="transform transition ease-in-out duration-300"
+    x-transition:leave-start="translate-y-0"
+    x-transition:leave-end="-translate-y-full"
+    class="fixed inset-x-0 top-0 z-50 h-screen overflow-y-auto bg-white"
   >
-    <div class="relative min-h-screen">
-      <div class="px-4 pb-6 pt-5">
-        <div class="flex items-center justify-between">
-          <div>
-            <img
-              src="/images/bageledu/bageledu-mobile-logo.png"
-              alt="BagelEdu"
-              class="h-8 w-auto"
-            />
-          </div>
-          <div class="-mr-2">
-            <button
-              type="button"
-              class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
-              @click="mobileMenuOpen = false"
-            >
-              <span class="sr-only">Close menu</span>
-              <svg
-                class="h-6 w-6"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div class="mt-6">
-          <nav class="grid gap-y-4">
-            {
-              navigation.map((link) => (
-                <div>
-                  {link.label.en === 'Our Services' ||
-                  link.label.en === 'Admission Guide' ? (
-                    <div x-data="{ open: false }">
-                      <button
-                        class="flex w-full items-center justify-between text-base font-medium text-gray-900"
-                        @click="open = !open"
-                      >
-                        <span
-                          data-label-ko={link.label.ko}
-                          data-label-en={link.label.en}
-                          x-text="$store.language === 'ko'
-                                ? $el.getAttribute('data-label-ko')
-                                : $el.getAttribute('data-label-en')"
-                        />
-                        <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" />
-                      </button>
-                      <div
-                        x-show="open"
-                        x-transition:enter="transition ease-out duration-100"
-                        x-transition:enter-start="transform opacity-0 scale-95"
-                        x-transition:enter-end="transform opacity-100 scale-100"
-                        class="mt-2 space-y-2"
-                      >
-                        {(link.label.en === 'Our Services'
-                          ? programs
-                          : admissionGuide
-                        ).map((item) =>
-                          link.label.en === 'Our Services' ? (
-                            <a
-                              href={`/programs/${item.slug}`}
-                              class="block rounded-lg py-2 pl-4 text-base text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-                              data-label-ko={item.data.name.ko}
-                              data-label-en={item.data.name.en}
-                              x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
-                            />
-                          ) : (
-                            <a
-                              href={`/admission-guide/${item.slug}`}
-                              class="block rounded-lg py-2 pl-4 text-base text-gray-500 hover:bg-gray-50 hover:text-gray-900"
-                              data-label-ko={item.data.name.ko}
-                              data-label-en={item.data.name.en}
-                              x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
-                            />
-                          ),
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <a
-                      href={link.href}
-                      class="block text-base font-medium text-gray-900 hover:text-purple-600"
+    <!-- Mobile Menu Header -->
+    <div class="flex items-center justify-between border-b border-gray-200 px-4 py-4">
+      <div>
+        <img
+          src="/images/bageledu/BagelEducation6.png"
+          alt="BagelEdu"
+          class="h-8 w-auto"
+        />
+      </div>
+      <button
+        type="button"
+        class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+        @click="toggleMobileMenu()"
+      >
+        <span class="sr-only">Close menu</span>
+        <Cross2Icon className="h-6 w-6" />
+      </button>
+    </div>
+
+    <!-- Mobile Menu Content -->
+    <div class="space-y-6 px-4 py-6">
+      <!-- Mobile Navigation -->
+      <nav class="grid gap-y-8">
+        {
+          navigation.map((link) => (
+            <div>
+              {link.label.en === 'Our Services' ||
+              link.label.en === 'Admission Guide' ? (
+                <div x-data="{ open: false }">
+                  <button
+                    class="flex w-full items-center justify-between text-base font-medium text-gray-900"
+                    @click="open = !open"
+                  >
+                    <span
                       data-label-ko={link.label.ko}
                       data-label-en={link.label.en}
                       x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
                     />
-                  )}
+                    <ChevronDownIcon 
+                      className="w-4 h-4 ml-1 transition-transform duration-200" 
+                      :class="{ 'rotate-180': open }" 
+                    />
+                  </button>
+                  <div
+                    x-show="open"
+                    x-collapse
+                    class="mt-2 space-y-2"
+                  >
+                    {(link.label.en === 'Our Services'
+                      ? programs
+                      : admissionGuide
+                    ).map((item) =>
+                      link.label.en === 'Our Services' ? (
+                        <a
+                          href={`/programs/${item.slug}`}
+                          class="block rounded-lg py-2 pl-4 text-base text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                          @click="toggleMobileMenu()"
+                          data-label-ko={item.data.name.ko}
+                          data-label-en={item.data.name.en}
+                          x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                        />
+                      ) : (
+                        <a
+                          href={`/admission-guide/${item.slug}`}
+                          class="block rounded-lg py-2 pl-4 text-base text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                          @click="toggleMobileMenu()"
+                          data-label-ko={item.data.name.ko}
+                          data-label-en={item.data.name.en}
+                          x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                        />
+                      )
+                    )}
+                  </div>
                 </div>
-              ))
-            }
-          </nav>
-        </div>
-        <div class="mt-6 space-y-4 border-t border-gray-200 pt-6">
-          <button
-            @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
-            class="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-center font-medium text-gray-700 hover:text-purple-600"
-          >
-            <!-- Korean Flag -->
-            <span
-              x-show="$store.language === 'ko'"
-              class="flex h-5 w-5 items-center"
-            >
-              <img
-                src="/images/flags/us.svg"
-                alt="English"
-                class="h-4 w-4 rounded-full"
-              />
-            </span>
-            <!-- US Flag -->
-            <span
-              x-show="$store.language === 'en'"
-              class="flex h-5 w-5 items-center"
-            >
-              <img
-                src="/images/flags/kr.svg"
-                alt="Korean"
-                class="h-4 w-4 rounded-full"
-              />
-            </span>
-            <span
-              x-text="$store.language === 'ko' ? 'Switch to English' : '한국어로 전환'"
-            ></span>
-          </button>
+              ) : (
+                <a
+                  href={link.href}
+                  class="block text-base font-medium text-gray-900 hover:text-purple-600"
+                  @click="toggleMobileMenu()"
+                  data-label-ko={link.label.ko}
+                  data-label-en={link.label.en}
+                  x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                />
+              )}
+            </div>
+          ))
+        }
+      </nav>
 
-          <a
-            href="/contact"
-            class="block w-full rounded-lg bg-purple-600 px-4 py-2 text-center font-medium text-white hover:bg-purple-700"
-          >
-            <span x-text="$store.language === 'ko' ? '상담 문의' : 'Contact Us'"
-            ></span>
-          </a>
-        </div>
+      <!-- Mobile Language and Contact -->
+      <div class="space-y-4 border-t border-gray-200 pt-6">
+        <button
+          @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
+          class="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-center font-medium text-gray-700 hover:text-purple-600"
+        >
+          <span x-show="$store.language === 'ko'" class="flex h-5 w-5 items-center">
+            <img src="/images/flags/us.svg" alt="English" class="h-4 w-4 rounded-full" />
+          </span>
+          <span x-show="$store.language === 'en'" class="flex h-5 w-5 items-center">
+            <img src="/images/flags/kr.svg" alt="Korean" class="h-4 w-4 rounded-full" />
+          </span>
+          <span x-text="$store.language === 'ko' ? 'Switch to English' : '한국어로 전환'" />
+        </button>
+
+        <a
+          href="/contact"
+          @click="toggleMobileMenu()"
+          class="block w-full rounded-lg bg-purple-600 px-4 py-2 text-center font-medium text-white hover:bg-purple-700"
+        >
+          <span x-text="$store.language === 'ko' ? '상담 문의' : 'Contact Us'" />
+        </a>
       </div>
     </div>
   </div>
 </div>
 
 <style>
+  [x-cloak] { display: none !important; }
   .backdrop-blur-sm {
     backdrop-filter: blur(8px);
   }
