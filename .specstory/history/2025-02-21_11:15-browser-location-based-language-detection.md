@@ -1966,7 +1966,603 @@ Let's add the logo and close button to the mobile menu. Here's the updated mobil
   x-transition:enter-end="translate-y-0"
   x-transition:leave="transform transition ease-in-out duration-300"
   x-transition:leave-start="translate-y-0"
-  x-transition:
+  x-transition:leave-end="-translate-y-full"
+  class="fixed inset-x-0 top-0 z-50 h-screen overflow-y-auto bg-white"
+>
+  <!-- Mobile Menu Header -->
+  <div class="flex items-center justify-between border-b border-gray-200 px-4 py-4">
+    <div>
+      <img
+        src="/images/bageledu/BagelEducation6.png"
+        alt="BagelEdu"
+        class="h-8 w-auto"
+      />
+    </div>
+    <button
+      type="button"
+      class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+      @click="toggleMobileMenu()"
+    >
+      <span class="sr-only">Close menu</span>
+      <Cross2Icon className="h-6 w-6" />
+    </button>
+  </div>
+
+  <!-- Mobile Menu Content -->
+  <div class="space-y-6 px-4 py-6">
+    <!-- Mobile Navigation -->
+    <nav class="grid gap-y-8">
+      {
+        navigation.map((link) => (
+          <div>
+            {link.label.en === 'Our Services' ||
+            link.label.en === 'Admission Guide' ? (
+              <div x-data="{ open: false }">
+                <button
+                  class="flex w-full items-center justify-between text-base font-medium text-gray-900"
+                  @click="open = !open"
+                >
+                  <span
+                    data-label-ko={link.label.ko}
+                    data-label-en={link.label.en}
+                    x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                  />
+                  <ChevronDownIcon 
+                    className="w-4 h-4 ml-1 transition-transform duration-200" 
+                    :class="{ 'rotate-180': open }" 
+                  />
+                </button>
+                <div
+                  x-show="open"
+                  x-collapse
+                  class="mt-2 space-y-2"
+                >
+                  {(link.label.en === 'Our Services'
+                    ? programs
+                    : admissionGuide
+                  ).map((item) =>
+                    link.label.en === 'Our Services' ? (
+                      <a
+                        href={`/programs/${item.slug}`}
+                        class="block rounded-lg py-2 pl-4 text-base text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                        @click="toggleMobileMenu()"
+                        data-label-ko={item.data.name.ko}
+                        data-label-en={item.data.name.en}
+                        x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                      />
+                    ) : (
+                      <a
+                        href={`/admission-guide/${item.slug}`}
+                        class="block rounded-lg py-2 pl-4 text-base text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                        @click="toggleMobileMenu()"
+                        data-label-ko={item.data.name.ko}
+                        data-label-en={item.data.name.en}
+                        x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                      />
+                    )
+                  )}
+                </div>
+              </div>
+            ) : (
+              <a
+                href={link.href}
+                class="block text-base font-medium text-gray-900 hover:text-purple-600"
+                @click="toggleMobileMenu()"
+                data-label-ko={link.label.ko}
+                data-label-en={link.label.en}
+                x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+              />
+            )}
+          </div>
+        ))
+      }
+    </nav>
+
+    <!-- Mobile Language and Contact -->
+    <div class="space-y-4 border-t border-gray-200 pt-6">
+      <button
+        @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
+        class="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-center font-medium text-gray-700 hover:text-purple-600"
+      >
+        <span x-show="$store.language === 'ko'" class="flex h-5 w-5 items-center">
+          <img src="/images/flags/us.svg" alt="English" class="h-4 w-4 rounded-full" />
+        </span>
+        <span x-show="$store.language === 'en'" class="flex h-5 w-5 items-center">
+          <img src="/images/flags/kr.svg" alt="Korean" class="h-4 w-4 rounded-full" />
+        </span>
+        <span x-text="$store.language === 'ko' ? 'Switch to English' : '한국어로 전환'" />
+      </button>
+
+      <a
+        href="/contact"
+        @click="toggleMobileMenu()"
+        class="block w-full rounded-lg bg-purple-600 px-4 py-2 text-center font-medium text-white hover:bg-purple-700"
+      >
+        <span x-text="$store.language === 'ko' ? '상담 문의' : 'Contact Us'" />
+      </a>
+    </div>
+  </div>
+</div>
+```
+
+주요 변경사항:
+1. 모바일 메뉴 상단에 로고와 닫기 버튼이 있는 헤더 추가
+2. 헤더에 border-b 추가하여 시각적 구분
+3. 메뉴 아이템 간격 조정 (gap-y-8)
+4. 전체 높이를 h-screen으로 설정하여 전체 화면 커버
+5. 스크롤이 필요한 경우를 위해 overflow-y-auto 추가
+
+이렇게 하면:
+1. 모바일 메뉴 상단에 로고가 표시됨
+2. 닫기 버튼이 우측 상단에 위치
+3. 메뉴 아이템들이 더 잘 구분됨
+4. 전체적인 디자인이 더 깔끔해짐
+
+---
+
+_**User**_
+
+ok, there is a bug, on desktop when I click any nav menu, it flashing with mobile menu 
+
+---
+
+_**Assistant**_
+
+Let's fix the flashing mobile menu issue by separating the desktop and mobile navigation logic more clearly. Here's the fix:
+
+```astro:src/components/shared/Header.astro
+<!-- Update the navigation section -->
+<div class="w-full items-center justify-between hidden md:flex md:w-auto">
+  <!-- Desktop Navigation -->
+  <ul class="flex flex-row space-x-8 font-medium">
+    {
+      navigation.map((link) => (
+        <li class="flex items-center">
+          {link.label.en === 'Our Services' ? (
+            <div class="group relative" x-data="{ open: false }">
+              <button
+                class="group flex items-center rounded px-3 py-2 text-gray-900 hover:bg-transparent"
+                @click="open = !open"
+                @click.away="open = false"
+              >
+                <!-- ... rest of the button content ... -->
+              </button>
+              <div
+                x-show="open"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 translate-y-1"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 translate-y-1"
+                class="absolute left-1/2 mt-2 w-screen max-w-[60rem] -translate-x-1/2 transform rounded-xl border border-gray-100 bg-white shadow-lg"
+                @click.away="open = false"
+              >
+                <!-- ... rest of the dropdown content ... -->
+              </div>
+            </div>
+          ) : link.label.en === 'Admission Guide' ? (
+            <!-- ... Admission Guide dropdown ... -->
+          ) : (
+            <a
+              href={link.href}
+              class="block text-base font-medium text-gray-900 hover:text-purple-600"
+              data-label-ko={link.label.ko}
+              data-label-en={link.label.en}
+              x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+            />
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<!-- Mobile Navigation (Only visible on mobile) -->
+<div 
+  class="w-full md:hidden" 
+  :class="{ 'hidden': !mobileMenuOpen, 'block': mobileMenuOpen }"
+>
+  <ul class="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium">
+    <!-- ... mobile navigation content ... -->
+  </ul>
+</div>
+```
+
+주요 변경사항:
+1. 데스크톱 네비게이션에 `hidden md:flex` 클래스 추가
+2. 모바일 네비게이션에 `md:hidden` 클래스 추가
+3. 데스크톱 메뉴에서 불필요한 모바일 관련 클래스 제거
+4. 모바일/데스크톱 네비게이션을 완전히 분리
+
+이렇게 하면:
+1. 데스크톱에서 메뉴 클릭시 모바일 메뉴가 깜빡이지 않음
+2. 모바일과 데스크톱 메뉴가 완전히 독립적으로 작동
+3. 반응형 동작이 더 매끄러워짐
+
+---
+
+_**User**_
+
+mega menu is not working on header
+
+---
+
+_**Assistant**_
+
+Let's fix the mega menu issue in the header. The problem appears to be with the visibility of the dropdown menus. Here's the fix:
+
+```astro:src/components/shared/Header.astro
+<!-- Update the Our Services dropdown section -->
+<div class="group relative" x-data="{ open: false }">
+  <button
+    class="group flex items-center rounded px-3 py-2 text-gray-900 hover:bg-transparent"
+    @click="open = !open"
+    @click.away="open = false"
+  >
+    <span class="relative" x-data>
+      <span
+        data-label-ko={link.label.ko}
+        data-label-en={link.label.en}
+        x-text="$store.language === 'ko'
+              ? $el.getAttribute('data-label-ko')
+              : $el.getAttribute('data-label-en')"
+      />
+      <span class="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 transform bg-purple-600 transition-transform group-hover:scale-x-100" />
+    </span>
+    <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': open }" />
+  </button>
+  <div
+    x-show="open"
+    x-cloak
+    style="display: none"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 translate-y-1"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 translate-y-1"
+    class="absolute left-1/2 mt-2 w-screen max-w-[60rem] -translate-x-1/2 transform rounded-xl border border-gray-100 bg-white shadow-lg"
+    @click.away="open = false"
+  >
+    <!-- ... rest of the mega menu content ... -->
+  </div>
+</div>
+
+<!-- Update the Admission Guide dropdown section similarly -->
+<div class="group relative" x-data="{ open: false }">
+  <button
+    class="group flex items-center rounded px-3 py-2 text-gray-900 hover:bg-transparent"
+    @click="open = !open"
+    @click.away="open = false"
+  >
+    <!-- ... button content ... -->
+  </button>
+  <div
+    x-show="open"
+    x-cloak
+    style="display: none"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 translate-y-1"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 translate-y-1"
+    class="absolute left-0 mt-2 w-screen max-w-[30rem] rounded-xl border border-gray-100 bg-white shadow-lg"
+    @click.away="open = false"
+  >
+    <!-- ... rest of the admission guide menu content ... -->
+  </div>
+</div>
+```
+
+주요 변경사항:
+1. `x-cloak` 디렉티브 추가
+2. `style="display: none"` 초기 스타일 추가
+3. `hidden` 클래스 제거 (md:block 포함)
+4. 트랜지션 효과 유지
+5. 클릭 이벤트 핸들링 유지
+
+이렇게 하면:
+1. 메가 메뉴가 초기에 보이지 않음
+2. 클릭시 부드럽게 나타남
+3. 모바일/데스크톱 모두에서 정상 작동
+4. 트랜지션 효과가 자연스럽게 적용됨
+
+---
+
+_**User**_
+
+mobile menu all gone, and mega menu is not working
+
+---
+
+_**Assistant**_
+
+Let's fix both the mobile menu and mega menu issues. Here's the corrected version:
+
+```astro:src/components/shared/Header.astro
+<!-- First, fix the desktop navigation container -->
+<div class="hidden w-full items-center justify-between md:flex md:w-auto">
+  <!-- Desktop Navigation -->
+  <ul class="flex flex-row space-x-8 font-medium">
+    {
+      navigation.map((link) => (
+        <li class="flex items-center">
+          {link.label.en === 'Our Services' ? (
+            <div class="group relative" x-data="{ open: false }">
+              <button
+                class="group flex items-center rounded px-3 py-2 text-gray-900 hover:bg-transparent"
+                @click="open = !open"
+                @click.away="open = false"
+              >
+                <!-- ... button content ... -->
+              </button>
+              <div
+                x-show="open"
+                x-cloak
+                style="display: none"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 translate-y-1"
+                x-transition:enter-end="opacity-100 translate-y-0"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 translate-y-0"
+                x-transition:leave-end="opacity-0 translate-y-1"
+                class="absolute left-1/2 mt-2 w-screen max-w-[60rem] -translate-x-1/2 transform rounded-xl border border-gray-100 bg-white shadow-lg"
+              >
+                <!-- ... mega menu content ... -->
+              </div>
+            </div>
+          ) : link.label.en === 'Admission Guide' ? (
+            <!-- ... similar structure for Admission Guide ... -->
+          ) : (
+            <a
+              href={link.href}
+              class="block text-base font-medium text-gray-900 hover:text-purple-600"
+              data-label-ko={link.label.ko}
+              data-label-en={link.label.en}
+              x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+            />
+          )}
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<!-- Remove the duplicate mobile menu and keep only the slide-in version -->
+<div
+  x-cloak
+  x-show="mobileMenuOpen"
+  x-transition.opacity.duration.200ms
+  class="fixed inset-0 z-40 bg-black bg-opacity-25"
+  @click="toggleMobileMenu()"
+></div>
+
+<div
+  x-cloak
+  x-show="mobileMenuOpen"
+  x-transition:enter="transform transition ease-in-out duration-300"
+  x-transition:enter-start="-translate-y-full"
+  x-transition:enter-end="translate-y-0"
+  x-transition:leave="transform transition ease-in-out duration-300"
+  x-transition:leave-start="translate-y-0"
+  x-transition:leave-end="-translate-y-full"
+  class="fixed inset-x-0 top-0 z-50 h-screen overflow-y-auto bg-white"
+>
+  <!-- Mobile Menu Header -->
+  <div class="flex items-center justify-between border-b border-gray-200 px-4 py-4">
+    <div>
+      <img
+        src="/images/bageledu/BagelEducation6.png"
+        alt="BagelEdu"
+        class="h-8 w-auto"
+      />
+    </div>
+    <button
+      type="button"
+      class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500"
+      @click="toggleMobileMenu()"
+    >
+      <span class="sr-only">Close menu</span>
+      <Cross2Icon className="h-6 w-6" />
+    </button>
+  </div>
+
+  <!-- Mobile Menu Content -->
+  <div class="space-y-6 px-4 py-6">
+    <!-- Mobile Navigation -->
+    <nav class="grid gap-y-8">
+      {
+        navigation.map((link) => (
+          <div>
+            {link.label.en === 'Our Services' ||
+            link.label.en === 'Admission Guide' ? (
+              <div x-data="{ open: false }">
+                <button
+                  class="flex w-full items-center justify-between text-base font-medium text-gray-900"
+                  @click="open = !open"
+                >
+                  <span
+                    data-label-ko={link.label.ko}
+                    data-label-en={link.label.en}
+                    x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                  />
+                  <ChevronDownIcon 
+                    className="w-4 h-4 ml-1 transition-transform duration-200" 
+                    :class="{ 'rotate-180': open }" 
+                  />
+                </button>
+                <div
+                  x-show="open"
+                  x-collapse
+                  class="mt-2 space-y-2"
+                >
+                  {(link.label.en === 'Our Services'
+                    ? programs
+                    : admissionGuide
+                  ).map((item) => (
+                    <a
+                      href={`/${link.label.en === 'Our Services' ? 'programs' : 'admission-guide'}/${item.slug}`}
+                      class="block rounded-lg py-2 pl-4 text-base text-gray-500 hover:bg-gray-50 hover:text-gray-900"
+                      @click="toggleMobileMenu()"
+                      data-label-ko={item.data.name.ko}
+                      data-label-en={item.data.name.en}
+                      x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+                    />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <a
+                href={link.href}
+                class="block text-base font-medium text-gray-900 hover:text-purple-600"
+                @click="toggleMobileMenu()"
+                data-label-ko={link.label.ko}
+                data-label-en={link.label.en}
+                x-text="$store.language === 'ko' ? $el.getAttribute('data-label-ko') : $el.getAttribute('data-label-en')"
+              />
+            )}
+          </div>
+        ))
+      }
+    </nav>
+
+    <!-- Mobile Language and Contact -->
+    <div class="space-y-4 border-t border-gray-200 pt-6">
+      <button
+        @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
+        class="flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-center font-medium text-gray-700 hover:text-purple-600"
+      >
+        <span x-show="$store.language === 'ko'" class="flex h-5 w-5 items-center">
+          <img src="/images/flags/us.svg" alt="English" class="h-4 w-4 rounded-full" />
+        </span>
+        <span x-show="$store.language === 'en'" class="flex h-5 w-5 items-center">
+          <img src="/images/flags/kr.svg" alt="Korean" class="h-4 w-4 rounded-full" />
+        </span>
+        <span x-text="$store.language === 'ko' ? 'Switch to English' : '한국어로 전환'" />
+      </button>
+
+      <a
+        href="/contact"
+        @click="toggleMobileMenu()"
+        class="block w-full rounded-lg bg-purple-600 px-4 py-2 text-center font-medium text-white hover:bg-purple-700"
+      >
+        <span x-text="$store.language === 'ko' ? '상담 문의' : 'Contact Us'" />
+      </a>
+    </div>
+  </div>
+</div>
+```
+
+주요 변경사항:
+1. 데스크톱 네비게이션 컨테이너의 `hidden` 클래스와 `md:flex` 클래스 수정
+2. 중복된 모바일 메뉴 제거하고 슬라이드인 버전만 유지
+3. 메가 메뉴의 `x-show`와 `x-cloak` 디렉티브 수정
+4. 모바일 메뉴의 구조 개선 및 네비게이션 아이템 정리
+
+이렇게 하면:
+1. 데스크톱에서 메가 메뉴가 정상적으로 작동
+2. 모바일 메뉴가 올바르게 표시되고 작동
+3. 언어 전환과 메뉴 전환이 모든 화면 크기에서 정상 작동
+
+---
+
+_**User**_
+
+ok mega menu our services is working but admission guide is not working
+
+---
+
+_**Assistant**_
+
+The issue is with the Admission Guide dropdown menu. Let's fix it by making it consistent with the Our Services dropdown. Here's the fix:
+
+```astro:src/components/shared/Header.astro
+<!-- Update the Admission Guide dropdown section -->
+<div class="group relative" x-data="{ open: false }">
+  <button
+    class="group flex items-center rounded px-3 py-2 text-gray-900 hover:bg-transparent"
+    @click="open = !open"
+    @click.away="open = false"
+  >
+    <span class="relative" x-data>
+      <span
+        data-label-ko={link.label.ko}
+        data-label-en={link.label.en}
+        x-text="$store.language === 'ko'
+              ? $el.getAttribute('data-label-ko')
+              : $el.getAttribute('data-label-en')"
+      />
+      <span class="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 transform bg-purple-600 transition-transform group-hover:scale-x-100" />
+    </span>
+    <ChevronDownIcon className="w-4 h-4 ml-1 transition-transform duration-200" :class="{ 'rotate-180': open }" />
+  </button>
+  <div
+    x-show="open"
+    x-cloak
+    style="display: none"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 translate-y-1"
+    x-transition:enter-end="opacity-100 translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 translate-y-0"
+    x-transition:leave-end="opacity-0 translate-y-1"
+    class="absolute left-1/2 mt-2 w-screen max-w-[30rem] -translate-x-1/2 transform rounded-xl border border-gray-100 bg-white shadow-lg"
+  >
+    <div class="p-6">
+      <h3 class="mb-4 text-xs font-semibold uppercase tracking-wider text-gray-400">
+        Admission Resources
+      </h3>
+      <div class="space-y-4">
+        {admissionGuide.map((item) => (
+          <a
+            href={`/admission-guide/${item.slug}`}
+            class:list={[
+              'group block rounded-lg p-3 transition-all duration-200 hover:bg-purple-50',
+              pathname === `/admission-guide/${item.slug}` &&
+                'bg-purple-50',
+            ]}
+          >
+            <p
+              class="text-sm font-medium text-gray-900 transition-colors duration-200 group-hover:text-purple-600"
+              data-name-ko={item.data.name.ko}
+              data-name-en={item.data.name.en}
+              x-text="$store.language === 'ko' ? $el.getAttribute('data-name-ko') : $el.getAttribute('data-name-en')"
+            />
+            {item.data.dropdownDescription && (
+              <p
+                class="mt-1 text-sm text-gray-500"
+                data-desc-ko={item.data.dropdownDescription.ko}
+                data-desc-en={item.data.dropdownDescription.en}
+                x-text="$store.language === 'ko' ? $el.getAttribute('data-desc-ko') : $el.getAttribute('data-desc-en')"
+              />
+            )}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+주요 변경사항:
+1. `left-0`를 `left-1/2`로 변경하고 `-translate-x-1/2` 추가하여 중앙 정렬
+2. `@click.away="open = false"` 위치 수정
+3. `style="display: none"` 추가
+4. 트랜지션 효과 유지
+
+이렇게 하면:
+1. Admission Guide 드롭다운 메뉴가 Our Services와 동일한 방식으로 작동
+2. 메뉴가 버튼 중앙에 정렬
+3. 클릭시 부드럽게 나타나고 사라짐
+4. 메뉴 외부 클릭시 닫힘
+
+---
+
+_**User**_
+
+there is invalid date why?
 
 ---
 
