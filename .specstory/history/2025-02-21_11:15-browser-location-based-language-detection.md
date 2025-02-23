@@ -1057,6 +1057,48 @@ This tells TypeScript that we know the store value will always be either 'en' or
 
 ---
 
+_**User**_
+
+Language switcher 버튼이 동작안되는거같은데 고쳐줘
+
+---
+
+_**Assistant**_
+
+네, Language Toggle 버튼이 제대로 동작하도록 수정하겠습니다. `LanguageToggle.astro` 컴포넌트를 다음과 같이 수정해주세요:
+
+```astro:src/components/shared/LanguageToggle.astro
+---
+---
+<button
+  @click="$store.language = $store.language === 'ko' ? 'en' : 'ko'"
+  class="inline-flex items-center gap-2 rounded-md border px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors duration-200 hover:border-purple-600 hover:text-purple-600 focus:outline-none"
+>
+  <template x-if="$store.language === 'ko'">
+    <span class="h-5 w-5 overflow-hidden rounded-full">🇺🇸</span>
+  </template>
+  <template x-if="$store.language === 'en'">
+    <span class="h-5 w-5 overflow-hidden rounded-full">🇰🇷</span>
+  </template>
+  <span x-text="$store.language === 'ko' ? 'English' : '한국어'"></span>
+</button>
+```
+
+주요 변경사항:
+1. `x-data` 제거 (전역 store를 사용하므로 불필요)
+2. `x-show`를 `x-if`와 `template` 태그로 변경
+3. 불필요한 `uppercase` 클래스 제거
+
+이제 언어 토글 버튼이 제대로 작동할 것입니다.
+
+---
+
+_**User**_
+
+@Header.astro 여기에있는 언어변경하는거 안되는데 고쳐줘
+
+---
+
 
 
 ---
