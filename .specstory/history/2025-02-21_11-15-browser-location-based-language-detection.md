@@ -2566,6 +2566,71 @@ there is invalid date why?
 
 ---
 
+_**Assistant**_
+
+The "Invalid Date" issue appears in the blog posts section because the date format in the data might not be in a valid format that JavaScript's Date object can parse. Let's fix this by ensuring proper date formatting.
+
+First, let's check how the date is being displayed in the mega menu:
+
+```astro:src/components/shared/Header.astro
+<!-- Find and update this section in the Latest Updates area -->
+<p
+  class="mt-2 text-xs text-gray-400"
+  x-data
+  x-text="new Date('${post.data.date}').toLocaleDateString($store.language === 'ko' ? 'ko-KR' : 'en-US', { year: 'numeric', month: 'long', day: 'numeric' })"
+/>
+```
+
+Let's modify it to handle the date more safely:
+
+```astro:src/components/shared/Header.astro
+<p
+  class="mt-2 text-xs text-gray-400"
+  x-data="{ 
+    formatDate(dateStr) {
+      try {
+        const date = new Date(dateStr);
+        if (isNaN(date.getTime())) return '';
+        return date.toLocaleDateString($store.language === 'ko' ? 'ko-KR' : 'en-US', 
+          { year: 'numeric', month: 'long', day: 'numeric' }
+        );
+      } catch (e) {
+        return '';
+      }
+    }
+  }"
+  x-text="formatDate('${post.data.date}')"
+/>
+```
+
+Also, we need to make sure the date format in your blog posts is correct. The date in your content files should be in ISO 8601 format (YYYY-MM-DD). For example:
+
+```yaml
+---
+title:
+  en: "Blog Post Title"
+  ko: "블로그 포스트 제목"
+date: "2024-02-20"  # Use this format
+---
+```
+
+To fix this:
+
+1. Check your blog post files in `src/content/blog/` directory
+2. Make sure all dates are in YYYY-MM-DD format
+3. If you need to keep track of time as well, use YYYY-MM-DDTHH:mm:ss.sssZ format
+
+For example:
+```yaml
+date: "2024-02-20"           # Just date
+# or
+date: "2024-02-20T12:00:00Z" # Date with time
+```
+
+This should resolve the "Invalid Date" issue in your mega menu.
+
+---
+
 
 
 ---
