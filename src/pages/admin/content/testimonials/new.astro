@@ -1,0 +1,418 @@
+---
+import { supabase } from '../../../../lib/supabase/client';
+import { Button } from '../../../../components/components/ui/button';
+import { Input } from '../../../../components/components/ui/input';
+import { Textarea } from '../../../../components/components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '../../../../components/components/ui/card';
+import { Label } from '../../../../components/components/ui/label';
+
+// Check if user is authenticated
+const { data: { session } } = await supabase.auth.getSession();
+const isAuthenticated = !!session;
+
+// Redirect to login if not authenticated
+if (!isAuthenticated) {
+  return Astro.redirect('/admin/login');
+}
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Testimonial | Admin Dashboard | Bagel Education</title>
+  <link rel="stylesheet" href="/styles/globals.css">
+</head>
+<body class="min-h-screen bg-background">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="hidden md:flex w-64 flex-col bg-card border-r border-border h-screen sticky top-0">
+      <div class="p-6 border-b border-border">
+        <h1 class="text-xl font-bold">Bagel Admin</h1>
+      </div>
+      
+      <nav class="flex-1 p-4">
+        <ul class="space-y-1">
+          <li>
+            <a href="/admin" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/blog" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              Blog Posts
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/programs" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+              Programs
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/testimonials" class="flex items-center py-2 px-3 rounded-md bg-accent">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Testimonials
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/faqs" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              FAQs
+            </a>
+          </li>
+          <li>
+            <a href="/admin/media" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              Media Library
+            </a>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="p-4 border-t border-border">
+        <Button id="logout-button" variant="ghost" className="w-full justify-start">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Log out
+        </Button>
+      </div>
+    </aside>
+    
+    <!-- Main content -->
+    <main class="flex-1 p-6">
+      <header class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-bold">New Testimonial</h1>
+          <p class="text-muted-foreground">Create a new student or client testimonial</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="/admin/content/testimonials">
+            <Button variant="outline" className="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              Back to Testimonials
+            </Button>
+          </a>
+        </div>
+      </header>
+
+      <!-- Testimonial form -->
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Testimonial Details</CardTitle>
+          <CardDescription>
+            Fill in the information below to create a new testimonial
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <form id="testimonial-form" class="space-y-6">
+            <div class="space-y-4">
+              <div>
+                <Label htmlFor="author_name">Author Name</Label>
+                <Input 
+                  id="author_name" 
+                  name="author_name" 
+                  required 
+                  placeholder="Enter author's name"
+                  className="mt-1"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="author_title">Author Title</Label>
+                <Input 
+                  id="author_title" 
+                  name="author_title" 
+                  placeholder="e.g., Student, Marketing Professional, etc." 
+                  className="mt-1"
+                />
+                <p class="text-xs text-muted-foreground mt-1">
+                  The person's role or position
+                </p>
+              </div>
+              
+              <div>
+                <Label htmlFor="avatar_url">Avatar Image URL</Label>
+                <div class="flex gap-2">
+                  <Input 
+                    id="avatar_url" 
+                    name="avatar_url" 
+                    placeholder="https://example.com/image.jpg" 
+                    className="mt-1 flex-1"
+                  />
+                  <Button 
+                    type="button" 
+                    id="select-image-btn"
+                    variant="outline"
+                    className="mt-1"
+                  >
+                    Browse Media
+                  </Button>
+                </div>
+                <p class="text-xs text-muted-foreground mt-1">
+                  Leave empty to use initials
+                </p>
+              </div>
+              
+              <div>
+                <Label htmlFor="rating">Rating</Label>
+                <div class="flex items-center gap-2 mt-1">
+                  <div class="star-rating">
+                    <div id="star-rating-display" class="text-2xl text-amber-500">★★★★★</div>
+                    <input type="range" id="rating" name="rating" min="1" max="5" value="5" class="w-full">
+                  </div>
+                  <span id="rating-value" class="text-lg font-medium">5</span>
+                </div>
+              </div>
+              
+              <div>
+                <Label htmlFor="content">Testimonial Content</Label>
+                <Textarea 
+                  id="content" 
+                  name="content" 
+                  required
+                  placeholder="Enter the testimonial content" 
+                  className="mt-1 h-32"
+                ></Textarea>
+              </div>
+              
+              <div>
+                <Label htmlFor="program_name">Related Program (Optional)</Label>
+                <Input 
+                  id="program_name" 
+                  name="program_name" 
+                  placeholder="e.g., Web Development Bootcamp" 
+                  className="mt-1"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="date">Date</Label>
+                <Input 
+                  id="date" 
+                  name="date" 
+                  type="date" 
+                  className="mt-1"
+                  value={new Date().toISOString().split('T')[0]}
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="status">Status</Label>
+                <select 
+                  id="status" 
+                  name="status" 
+                  required
+                  class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm mt-1"
+                >
+                  <option value="published">Published</option>
+                  <option value="pending">Pending Review</option>
+                  <option value="rejected">Rejected</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-between border-t pt-6">
+          <Button variant="outline" id="cancel-btn">Cancel</Button>
+          <Button id="save-testimonial">Save Testimonial</Button>
+        </CardFooter>
+      </Card>
+
+      <!-- Image selection modal -->
+      <div id="image-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
+        <div class="bg-background rounded-lg w-full max-w-3xl max-h-[80vh] overflow-hidden flex flex-col">
+          <div class="p-4 border-b flex justify-between items-center">
+            <h3 class="text-lg font-medium">Select Image</h3>
+            <button id="close-modal" class="text-muted-foreground hover:text-foreground">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+          <div class="p-4 overflow-y-auto flex-1">
+            <div id="media-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              <!-- Images will be loaded here -->
+              <div class="text-center py-10 text-muted-foreground">
+                Loading media...
+              </div>
+            </div>
+          </div>
+          <div class="p-4 border-t flex justify-end">
+            <Button id="cancel-selection" variant="outline">Cancel</Button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script>
+    // Initialize Supabase client
+    import { createClient } from '@supabase/supabase-js';
+    
+    window.supabase = createClient(
+      import.meta.env.PUBLIC_SUPABASE_URL,
+      import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+    );
+    
+    // Star rating functionality
+    const ratingInput = document.getElementById('rating');
+    const ratingValue = document.getElementById('rating-value');
+    const starRatingDisplay = document.getElementById('star-rating-display');
+    
+    function updateStarRating() {
+      const rating = ratingInput.value;
+      ratingValue.textContent = rating;
+      starRatingDisplay.textContent = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    }
+    
+    ratingInput?.addEventListener('input', updateStarRating);
+    
+    // Media selector
+    const selectImageBtn = document.getElementById('select-image-btn');
+    const imageModal = document.getElementById('image-modal');
+    const closeModal = document.getElementById('close-modal');
+    const cancelSelection = document.getElementById('cancel-selection');
+    const mediaGrid = document.getElementById('media-grid');
+    const avatarUrlInput = document.getElementById('avatar_url');
+    
+    // Open media selection modal
+    selectImageBtn?.addEventListener('click', async () => {
+      imageModal.classList.remove('hidden');
+      
+      // Load media
+      try {
+        const { data: mediaItems, error } = await window.supabase
+          .from('media')
+          .select('*')
+          .order('created_at', { ascending: false });
+          
+        if (error) throw error;
+        
+        // Display media items
+        if (mediaItems && mediaItems.length > 0) {
+          mediaGrid.innerHTML = mediaItems
+            .filter(item => item.type?.startsWith('image/')) // Only show images
+            .map(item => `
+              <div class="cursor-pointer hover:opacity-80 transition" data-url="${item.url}">
+                <div class="aspect-square rounded-md overflow-hidden border">
+                  <img 
+                    src="${item.url}" 
+                    alt="${item.name || 'Image'}"
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="mt-1 text-xs truncate">${item.name || 'Unnamed'}</div>
+              </div>
+            `)
+            .join('');
+            
+          // Add click event listeners
+          document.querySelectorAll('#media-grid > div').forEach(item => {
+            item.addEventListener('click', () => {
+              const url = item.dataset.url;
+              avatarUrlInput.value = url;
+              imageModal.classList.add('hidden');
+            });
+          });
+        } else {
+          mediaGrid.innerHTML = `
+            <div class="text-center py-10 text-muted-foreground col-span-full">
+              <p>No images found.</p>
+              <p class="text-sm mt-2">Upload images in the Media Library.</p>
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.error('Error loading media:', error);
+        mediaGrid.innerHTML = `
+          <div class="text-center py-10 text-muted-foreground col-span-full">
+            <p>Error loading media.</p>
+            <p class="text-sm">${error.message}</p>
+          </div>
+        `;
+      }
+    });
+    
+    // Close media selection modal
+    closeModal?.addEventListener('click', () => {
+      imageModal.classList.add('hidden');
+    });
+    
+    cancelSelection?.addEventListener('click', () => {
+      imageModal.classList.add('hidden');
+    });
+    
+    // Submit form
+    const testimonialForm = document.getElementById('testimonial-form');
+    const saveTestimonialBtn = document.getElementById('save-testimonial');
+    const cancelBtn = document.getElementById('cancel-btn');
+    
+    saveTestimonialBtn?.addEventListener('click', async () => {
+      const formData = new FormData(testimonialForm);
+      const testimonialData = Object.fromEntries(formData.entries());
+      
+      try {
+        const { data, error } = await window.supabase
+          .from('testimonials')
+          .insert(testimonialData)
+          .select()
+          .single();
+          
+        if (error) throw error;
+        
+        alert('Testimonial saved successfully!');
+        window.location.href = '/admin/content/testimonials';
+      } catch (error) {
+        console.error('Error saving testimonial:', error);
+        alert('Failed to save testimonial. Please try again.');
+      }
+    });
+    
+    cancelBtn?.addEventListener('click', () => {
+      window.location.href = '/admin/content/testimonials';
+    });
+    
+    // Handle logout
+    document.getElementById('logout-button')?.addEventListener('click', async () => {
+      try {
+        const { error } = await window.supabase.auth.signOut();
+        if (error) throw error;
+        window.location.href = '/admin/login';
+      } catch (error) {
+        console.error('Error signing out:', error);
+      }
+    });
+  </script>
+</body>
+</html> 
