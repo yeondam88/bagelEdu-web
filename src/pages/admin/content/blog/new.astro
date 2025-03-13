@@ -1,0 +1,434 @@
+---
+import { supabase } from '../../../../lib/supabase/client';
+import { Button } from '../../../../components/components/ui/button';
+import { Input } from '../../../../components/components/ui/input';
+import { Textarea } from '../../../../components/components/ui/textarea';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '../../../../components/components/ui/card';
+import { Label } from '../../../../components/components/ui/label';
+import { Select } from '../../../../components/components/ui/select';
+
+// Check if user is authenticated
+const { data: { session } } = await supabase.auth.getSession();
+const isAuthenticated = !!session;
+
+// Redirect to login if not authenticated
+if (!isAuthenticated) {
+  return Astro.redirect('/admin/login');
+}
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Blog Post | Admin Dashboard | Bagel Education</title>
+  <link rel="stylesheet" href="/styles/globals.css">
+</head>
+<body class="min-h-screen bg-background">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="hidden md:flex w-64 flex-col bg-card border-r border-border h-screen sticky top-0">
+      <div class="p-6 border-b border-border">
+        <h1 class="text-xl font-bold">Bagel Admin</h1>
+      </div>
+      
+      <nav class="flex-1 p-4">
+        <ul class="space-y-1">
+          <li>
+            <a href="/admin" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/blog" class="flex items-center py-2 px-3 rounded-md bg-accent">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              Blog Posts
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/programs" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+              Programs
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/testimonials" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Testimonials
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/faqs" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              FAQs
+            </a>
+          </li>
+          <li>
+            <a href="/admin/media" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              Media Library
+            </a>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="p-4 border-t border-border">
+        <Button id="logout-button" variant="ghost" className="w-full justify-start">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Log out
+        </Button>
+      </div>
+    </aside>
+    
+    <!-- Main content -->
+    <main class="flex-1 p-6">
+      <header class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-bold">New Blog Post</h1>
+          <p class="text-muted-foreground">Create a new article for your blog</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="/admin/content/blog">
+            <Button variant="outline" className="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+              </svg>
+              Back to Posts
+            </Button>
+          </a>
+        </div>
+      </header>
+
+      <!-- Blog post form -->
+      <Card className="mb-6">
+        <CardHeader>
+          <CardTitle>Post Details</CardTitle>
+          <CardDescription>
+            Fill in the information below to create your blog post
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <form id="blog-post-form" class="space-y-6">
+            <div class="space-y-4">
+              <div>
+                <Label htmlFor="title">Title</Label>
+                <Input 
+                  id="title" 
+                  name="title" 
+                  required 
+                  placeholder="Enter post title"
+                  className="mt-1"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="slug">Slug</Label>
+                <Input 
+                  id="slug" 
+                  name="slug" 
+                  placeholder="enter-post-slug" 
+                  className="mt-1"
+                />
+                <p class="text-xs text-muted-foreground mt-1">
+                  Leave empty to generate automatically from title
+                </p>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="category">Category</Label>
+                  <select 
+                    id="category" 
+                    name="category" 
+                    required
+                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm mt-1"
+                  >
+                    <option value="">Select a category</option>
+                    <option value="tutorial">Tutorial</option>
+                    <option value="news">News</option>
+                    <option value="feature">Feature</option>
+                    <option value="case-study">Case Study</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="status">Status</Label>
+                  <select 
+                    id="status" 
+                    name="status" 
+                    required
+                    class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm mt-1"
+                  >
+                    <option value="draft">Draft</option>
+                    <option value="published">Published</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div>
+                <Label htmlFor="featured_image">Featured Image URL</Label>
+                <Input 
+                  id="featured_image" 
+                  name="featured_image" 
+                  placeholder="https://example.com/image.jpg" 
+                  className="mt-1"
+                />
+              </div>
+              
+              <div>
+                <Label htmlFor="excerpt">Excerpt/Summary</Label>
+                <Textarea 
+                  id="excerpt" 
+                  name="excerpt" 
+                  placeholder="Brief description of your post" 
+                  className="mt-1 h-20"
+                ></Textarea>
+              </div>
+              
+              <div>
+                <Label htmlFor="content">Content</Label>
+                <div class="border rounded-md p-4 mt-1">
+                  <div id="editor-container" class="min-h-[300px]"></div>
+                  <textarea id="content" name="content" class="hidden"></textarea>
+                </div>
+                <div class="flex justify-end mt-2">
+                  <Button 
+                    type="button" 
+                    id="generate-ai-content"
+                    variant="outline"
+                    className="text-sm"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10"></path>
+                      <path d="M10 8v8"></path>
+                      <path d="M14 8v8"></path>
+                      <path d="M18 12a6 6 0 0 0-6-6"></path>
+                    </svg>
+                    Generate with AI
+                  </Button>
+                </div>
+              </div>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="author">Author</Label>
+                  <Input 
+                    id="author" 
+                    name="author" 
+                    placeholder="Author name" 
+                    className="mt-1"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="tags">Tags</Label>
+                  <Input 
+                    id="tags" 
+                    name="tags" 
+                    placeholder="tag1, tag2, tag3" 
+                    className="mt-1"
+                  />
+                  <p class="text-xs text-muted-foreground mt-1">
+                    Separate multiple tags with commas
+                  </p>
+                </div>
+              </div>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-between border-t pt-6">
+          <Button variant="outline" id="save-draft">Save as Draft</Button>
+          <Button id="publish-post">Publish Post</Button>
+        </CardFooter>
+      </Card>
+    </main>
+  </div>
+  
+  <script>
+    // Initialize Supabase client
+    import { createClient } from '@supabase/supabase-js';
+    
+    window.supabase = createClient(
+      import.meta.env.PUBLIC_SUPABASE_URL,
+      import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+    );
+    
+    // Load Quill editor
+    document.addEventListener('DOMContentLoaded', async () => {
+      const { default: Quill } = await import('https://cdn.skypack.dev/quill@1.3.7');
+      
+      // Initialize Quill editor
+      const quill = new Quill('#editor-container', {
+        theme: 'snow',
+        modules: {
+          toolbar: [
+            [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'color': [] }, { 'background': [] }],
+            ['link', 'image', 'code-block'],
+            ['clean']
+          ]
+        },
+        placeholder: 'Write your blog post content here...'
+      });
+      
+      // Add Quill CSS
+      const quillCSS = document.createElement('link');
+      quillCSS.rel = 'stylesheet';
+      quillCSS.href = 'https://cdn.quilljs.com/1.3.7/quill.snow.css';
+      document.head.appendChild(quillCSS);
+      
+      // Update hidden content field when editor content changes
+      quill.on('text-change', () => {
+        document.getElementById('content').value = quill.root.innerHTML;
+      });
+      
+      // Auto-generate slug from title
+      const titleInput = document.getElementById('title');
+      const slugInput = document.getElementById('slug');
+      
+      titleInput?.addEventListener('blur', () => {
+        if (slugInput.value) return; // Don't override if already has a value
+        
+        const slug = titleInput.value
+          .toLowerCase()
+          .replace(/[^\w\s]/gi, '')
+          .replace(/\s+/g, '-');
+          
+        slugInput.value = slug;
+      });
+      
+      // Handle form submission
+      function handleSubmit(status) {
+        // Get form data
+        const form = document.getElementById('blog-post-form');
+        const formData = new FormData(form);
+        
+        // Set status
+        formData.set('status', status);
+        
+        // Get content from Quill
+        formData.set('content', quill.root.innerHTML);
+        
+        // Convert to object
+        const postData = Object.fromEntries(formData.entries());
+        
+        // Format tags
+        if (postData.tags) {
+          postData.tags = postData.tags
+            .split(',')
+            .map(tag => tag.trim())
+            .filter(tag => tag);
+        }
+        
+        return postData;
+      }
+      
+      // Save as draft
+      document.getElementById('save-draft')?.addEventListener('click', async () => {
+        const postData = handleSubmit('draft');
+        await savePost(postData);
+      });
+      
+      // Publish post
+      document.getElementById('publish-post')?.addEventListener('click', async () => {
+        const postData = handleSubmit('published');
+        await savePost(postData);
+      });
+      
+      async function savePost(postData) {
+        try {
+          const { data, error } = await window.supabase
+            .from('blog_posts')
+            .insert(postData)
+            .select()
+            .single();
+            
+          if (error) throw error;
+          
+          alert('Blog post saved successfully!');
+          window.location.href = '/admin/content/blog';
+        } catch (error) {
+          console.error('Error saving blog post:', error);
+          alert('Failed to save blog post. Please try again.');
+        }
+      }
+      
+      // AI content generation
+      document.getElementById('generate-ai-content')?.addEventListener('click', async () => {
+        const title = document.getElementById('title').value;
+        if (!title) {
+          alert('Please enter a title before generating content');
+          return;
+        }
+        
+        try {
+          const response = await fetch('/api/ai/generate', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              prompt: `Write a blog post about: ${title}`,
+              type: 'blog'
+            })
+          });
+          
+          if (!response.ok) throw new Error('Failed to generate content');
+          
+          const data = await response.json();
+          quill.root.innerHTML = data.content;
+          document.getElementById('content').value = data.content;
+          
+          // If excerpt is empty, use the summary
+          const excerptField = document.getElementById('excerpt');
+          if (!excerptField.value && data.summary) {
+            excerptField.value = data.summary;
+          }
+        } catch (error) {
+          console.error('Error generating content:', error);
+          alert('Failed to generate content. Please try again.');
+        }
+      });
+    });
+    
+    // Handle logout
+    document.getElementById('logout-button')?.addEventListener('click', async () => {
+      try {
+        const { error } = await window.supabase.auth.signOut();
+        if (error) throw error;
+        window.location.href = '/admin/login';
+      } catch (error) {
+        console.error('Error signing out:', error);
+      }
+    });
+  </script>
+</body>
+</html> 

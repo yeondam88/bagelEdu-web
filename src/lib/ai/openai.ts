@@ -1,8 +1,10 @@
 import OpenAI from 'openai';
 
-// Create OpenAI client
-const openai = new OpenAI({
-  apiKey: import.meta.env.OPENAI_API_KEY,
+// Initialize OpenAI client
+const apiKey = import.meta.env.OPENAI_API_KEY;
+
+export const openai = new OpenAI({
+  apiKey: apiKey || '',
 });
 
 /**
@@ -89,4 +91,81 @@ export async function generateContentIdeas(topic: string, count: number | null |
 export async function translateContent(content: string, targetLanguage: string) {
   const prompt = `Translate the following content to ${targetLanguage}: ${content}`;
   return generateContent(prompt);
+}
+
+// Helper functions for common AI operations
+export async function generateBlogPost(topic: string) {
+  const systemPrompt = `You are an expert educational content writer. 
+  Create a well-structured, engaging blog post that's optimized for SEO. 
+  Include appropriate HTML formatting with headings (h2, h3), paragraphs, lists, and emphasis where needed.
+  The content should be informative and valuable to readers interested in education.`;
+  
+  const completion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: `Write a blog post about: ${topic}` }
+    ],
+    temperature: 0.7,
+  });
+  
+  return completion.choices[0]?.message?.content || '';
+}
+
+export async function generateFAQAnswer(question: string) {
+  const systemPrompt = `You are an expert at creating clear, concise FAQ answers.
+  Provide a straightforward, helpful answer to the question.
+  Keep your response friendly but direct, focused on precisely answering the question.`;
+  
+  const completion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: question }
+    ],
+    temperature: 0.7,
+  });
+  
+  return completion.choices[0]?.message?.content || '';
+}
+
+export async function generateSummary(content: string, maxLength = 100) {
+  const completion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [
+      { role: "system", content: "Create a concise 1-2 sentence summary of the following text that would work well as a meta description:" },
+      { role: "user", content }
+    ],
+    temperature: 0.5,
+    max_tokens: maxLength,
+  });
+  
+  return completion.choices[0]?.message?.content || '';
+}
+
+export async function generateSEOSuggestions(content: string, keywords?: string[]) {
+  const keywordText = keywords && keywords.length > 0 
+    ? `Focus on these keywords: ${keywords.join(', ')}.` 
+    : '';
+  
+  const completion = await openai.chat.completions.create({
+    model: "gpt-3.5-turbo",
+    messages: [
+      { 
+        role: "system", 
+        content: `Analyze the following content and provide SEO improvement suggestions. ${keywordText}
+        Include recommendations for:
+        1. Title optimization
+        2. Meta description improvement
+        3. Heading structure
+        4. Keyword usage and placement
+        5. Internal linking opportunities
+        Format your response as a bulleted list for each section.`
+      },
+      { role: "user", content }
+    ],
+    temperature: 0.5,
+  });
+  
+  return completion.choices[0]?.message?.content || '';
 } 
