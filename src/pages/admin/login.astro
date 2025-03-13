@@ -1,0 +1,75 @@
+---
+import { supabase } from '../../lib/supabase/client';
+import { Button } from '../../components/components/ui/button';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '../../components/components/ui/card';
+
+// Check if user is already authenticated
+const { data: { session } } = await supabase.auth.getSession();
+const isAuthenticated = !!session;
+
+// Redirect to admin dashboard if already authenticated
+if (isAuthenticated) {
+  return Astro.redirect('/admin');
+}
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | Bagel Education</title>
+  <link rel="stylesheet" href="/styles/globals.css">
+</head>
+<body class="min-h-screen bg-background flex items-center justify-center">
+  <div class="container flex items-center justify-center">
+    <Card className="w-full max-w-md">
+      <CardHeader className="space-y-1 text-center">
+        <CardTitle className="text-2xl font-bold tracking-tight">Bagel Admin</CardTitle>
+        <CardDescription>
+          Sign in to access the admin dashboard
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-4">
+        <Button id="google-login" variant="outline" className="w-full">
+          <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z" fill="currentColor"/>
+          </svg>
+          Sign in with Google
+        </Button>
+      </CardContent>
+      <CardFooter className="flex flex-col">
+        <p class="text-xs text-muted-foreground text-center mt-4">
+          By signing in, you agree to our Terms of Service and Privacy Policy.
+        </p>
+      </CardFooter>
+    </Card>
+  </div>
+
+  <script>
+    // Initialize Supabase client on the frontend
+    import { createClient } from '@supabase/supabase-js';
+    
+    window.supabase = createClient(
+      import.meta.env.PUBLIC_SUPABASE_URL,
+      import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+    );
+    
+    // Handle Google login
+    document.getElementById('google-login')?.addEventListener('click', async () => {
+      try {
+        const { error } = await window.supabase.auth.signInWithOAuth({
+          provider: 'google',
+          options: {
+            redirectTo: `${window.location.origin}/admin`
+          }
+        });
+        
+        if (error) throw error;
+      } catch (error) {
+        console.error('Error signing in with Google:', error);
+        alert('Failed to sign in with Google. Please try again.');
+      }
+    });
+  </script>
+</body>
+</html> 
