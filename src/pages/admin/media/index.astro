@@ -1,0 +1,488 @@
+---
+import { supabase } from '../../../lib/supabase/client';
+import { Button } from '../../../components/components/ui/button';
+import { Input } from '../../../components/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '../../../components/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../../../components/components/ui/dropdown-menu';
+
+// Check if user is authenticated
+const { data: { session } } = await supabase.auth.getSession();
+const isAuthenticated = !!session;
+
+// Redirect to login if not authenticated
+if (!isAuthenticated) {
+  return Astro.redirect('/admin/login');
+}
+
+// Fetch media items
+const { data: mediaItems, error } = await supabase
+  .from('media')
+  .select('*')
+  .order('created_at', { ascending: false });
+
+if (error) {
+  console.error('Error fetching media:', error);
+}
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media Library | Admin Dashboard | Bagel Education</title>
+  <link rel="stylesheet" href="/styles/globals.css">
+</head>
+<body class="min-h-screen bg-background">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="hidden md:flex w-64 flex-col bg-card border-r border-border h-screen sticky top-0">
+      <div class="p-6 border-b border-border">
+        <h1 class="text-xl font-bold">Bagel Admin</h1>
+      </div>
+      
+      <nav class="flex-1 p-4">
+        <ul class="space-y-1">
+          <li>
+            <a href="/admin" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/blog" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              Blog Posts
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/programs" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+              Programs
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/testimonials" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Testimonials
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/faqs" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              FAQs
+            </a>
+          </li>
+          <li>
+            <a href="/admin/media" class="flex items-center py-2 px-3 rounded-md bg-accent">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              Media Library
+            </a>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="p-4 border-t border-border">
+        <Button id="logout-button" variant="ghost" className="w-full justify-start">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Log out
+        </Button>
+      </div>
+    </aside>
+    
+    <!-- Main content -->
+    <main class="flex-1 p-6">
+      <header class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-bold">Media Library</h1>
+          <p class="text-muted-foreground">Manage your images and files</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <Button id="upload-button" className="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Upload Media
+          </Button>
+          <input type="file" id="file-input" class="hidden" multiple accept="image/*" />
+        </div>
+      </header>
+
+      <!-- Search and filter -->
+      <Card className="mb-6">
+        <CardContent className="pt-6">
+          <div class="flex flex-col sm:flex-row gap-4">
+            <div class="relative flex-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </svg>
+              <Input 
+                id="search-media"
+                type="search" 
+                placeholder="Search media..." 
+                className="pl-8 w-full"
+              />
+            </div>
+            <div class="flex gap-2">
+              <select id="type-filter" class="px-3 py-2 border rounded-md text-sm">
+                <option value="">All Types</option>
+                <option value="image">Images</option>
+                <option value="document">Documents</option>
+                <option value="video">Videos</option>
+              </select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Upload progress -->
+      <div id="upload-progress" class="mb-6 hidden">
+        <Card>
+          <CardContent className="py-4">
+            <div class="flex items-center gap-4">
+              <div class="w-full">
+                <div class="flex justify-between mb-1">
+                  <span class="text-sm font-medium">Uploading...</span>
+                  <span id="upload-percentage" class="text-sm font-medium">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-2.5">
+                  <div id="upload-progress-bar" class="bg-primary h-2.5 rounded-full" style="width: 0%"></div>
+                </div>
+              </div>
+              <Button id="cancel-upload" variant="outline" size="sm">Cancel</Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <!-- Media grid -->
+      <Card>
+        <CardHeader>
+          <CardTitle>Media Files</CardTitle>
+          <CardDescription>
+            {mediaItems?.length 
+              ? `Showing ${mediaItems.length} items`
+              : 'No media items found'}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {mediaItems && mediaItems.length > 0 ? (
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {mediaItems.map((item) => (
+                <div key={item.id} class="group relative">
+                  <div class="aspect-square rounded-md overflow-hidden border">
+                    <img 
+                      src={item.url}
+                      alt={item.name || 'Media item'}
+                      class="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  
+                  <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div class="flex gap-2">
+                      <button 
+                        class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
+                        data-url={item.url}
+                        onclick="copyToClipboard(this.dataset.url)"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                      </button>
+                      <button 
+                        class="p-2 bg-white/20 rounded-full hover:bg-white/30 transition"
+                        data-id={item.id}
+                        data-name={item.name}
+                        onclick="confirmDeleteMedia(this.dataset.id, this.dataset.name)"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M3 6h18"></path>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-2 text-sm truncate">{item.name || 'Unnamed'}</div>
+                  <div class="text-xs text-muted-foreground">{item.size ? formatFileSize(item.size) : ''}</div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div class="text-center py-10 text-muted-foreground">
+              {error ? (
+                <div>
+                  <p>Error loading media items.</p>
+                  <p class="text-sm">{error.message}</p>
+                </div>
+              ) : (
+                <div>
+                  <p>No media items found.</p>
+                  <p class="text-sm mt-2">Upload images to your media library.</p>
+                  <div class="mt-4">
+                    <Button id="empty-upload-button" variant="outline">Upload Media</Button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </main>
+  </div>
+  
+  <script>
+    // Initialize Supabase client
+    import { createClient } from '@supabase/supabase-js';
+    
+    window.supabase = createClient(
+      import.meta.env.PUBLIC_SUPABASE_URL,
+      import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+    );
+    
+    // Format file size
+    window.formatFileSize = (bytes) => {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    };
+    
+    // Upload functionality
+    const uploadButton = document.getElementById('upload-button');
+    const emptyUploadButton = document.getElementById('empty-upload-button');
+    const fileInput = document.getElementById('file-input');
+    const uploadProgress = document.getElementById('upload-progress');
+    const uploadProgressBar = document.getElementById('upload-progress-bar');
+    const uploadPercentage = document.getElementById('upload-percentage');
+    const cancelUpload = document.getElementById('cancel-upload');
+    
+    let currentUploads = [];
+    
+    uploadButton?.addEventListener('click', () => {
+      fileInput.click();
+    });
+    
+    emptyUploadButton?.addEventListener('click', () => {
+      fileInput.click();
+    });
+    
+    fileInput?.addEventListener('change', async () => {
+      const files = fileInput.files;
+      
+      if (!files || files.length === 0) return;
+      
+      // Show progress
+      uploadProgress.classList.remove('hidden');
+      
+      // Upload each file
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        
+        // Generate a unique file name
+        const fileName = `${Date.now()}_${file.name.replace(/\s+/g, '_')}`;
+        
+        // Get file extension
+        const fileExt = file.name.split('.').pop();
+        
+        // Set up the upload
+        const { data: uploadData, error: uploadError } = await window.supabase.storage
+          .from('media')
+          .upload(`public/${fileName}`, file, {
+            cacheControl: '3600',
+            upsert: false,
+            contentType: file.type
+          });
+        
+        if (uploadError) {
+          console.error('Error uploading file:', uploadError);
+          alert(`Failed to upload ${file.name}. Please try again.`);
+          continue;
+        }
+        
+        // Get public URL
+        const { data: publicUrlData } = window.supabase.storage
+          .from('media')
+          .getPublicUrl(`public/${fileName}`);
+        
+        const publicUrl = publicUrlData?.publicUrl;
+        
+        // Add to database
+        const { data: mediaData, error: mediaError } = await window.supabase
+          .from('media')
+          .insert({
+            name: file.name,
+            url: publicUrl,
+            size: file.size,
+            type: file.type,
+            extension: fileExt,
+            storage_path: uploadData.path
+          })
+          .select()
+          .single();
+          
+        if (mediaError) {
+          console.error('Error saving media data:', mediaError);
+        }
+        
+        // Update progress
+        const progress = Math.round(((i + 1) / files.length) * 100);
+        uploadProgressBar.style.width = `${progress}%`;
+        uploadPercentage.textContent = `${progress}%`;
+      }
+      
+      // Reset file input
+      fileInput.value = '';
+      
+      // Hide progress after a delay
+      setTimeout(() => {
+        uploadProgress.classList.add('hidden');
+        
+        // Reload the page to show new uploads
+        window.location.reload();
+      }, 1000);
+    });
+    
+    cancelUpload?.addEventListener('click', () => {
+      // Cancel uploads if any
+      currentUploads.forEach(upload => {
+        upload.abort();
+      });
+      
+      // Reset
+      currentUploads = [];
+      uploadProgress.classList.add('hidden');
+      fileInput.value = '';
+    });
+    
+    // Copy URL to clipboard
+    window.copyToClipboard = (url) => {
+      navigator.clipboard.writeText(url).then(() => {
+        alert('URL copied to clipboard!');
+      }).catch(err => {
+        console.error('Failed to copy URL:', err);
+      });
+    };
+    
+    // Delete media confirmation
+    window.confirmDeleteMedia = (id, name) => {
+      if (confirm(`Are you sure you want to delete "${name}"? This action cannot be undone.`)) {
+        deleteMedia(id);
+      }
+    };
+    
+    async function deleteMedia(id) {
+      try {
+        // Get the media item first to get the storage path
+        const { data: mediaItem, error: fetchError } = await window.supabase
+          .from('media')
+          .select('storage_path')
+          .eq('id', id)
+          .single();
+          
+        if (fetchError) throw fetchError;
+        
+        // Delete from storage if path exists
+        if (mediaItem?.storage_path) {
+          const { error: storageError } = await window.supabase.storage
+            .from('media')
+            .remove([mediaItem.storage_path]);
+            
+          if (storageError) {
+            console.error('Error deleting from storage:', storageError);
+          }
+        }
+        
+        // Delete from database
+        const { error: deleteError } = await window.supabase
+          .from('media')
+          .delete()
+          .eq('id', id);
+          
+        if (deleteError) throw deleteError;
+        
+        // Refresh the page
+        window.location.reload();
+      } catch (error) {
+        console.error('Error deleting media:', error);
+        alert('Failed to delete media. Please try again.');
+      }
+    }
+    
+    // Search functionality
+    const searchInput = document.getElementById('search-media');
+    const typeFilter = document.getElementById('type-filter');
+    
+    function filterMedia() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const type = typeFilter.value;
+      
+      const mediaItems = document.querySelectorAll('.grid > div');
+      
+      mediaItems.forEach(item => {
+        const name = item.querySelector('.mt-2').textContent.toLowerCase();
+        const itemType = item.dataset.type?.toLowerCase() || '';
+        
+        const matchesSearch = name.includes(searchTerm);
+        const matchesType = type === '' || itemType.includes(type);
+        
+        if (matchesSearch && matchesType) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+    }
+    
+    searchInput?.addEventListener('input', filterMedia);
+    typeFilter?.addEventListener('change', filterMedia);
+    
+    // Handle logout
+    document.getElementById('logout-button')?.addEventListener('click', async () => {
+      try {
+        const { error } = await window.supabase.auth.signOut();
+        if (error) throw error;
+        window.location.href = '/admin/login';
+      } catch (error) {
+        console.error('Error signing out:', error);
+      }
+    });
+  </script>
+</body>
+</html> 

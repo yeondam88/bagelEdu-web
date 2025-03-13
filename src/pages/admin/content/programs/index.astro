@@ -1,0 +1,376 @@
+---
+import { supabase } from '../../../../lib/supabase/client';
+import { Button } from '../../../../components/components/ui/button';
+import { Input } from '../../../../components/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../../../components/components/ui/card';
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from '../../../../components/components/ui/table';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '../../../../components/components/ui/dropdown-menu';
+
+// Check if user is authenticated
+const { data: { session } } = await supabase.auth.getSession();
+const isAuthenticated = !!session;
+
+// Redirect to login if not authenticated
+if (!isAuthenticated) {
+  return Astro.redirect('/admin/login');
+}
+
+// Fetch programs
+const { data: programs, error } = await supabase
+  .from('programs')
+  .select('*')
+  .order('created_at', { ascending: false });
+
+if (error) {
+  console.error('Error fetching programs:', error);
+}
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Programs | Admin Dashboard | Bagel Education</title>
+  <link rel="stylesheet" href="/styles/globals.css">
+</head>
+<body class="min-h-screen bg-background">
+  <div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <aside class="hidden md:flex w-64 flex-col bg-card border-r border-border h-screen sticky top-0">
+      <div class="p-6 border-b border-border">
+        <h1 class="text-xl font-bold">Bagel Admin</h1>
+      </div>
+      
+      <nav class="flex-1 p-4">
+        <ul class="space-y-1">
+          <li>
+            <a href="/admin" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/blog" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              Blog Posts
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/programs" class="flex items-center py-2 px-3 rounded-md bg-accent">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+              Programs
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/testimonials" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+              </svg>
+              Testimonials
+            </a>
+          </li>
+          <li>
+            <a href="/admin/content/faqs" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              FAQs
+            </a>
+          </li>
+          <li>
+            <a href="/admin/media" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                <polyline points="21 15 16 10 5 21"></polyline>
+              </svg>
+              Media Library
+            </a>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="p-4 border-t border-border">
+        <Button id="logout-button" variant="ghost" className="w-full justify-start">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+            <polyline points="16 17 21 12 16 7"></polyline>
+            <line x1="21" y1="12" x2="9" y2="12"></line>
+          </svg>
+          Log out
+        </Button>
+      </div>
+    </aside>
+    
+    <!-- Main content -->
+    <main class="flex-1 p-6">
+      <header class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div>
+          <h1 class="text-3xl font-bold">Programs</h1>
+          <p class="text-muted-foreground">Manage your educational programs</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a href="/admin/content/programs/new">
+            <Button className="flex items-center gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+              New Program
+            </Button>
+          </a>
+        </div>
+      </header>
+
+      <!-- Search and filter -->
+      <Card className="mb-6">
+        <CardContent className="pt-6">
+          <div class="flex flex-col sm:flex-row gap-4">
+            <div class="relative flex-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </svg>
+              <Input 
+                id="search-programs"
+                type="search" 
+                placeholder="Search programs..." 
+                className="pl-8 w-full"
+              />
+            </div>
+            <div class="flex gap-2">
+              <select id="type-filter" class="px-3 py-2 border rounded-md text-sm">
+                <option value="">All Types</option>
+                <option value="course">Course</option>
+                <option value="workshop">Workshop</option>
+                <option value="bootcamp">Bootcamp</option>
+                <option value="certification">Certification</option>
+              </select>
+              <select id="status-filter" class="px-3 py-2 border rounded-md text-sm">
+                <option value="">All Status</option>
+                <option value="active">Active</option>
+                <option value="upcoming">Upcoming</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <!-- Programs table -->
+      <Card>
+        <CardHeader>
+          <CardTitle>All Programs</CardTitle>
+          <CardDescription>
+            {programs?.length 
+              ? `Showing ${programs.length} programs`
+              : 'No programs found'}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {programs && programs.length > 0 ? (
+            <Table className="border">
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Title</TableHead>
+                  <TableHead className="hidden md:table-cell">Type</TableHead>
+                  <TableHead className="hidden md:table-cell">Price</TableHead>
+                  <TableHead className="hidden md:table-cell">Status</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {programs.map((program) => (
+                  <TableRow key={program.id}>
+                    <TableCell className="font-medium">
+                      <div>
+                        <div>{program.title}</div>
+                        <div class="text-xs text-muted-foreground md:hidden">
+                          {program.type} • ${program.price} • {program.status}
+                        </div>
+                      </div>
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">{program.type}</TableCell>
+                    <TableCell className="hidden md:table-cell">${program.price}</TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      <span class={`px-2 py-1 text-xs rounded-full ${
+                        program.status === 'active' 
+                          ? 'bg-green-100 text-green-800' 
+                          : program.status === 'upcoming'
+                          ? 'bg-blue-100 text-blue-800'
+                          : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        {program.status}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 p-0">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <circle cx="12" cy="12" r="1"></circle>
+                              <circle cx="12" cy="5" r="1"></circle>
+                              <circle cx="12" cy="19" r="1"></circle>
+                            </svg>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                          <DropdownMenuItem 
+                            class="cursor-pointer"
+                            onclick={`window.location.href='/admin/content/programs/${program.id}'`}
+                          >
+                            View
+                          </DropdownMenuItem>
+                          <DropdownMenuItem 
+                            class="cursor-pointer"
+                            onclick={`window.location.href='/admin/content/programs/${program.id}/edit'`}
+                          >
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem 
+                            class="cursor-pointer text-red-600"
+                            data-program-id={program.id}
+                            data-program-title={program.title}
+                            onclick="confirmDeleteProgram(this.dataset.programId, this.dataset.programTitle)"
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <div class="text-center py-10 text-muted-foreground">
+              {error ? (
+                <div>
+                  <p>Error loading programs.</p>
+                  <p class="text-sm">{error.message}</p>
+                </div>
+              ) : (
+                <div>
+                  <p>No programs found.</p>
+                  <p class="text-sm mt-2">Get started by creating your first program.</p>
+                  <div class="mt-4">
+                    <a href="/admin/content/programs/new">
+                      <Button variant="outline">Create Program</Button>
+                    </a>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </main>
+  </div>
+  
+  <script>
+    // Initialize Supabase client
+    import { createClient } from '@supabase/supabase-js';
+    
+    window.supabase = createClient(
+      import.meta.env.PUBLIC_SUPABASE_URL,
+      import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+    );
+    
+    // Search functionality
+    const searchInput = document.getElementById('search-programs');
+    const typeFilter = document.getElementById('type-filter');
+    const statusFilter = document.getElementById('status-filter');
+    
+    function filterPrograms() {
+      const searchTerm = searchInput.value.toLowerCase();
+      const type = typeFilter.value;
+      const status = statusFilter.value;
+      
+      const rows = document.querySelectorAll('tbody tr');
+      
+      rows.forEach(row => {
+        const title = row.querySelector('td:first-child').textContent.toLowerCase();
+        const rowType = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
+        const rowStatus = row.querySelector('td:nth-child(4)')?.textContent.toLowerCase() || '';
+        
+        const matchesSearch = title.includes(searchTerm);
+        const matchesType = type === '' || rowType === type;
+        const matchesStatus = status === '' || rowStatus === status;
+        
+        if (matchesSearch && matchesType && matchesStatus) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+    
+    searchInput?.addEventListener('input', filterPrograms);
+    typeFilter?.addEventListener('change', filterPrograms);
+    statusFilter?.addEventListener('change', filterPrograms);
+    
+    // Delete program confirmation
+    window.confirmDeleteProgram = (programId, programTitle) => {
+      if (confirm(`Are you sure you want to delete "${programTitle}"? This action cannot be undone.`)) {
+        deleteProgram(programId);
+      }
+    };
+    
+    async function deleteProgram(programId) {
+      try {
+        const { error } = await window.supabase
+          .from('programs')
+          .delete()
+          .eq('id', programId);
+          
+        if (error) throw error;
+        
+        // Refresh the page to show updated list
+        window.location.reload();
+      } catch (error) {
+        console.error('Error deleting program:', error);
+        alert('Failed to delete program. Please try again.');
+      }
+    }
+    
+    // Handle logout
+    document.getElementById('logout-button')?.addEventListener('click', async () => {
+      try {
+        const { error } = await window.supabase.auth.signOut();
+        if (error) throw error;
+        window.location.href = '/admin/login';
+      } catch (error) {
+        console.error('Error signing out:', error);
+      }
+    });
+  </script>
+</body>
+</html> 
