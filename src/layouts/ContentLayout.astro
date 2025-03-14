@@ -1,0 +1,35 @@
+---
+import AdminLayout from './AdminLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  createLink?: string;
+  createButtonText?: string;
+}
+
+const { 
+  title, 
+  description = `Manage your ${title.toLowerCase()}`, 
+  createLink,
+  createButtonText = `New ${title.endsWith('s') ? title.slice(0, -1) : title}`
+} = Astro.props;
+---
+
+<AdminLayout title={title}>
+  <!-- Header with title and create button -->
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-3xl font-bold">{title}</h1>
+      <p class="text-muted-foreground">{description}</p>
+    </div>
+    {createLink && (
+      <a href={createLink} class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2">
+        {createButtonText}
+      </a>
+    )}
+  </div>
+  
+  <!-- Page content -->
+  <slot />
+</AdminLayout> 

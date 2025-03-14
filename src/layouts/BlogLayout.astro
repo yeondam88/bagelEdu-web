@@ -1,0 +1,15 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<Layout title={title}>
+  <div class="container mx-auto py-8">
+    <slot />
+  </div>
+</Layout> 

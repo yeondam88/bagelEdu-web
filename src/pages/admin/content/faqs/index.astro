@@ -3,6 +3,7 @@ import { supabase } from '../../../../lib/supabase/client';
 import { Button } from '../../../../components/components/ui/button';
 import { Input } from '../../../../components/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../../../components/components/ui/card';
+import { Label } from '../../../../components/components/ui/label';
 import { 
   Table, 
   TableBody, 
@@ -24,7 +25,8 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '../../../../components/components/ui/accordion';
+} from '../../../../components/ui/accordion';
+import ContentLayout from '../../../../layouts/ContentLayout.astro';
 
 // Check if user is authenticated
 const { data: { session } } = await supabase.auth.getSession();
@@ -47,7 +49,7 @@ if (error) {
 }
 
 // Group FAQs by category
-const faqsByCategory = {};
+const faqsByCategory: Record<string, any[]> = {};
 faqs?.forEach(faq => {
   const category = faq.category || 'General';
   if (!faqsByCategory[category]) {
@@ -57,410 +59,295 @@ faqs?.forEach(faq => {
 });
 ---
 
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQs | Admin Dashboard | Bagel Education</title>
-  <link rel="stylesheet" href="/styles/globals.css">
-</head>
-<body class="min-h-screen bg-background">
-  <div class="flex min-h-screen">
-    <!-- Sidebar -->
-    <aside class="hidden md:flex w-64 flex-col bg-card border-r border-border h-screen sticky top-0">
-      <div class="p-6 border-b border-border">
-        <h1 class="text-xl font-bold">Bagel Admin</h1>
-      </div>
-      
-      <nav class="flex-1 p-4">
-        <ul class="space-y-1">
-          <li>
-            <a href="/admin" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="7" height="7"></rect>
-                <rect x="14" y="3" width="7" height="7"></rect>
-                <rect x="14" y="14" width="7" height="7"></rect>
-                <rect x="3" y="14" width="7" height="7"></rect>
-              </svg>
-              Dashboard
-            </a>
-          </li>
-          <li>
-            <a href="/admin/content/blog" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-              </svg>
-              Blog Posts
-            </a>
-          </li>
-          <li>
-            <a href="/admin/content/programs" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-              </svg>
-              Programs
-            </a>
-          </li>
-          <li>
-            <a href="/admin/content/testimonials" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg>
-              Testimonials
-            </a>
-          </li>
-          <li>
-            <a href="/admin/content/faqs" class="flex items-center py-2 px-3 rounded-md bg-accent">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-              </svg>
-              FAQs
-            </a>
-          </li>
-          <li>
-            <a href="/admin/media" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
-              </svg>
-              Media Library
-            </a>
-          </li>
-        </ul>
-      </nav>
-      
-      <div class="p-4 border-t border-border">
-        <Button id="logout-button" variant="ghost" className="w-full justify-start">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-            <polyline points="16 17 21 12 16 7"></polyline>
-            <line x1="21" y1="12" x2="9" y2="12"></line>
+<ContentLayout 
+  title="FAQs" 
+  description="Manage frequently asked questions"
+  createLink="/admin/content/faqs/new"
+  createButtonText="Add FAQ"
+>
+  <!-- Search and filter -->
+  <Card className="mb-6">
+    <CardContent className="pt-6">
+      <div class="flex flex-col sm:flex-row gap-4">
+        <div class="relative flex-1">
+          <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
           </svg>
-          Log out
-        </Button>
-      </div>
-    </aside>
-    
-    <!-- Main content -->
-    <main class="flex-1 p-6">
-      <header class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h1 class="text-3xl font-bold">FAQs</h1>
-          <p class="text-muted-foreground">Manage frequently asked questions</p>
+          <Input 
+            id="search-faqs"
+            type="search" 
+            placeholder="Search FAQs..." 
+            className="pl-8 w-full"
+          />
         </div>
-        <div class="flex items-center gap-2">
-          <a href="/admin/content/faqs/new">
-            <Button className="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              Add FAQ
-            </Button>
-          </a>
-        </div>
-      </header>
-
-      <!-- Search and filter -->
-      <Card className="mb-6">
-        <CardContent className="pt-6">
-          <div class="flex flex-col sm:flex-row gap-4">
-            <div class="relative flex-1">
-              <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-              </svg>
-              <Input 
-                id="search-faqs"
-                type="search" 
-                placeholder="Search FAQs..." 
-                className="pl-8 w-full"
-              />
-            </div>
-            <div class="flex gap-2">
-              <select id="category-filter" class="px-3 py-2 border rounded-md text-sm">
-                <option value="">All Categories</option>
-                {Object.keys(faqsByCategory).map(category => (
-                  <option value={category}>{category}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <!-- FAQs list -->
-      <div id="faqs-view-mode" class="grid grid-cols-1 gap-6">
-        <!-- Categorized view -->
-        {Object.keys(faqsByCategory).length > 0 ? (
-          <div class="space-y-6">
-            {Object.entries(faqsByCategory).map(([category, categoryFaqs]) => (
-              <Card key={category}>
-                <CardHeader class="flex flex-row items-center justify-between">
-                  <div>
-                    <CardTitle>{category}</CardTitle>
-                    <CardDescription>{categoryFaqs.length} question{categoryFaqs.length !== 1 ? 's' : ''}</CardDescription>
-                  </div>
-                  <Button variant="outline" size="sm" class="category-edit-btn" data-category={category}>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                      <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                    </svg>
-                    Edit Category
-                  </Button>
-                </CardHeader>
-                <CardContent>
-                  <Accordion type="single" collapsible className="w-full">
-                    {categoryFaqs.map((faq, index) => (
-                      <AccordionItem value={`item-${index}`} key={faq.id}>
-                        <AccordionTrigger className="hover:no-underline text-left">
-                          <div class="flex flex-1 justify-between items-center pr-4">
-                            <span>{faq.question}</span>
-                            <div class="flex items-center gap-2 shrink-0 ml-4">
-                              <Button variant="ghost" size="icon" class="h-8 w-8 p-0 edit-faq-btn" data-id={faq.id}>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                </svg>
-                              </Button>
-                              <Button variant="ghost" size="icon" class="h-8 w-8 p-0 text-red-500 delete-faq-btn" data-id={faq.id} data-question={faq.question}>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                  <path d="M3 6h18"></path>
-                                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                </svg>
-                              </Button>
-                            </div>
-                          </div>
-                        </AccordionTrigger>
-                        <AccordionContent>
-                          <div class="prose prose-sm max-w-none">
-                            <p>{faq.answer}</p>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </CardContent>
-              </Card>
+        <div class="flex gap-2">
+          <select id="category-filter" class="px-3 py-2 border rounded-md text-sm">
+            <option value="">All Categories</option>
+            {Object.keys(faqsByCategory).map(category => (
+              <option value={category}>{category}</option>
             ))}
+          </select>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+
+  <!-- FAQs list -->
+  <div id="faqs-view-mode" class="grid grid-cols-1 gap-6">
+    <!-- Categorized view -->
+    {Object.keys(faqsByCategory).length > 0 ? (
+      <div class="space-y-6">
+        {Object.entries(faqsByCategory).map(([category, categoryFaqs]) => (
+          <Card key={category}>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle>{category}</CardTitle>
+                <CardDescription>{categoryFaqs.length} question{categoryFaqs.length !== 1 ? 's' : ''}</CardDescription>
+              </div>
+              <Button variant="outline" size="sm" className="category-edit-btn" data-category={category}>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                  <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                Edit Category
+              </Button>
+            </CardHeader>
+            <CardContent>
+              <Accordion type="single" collapsible className="w-full">
+                {categoryFaqs.map((faq: any, index: number) => (
+                  <AccordionItem value={`item-${index}`} key={faq.id}>
+                    <AccordionTrigger className="hover:no-underline text-left">
+                      <div class="flex flex-1 justify-between items-center pr-4">
+                        <span>{faq.question}</span>
+                        <div class="flex items-center gap-2 shrink-0 ml-4">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 p-0 edit-faq-btn" data-id={faq.id}>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                            </svg>
+                          </Button>
+                          <Button variant="ghost" size="icon" className="h-8 w-8 p-0 text-red-500 delete-faq-btn" data-id={faq.id} data-question={faq.question}>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                              <path d="M3 6h18"></path>
+                              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                            </svg>
+                          </Button>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent>
+                      <div class="prose prose-sm max-w-none">
+                        <p>{faq.answer}</p>
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    ) : (
+      <div class="text-center py-10 text-muted-foreground">
+        {error ? (
+          <div>
+            <p>Error loading FAQs.</p>
+            <p class="text-sm">{error.message}</p>
           </div>
         ) : (
-          <div class="text-center py-10 text-muted-foreground">
-            {error ? (
-              <div>
-                <p>Error loading FAQs.</p>
-                <p class="text-sm">{error.message}</p>
-              </div>
-            ) : (
-              <div>
-                <p>No FAQs found.</p>
-                <p class="text-sm mt-2">Get started by creating your first FAQ.</p>
-                <div class="mt-4">
-                  <a href="/admin/content/faqs/new">
-                    <Button variant="outline">Create FAQ</Button>
-                  </a>
-                </div>
-              </div>
-            )}
+          <div>
+            <p>No FAQs found.</p>
+            <p class="text-sm mt-2">Get started by creating your first FAQ.</p>
+            <div class="mt-4">
+              <a href="/admin/content/faqs/new">
+                <Button variant="outline">Create FAQ</Button>
+              </a>
+            </div>
           </div>
         )}
       </div>
-
-      <!-- Category edit modal -->
-      <div id="category-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
-        <div class="bg-background rounded-lg w-full max-w-md overflow-hidden">
-          <div class="p-4 border-b flex justify-between items-center">
-            <h3 class="text-lg font-medium">Edit Category</h3>
-            <button id="close-category-modal" class="text-muted-foreground hover:text-foreground">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-            </button>
-          </div>
-          <div class="p-4">
-            <form id="category-form" class="space-y-4">
-              <input type="hidden" id="old-category" name="old-category">
-              <div>
-                <Label htmlFor="new-category">Category Name</Label>
-                <Input 
-                  id="new-category" 
-                  name="new-category" 
-                  required 
-                  placeholder="Enter category name"
-                  className="mt-1"
-                />
-              </div>
-            </form>
-          </div>
-          <div class="p-4 border-t flex justify-end gap-2">
-            <Button id="cancel-category" variant="outline">Cancel</Button>
-            <Button id="save-category">Save Category</Button>
-          </div>
-        </div>
-      </div>
-    </main>
+    )}
   </div>
+
+  <!-- Category edit modal -->
+  <div id="category-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
+    <div class="bg-background rounded-lg w-full max-w-md overflow-hidden">
+      <div class="p-4 border-b flex justify-between items-center">
+        <h3 class="text-lg font-medium">Edit Category</h3>
+        <button id="close-category-modal" class="text-muted-foreground hover:text-foreground">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="p-4">
+        <form id="category-form" class="space-y-4">
+          <input type="hidden" id="old-category" name="old-category">
+          <div>
+            <Label htmlFor="new-category">Category Name</Label>
+            <Input 
+              id="new-category" 
+              name="new-category" 
+              required 
+              placeholder="Enter category name"
+              className="mt-1"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="p-4 border-t flex justify-end gap-2">
+        <Button id="cancel-category" variant="outline">Cancel</Button>
+        <Button id="save-category">Save Category</Button>
+      </div>
+    </div>
+  </div>
+</ContentLayout>
+
+<script>
+  // Initialize Supabase client
+  import { createClient } from '@supabase/supabase-js';
   
-  <script>
-    // Initialize Supabase client
-    import { createClient } from '@supabase/supabase-js';
+  const supabase = createClient(
+    import.meta.env.PUBLIC_SUPABASE_URL,
+    import.meta.env.PUBLIC_SUPABASE_ANON_KEY
+  );
+  
+  // Search and filter functionality
+  const searchInput = document.getElementById('search-faqs') as HTMLInputElement;
+  const categoryFilter = document.getElementById('category-filter') as HTMLSelectElement;
+  
+  function filterFAQs() {
+    const searchTerm = searchInput?.value.toLowerCase() || '';
+    const categoryValue = categoryFilter?.value || '';
     
-    window.supabase = createClient(
-      import.meta.env.PUBLIC_SUPABASE_URL,
-      import.meta.env.PUBLIC_SUPABASE_ANON_KEY
-    );
+    const categoryCards = document.querySelectorAll('#faqs-view-mode .card') as NodeListOf<HTMLElement>;
     
-    // Search and filter functionality
-    const searchInput = document.getElementById('search-faqs');
-    const categoryFilter = document.getElementById('category-filter');
-    
-    function filterFAQs() {
-      const searchTerm = searchInput?.value.toLowerCase() || '';
-      const categoryValue = categoryFilter?.value || '';
+    categoryCards.forEach(card => {
+      const categoryTitle = card.querySelector('.card-title')?.textContent?.toLowerCase() || '';
+      const accordionItems = card.querySelectorAll('accordion-item') as NodeListOf<HTMLElement>;
       
-      const categoryCards = document.querySelectorAll('#faqs-view-mode .card');
-      
-      categoryCards.forEach(card => {
-        const categoryTitle = card.querySelector('.card-title')?.textContent.toLowerCase();
-        const accordionItems = card.querySelectorAll('accordion-item');
-        
-        // Filter by category first
-        if (categoryValue && categoryValue !== categoryTitle) {
-          card.style.display = 'none';
-          return;
-        }
-        
-        card.style.display = '';
-        
-        // Then filter individual FAQs by search term
-        let visibleItems = 0;
-        
-        accordionItems.forEach(item => {
-          const question = item.querySelector('accordion-trigger').textContent.toLowerCase();
-          const answer = item.querySelector('accordion-content').textContent.toLowerCase();
-          
-          if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-            item.style.display = '';
-            visibleItems++;
-          } else {
-            item.style.display = 'none';
-          }
-        });
-        
-        // Hide category if no visible FAQs
-        if (visibleItems === 0 && searchTerm) {
-          card.style.display = 'none';
-        }
-      });
-    }
-    
-    searchInput?.addEventListener('input', filterFAQs);
-    categoryFilter?.addEventListener('change', filterFAQs);
-    
-    // Edit FAQ
-    document.querySelectorAll('.edit-faq-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const faqId = btn.dataset.id;
-        window.location.href = `/admin/content/faqs/${faqId}/edit`;
-      });
-    });
-    
-    // Delete FAQ
-    document.querySelectorAll('.delete-faq-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const faqId = btn.dataset.id;
-        const question = btn.dataset.question;
-        
-        if (confirm(`Are you sure you want to delete the FAQ: "${question}"? This action cannot be undone.`)) {
-          deleteFAQ(faqId);
-        }
-      });
-    });
-    
-    async function deleteFAQ(id) {
-      try {
-        const { error } = await window.supabase
-          .from('faqs')
-          .delete()
-          .eq('id', id);
-          
-        if (error) throw error;
-        
-        // Refresh the page
-        window.location.reload();
-      } catch (error) {
-        console.error('Error deleting FAQ:', error);
-        alert('Failed to delete FAQ. Please try again.');
-      }
-    }
-    
-    // Edit category modal
-    const categoryModal = document.getElementById('category-modal');
-    const closeModalBtn = document.getElementById('close-category-modal');
-    const cancelCategoryBtn = document.getElementById('cancel-category');
-    const saveCategoryBtn = document.getElementById('save-category');
-    const oldCategoryInput = document.getElementById('old-category');
-    const newCategoryInput = document.getElementById('new-category');
-    
-    document.querySelectorAll('.category-edit-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const category = btn.dataset.category;
-        oldCategoryInput.value = category;
-        newCategoryInput.value = category;
-        categoryModal.classList.remove('hidden');
-      });
-    });
-    
-    closeModalBtn?.addEventListener('click', () => {
-      categoryModal.classList.add('hidden');
-    });
-    
-    cancelCategoryBtn?.addEventListener('click', () => {
-      categoryModal.classList.add('hidden');
-    });
-    
-    saveCategoryBtn?.addEventListener('click', async () => {
-      const oldCategory = oldCategoryInput.value;
-      const newCategory = newCategoryInput.value;
-      
-      if (!newCategory) {
-        alert('Please enter a category name');
+      // Filter by category first
+      if (categoryValue && categoryValue !== categoryTitle) {
+        card.style.display = 'none';
         return;
       }
       
-      try {
-        const { error } = await window.supabase
-          .from('faqs')
-          .update({ category: newCategory })
-          .eq('category', oldCategory);
-          
-        if (error) throw error;
+      card.style.display = '';
+      
+      // Then filter individual FAQs by search term
+      let visibleItems = 0;
+      
+      accordionItems.forEach(item => {
+        const question = item.querySelector('accordion-trigger')?.textContent?.toLowerCase() || '';
+        const answer = item.querySelector('accordion-content')?.textContent?.toLowerCase() || '';
         
-        alert('Category updated successfully!');
-        window.location.reload();
-      } catch (error) {
-        console.error('Error updating category:', error);
-        alert('Failed to update category. Please try again.');
+        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+          item.style.display = '';
+          visibleItems++;
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      
+      // Hide category if no visible FAQs
+      if (visibleItems === 0 && searchTerm) {
+        card.style.display = 'none';
       }
     });
+  }
+  
+  searchInput?.addEventListener('input', filterFAQs);
+  categoryFilter?.addEventListener('change', filterFAQs);
+  
+  // Edit FAQ
+  document.querySelectorAll('.edit-faq-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const faqId = (btn as HTMLElement).dataset.id;
+      window.location.href = `/admin/content/faqs/${faqId}/edit`;
+    });
+  });
+  
+  // Delete FAQ
+  document.querySelectorAll('.delete-faq-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const faqId = (btn as HTMLElement).dataset.id;
+      const question = (btn as HTMLElement).dataset.question;
+      
+      if (confirm(`Are you sure you want to delete the FAQ: "${question}"? This action cannot be undone.`)) {
+        deleteFAQ(faqId as string);
+      }
+    });
+  });
+  
+  async function deleteFAQ(id: string) {
+    try {
+      const { error } = await supabase
+        .from('faqs')
+        .delete()
+        .eq('id', id);
+        
+      if (error) throw error;
+      
+      // Refresh the page
+      window.location.reload();
+    } catch (error) {
+      console.error('Error deleting FAQ:', error);
+      alert('Failed to delete FAQ. Please try again.');
+    }
+  }
+  
+  // Edit category modal
+  const categoryModal = document.getElementById('category-modal') as HTMLDivElement;
+  const closeModalBtn = document.getElementById('close-category-modal');
+  const cancelCategoryBtn = document.getElementById('cancel-category');
+  const saveCategoryBtn = document.getElementById('save-category');
+  const oldCategoryInput = document.getElementById('old-category') as HTMLInputElement;
+  const newCategoryInput = document.getElementById('new-category') as HTMLInputElement;
+  
+  document.querySelectorAll('.category-edit-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = (btn as HTMLElement).dataset.category;
+      if (oldCategoryInput) oldCategoryInput.value = category as string;
+      if (newCategoryInput) newCategoryInput.value = category as string;
+      if (categoryModal) categoryModal.classList.remove('hidden');
+    });
+  });
+  
+  closeModalBtn?.addEventListener('click', () => {
+    if (categoryModal) categoryModal.classList.add('hidden');
+  });
+  
+  cancelCategoryBtn?.addEventListener('click', () => {
+    if (categoryModal) categoryModal.classList.add('hidden');
+  });
+  
+  saveCategoryBtn?.addEventListener('click', async () => {
+    const oldCategory = oldCategoryInput?.value;
+    const newCategory = newCategoryInput?.value;
     
-    // Handle logout
-    document.getElementById('logout-button')?.addEventListener('click', async () => {
-      try {
-        const { error } = await window.supabase.auth.signOut();
-        if (error) throw error;
-        window.location.href = '/admin/login';
-      } catch (error) {
-        console.error('Error signing out:', error);
-      }
-    });
-  </script>
-</body>
-</html> 
+    if (!newCategory) {
+      alert('Please enter a category name');
+      return;
+    }
+    
+    try {
+      const { error } = await supabase
+        .from('faqs')
+        .update({ category: newCategory })
+        .eq('category', oldCategory);
+        
+      if (error) throw error;
+      
+      alert('Category updated successfully!');
+      window.location.reload();
+    } catch (error) {
+      console.error('Error updating category:', error);
+      alert('Failed to update category. Please try again.');
+    }
+  });
+</script>
+</rewritten_file> 

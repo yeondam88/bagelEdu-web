@@ -8,9 +8,53 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.error('Missing Supabase environment variables');
 }
 
+// Check if we're in a browser environment
+const isBrowser = typeof window !== 'undefined';
+
+// Safe storage implementation that works in both client and server
+const safeStorage = {
+  getItem: (key: string) => {
+    if (!isBrowser) return null;
+    try {
+      return JSON.parse(localStorage.getItem(key) || 'null');
+    } catch (error) {
+      console.error('Error getting auth from localStorage:', error);
+      return null;
+    }
+  },
+  setItem: (key: string, value: any) => {
+    if (!isBrowser) return;
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      console.error('Error setting auth in localStorage:', error);
+    }
+  },
+  removeItem: (key: string) => {
+    if (!isBrowser) return;
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      console.error('Error removing auth from localStorage:', error);
+    }
+  },
+};
+
+// Create Supabase client with persistence configuration
 export const supabase = createClient(
   supabaseUrl as string,
-  supabaseAnonKey as string
+  supabaseAnonKey as string,
+  {
+    auth: {
+      flowType: 'pkce',
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true
+    },
+    global: {
+      fetch: (...args) => fetch(...args)
+    }
+  }
 );
 
 // Helper functions for content operations

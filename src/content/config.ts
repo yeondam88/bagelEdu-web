@@ -161,28 +161,31 @@ const galleryCollection = defineCollection({
 
 const blogCollection = defineCollection({
   type: 'content',
-  schema: ({ image }) => z.object({
-    title: z.object({
-      en: z.string(),
-      ko: z.string(),
-    }),
-    date: z.string(),
-    author: z.string(),
+  schema: z.object({
+    title: z.union([
+      z.string(),
+      z.object({
+        en: z.string(),
+        ko: z.string().optional(),
+      }),
+    ]),
+    date: z.string().or(z.date()),
+    author: z.string().optional(),
+    authorImage: z.string().optional(),
     image: z.object({
-      src: image(),
-      alt: z.string(),
-    }),
-    excerpt: z.object({
-      en: z.string(),
-      ko: z.string(),
-    }),
-    description: z.object({
-      en: z.string(),
-      ko: z.string(),
+      src: z.string(),
+      alt: z.string().optional(),
     }).optional(),
-    category: z.string(),
-    authorImage: z.string(),
+    excerpt: z.union([
+      z.string().optional(),
+      z.object({
+        en: z.string(),
+        ko: z.string().optional(),
+      }).optional(),
+    ]),
+    category: z.string().optional(),
     tags: z.array(z.string()).optional(),
+    published: z.boolean().default(true).optional(),
   }),
 })
 

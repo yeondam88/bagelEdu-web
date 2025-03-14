@@ -1,0 +1,95 @@
+import AdminLayout from '../../../../../layouts/AdminLayout.astro';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../../../components/components/ui/card';
+import { supabase } from '../../../../../lib/supabase/client';
+import BlogEditorClientOnly from '../../../../../components/BlogEditorClientOnly';
+import { BlogService } from '../../../../../lib/services/blog-service';
+import type { BlogPost } from '../../../../../types/blog';
+
+// Get the blog post ID from the URL
+const { id } = Astro.params;
+
+// Check if user is authenticated
+const { data: { session } } = await supabase.auth.getSession();
+if (!session) {
+  return Astro.redirect('/auth/login?redirect=' + encodeURIComponent(Astro.url.pathname));
+}
+
+// Fetch the blog post to edit
+let blogPost: BlogPost | null = null;
+let error = null;
+
+try {
+  // Use BlogService to fetch the post
+  blogPost = await BlogService.getPostById(id as string);
+  
+  if (!blogPost) {
+    error = "Blog post not found";
+  } else {
+    // Ensure the post is properly parsed (handles multilingual content)
+    blogPost = BlogService.parsePost(blogPost);
+  }
+} catch (e) {
+  error = e instanceof Error ? e.message : 'An unknown error occurred';
+}
+
+// Check if user has permission to edit this post
+const currentUser = session.user;
+const isAdmin = currentUser.user_metadata?.role === 'admin';
+const isAuthor = blogPost?.author_id === currentUser.id;
+
+if (blogPost && !isAdmin && !isAuthor) {
+  return Astro.redirect('/admin/content/blog?error=unauthorized');
+}
+
+// Helper function to get display title
+function getDisplayTitle(title: string | {en: string, ko?: string, [key: string]: string | undefined}): string {
+  if (typeof title === 'string') {
+    return title;
+  }
+  return title?.en || Object.values(title)[0] || 'Untitled';
+}
+
+<AdminLayout title={blogPost ? `Edit Blog Post: ${getDisplayTitle(blogPost.title)}` : 'Edit Blog Post'}>
+  <div class="space-y-6">
+    <div class="flex justify-between items-center">
+      <h1 class="text-3xl font-bold tracking-tight">
+        {blogPost ? 'Edit Blog Post' : 'Blog Post Not Found'}
+      </h1>
+      <a href="/admin/content/blog" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80 h-9 px-4 py-2">
+        Back to Posts
+      </a>
+    </div>
+
+    {error && (
+      <Card>
+        <CardHeader>
+          <CardTitle class="text-red-500">Error</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p>{error}</p>
+          <p class="mt-4">
+            <a href="/admin/content/blog" class="text-primary hover:underline">Return to blog posts</a>
+          </p>
+        </CardContent>
+      </Card>
+    )}
+
+    {blogPost && !error && (
+      <BlogEditorClientOnly client:only="react" blogPost={blogPost} />
+    )}
+
+    {!blogPost && !error && (
+      <Card>
+        <CardHeader>
+          <CardTitle>Blog Post Not Found</CardTitle>
+          <CardDescription>The requested blog post could not be found.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>
+            <a href="/admin/content/blog" class="text-primary hover:underline">Return to blog posts</a>
+          </p>
+        </CardContent>
+      </Card>
+    )}
+  </div>
+</AdminLayout> 

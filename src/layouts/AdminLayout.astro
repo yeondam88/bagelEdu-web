@@ -1,0 +1,113 @@
+---
+import { supabase } from '../lib/supabase/client';
+import UserDropdown from '../components/admin/UserDropdown.jsx';
+import AuthScreen from '../components/admin/AuthScreen.jsx';
+import { Sidebar } from '../components/layout/sidebar';
+import { ThemeSwitcher } from '../components/admin/theme-switcher';
+
+// Props for the page's title and any additional head content
+interface Props {
+  title?: string;
+}
+
+// Get page title from props with default value
+const { title = 'Admin Dashboard' } = Astro.props;
+
+// Authentication is handled on server during SSR
+let session = null;
+let user = null;
+let isAuthenticated = false;
+
+try {
+  // Server-side authentication check
+  const { data, error } = await supabase.auth.getSession();
+  session = data.session;
+  
+  if (error) {
+    console.error('Error checking session:', error.message);
+  }
+  
+  // Only consider authenticated with valid session and user ID
+  isAuthenticated = !!(session?.user?.id);
+  
+  if (isAuthenticated && session?.user) {
+    // If authenticated, get full user data
+    const { data: userData } = await supabase.auth.getUser();
+    user = userData.user;
+    console.log('Server-side auth check: User authenticated -', user?.email || 'Unknown email');
+  } else {
+    console.log('Server-side auth check: No authenticated user');
+  }
+} catch (err) {
+  console.error('Unexpected error during authentication:', err);
+}
+
+// Get the current path for active state in sidebar
+const currentPath = Astro.url.pathname;
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title} | Bagel Education</title>
+  <link rel="stylesheet" href="/styles/globals.css">
+  <slot name="head" />
+</head>
+<body class="min-h-screen bg-background">
+  {isAuthenticated ? (
+    <div class="flex min-h-screen admin-dashboard">
+      <!-- Sidebar with our new component -->
+      <Sidebar client:load currentPath={currentPath} />
+      
+      <!-- Main content -->
+      <main class="flex-1 p-6">
+        <div class="flex justify-between items-center mb-6">
+          <ThemeSwitcher client:load />
+          <UserDropdown client:load user={user} />
+        </div>
+        <slot />
+      </main>
+    </div>
+  ) : (
+    <AuthScreen client:load />
+  )}
+  
+  <script>
+    // Simple client-side script that only reacts to explicit user interactions
+    import { supabase } from '../lib/supabase/client';
+    
+    // Add a session status indicator
+    const addStatusIndicator = () => {
+      const container = document.createElement('div');
+      container.className = 'fixed bottom-4 right-4 bg-white shadow-lg rounded-lg p-4 text-sm';
+      container.innerHTML = `
+        <p>Having trouble signing in?</p>
+        <button id="reload-page" class="mt-2 px-3 py-1 bg-blue-500 text-white rounded">
+          Refresh Page
+        </button>
+      `;
+      document.body.appendChild(container);
+      
+      // Add reload functionality
+      document.getElementById('reload-page')?.addEventListener('click', () => {
+        window.location.reload();
+      });
+    };
+    
+    // Only add status indicator if not authenticated
+    if (!document.querySelector('.admin-dashboard')) {
+      // Wait for page to be fully loaded
+      window.addEventListener('load', () => {
+        addStatusIndicator();
+      });
+    }
+    
+    // Manual auth state listener just for logging
+    supabase.auth.onAuthStateChange((event) => {
+      console.log('Auth state changed:', event);
+      // No automatic reloads - let user control the experience
+    });
+  </script>
+</body>
+</html> 

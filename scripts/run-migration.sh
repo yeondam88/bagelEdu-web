@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Set your Supabase credentials here
+export SUPABASE_URL="https://vszxxiryhbllennzygfo.supabase.co"
+export SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzenh4aXJ5aGJsbGVubnp5Z2ZvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE4NDI5MzMsImV4cCI6MjA1NzQxODkzM30.rPojSkMonP3Nq2SabqYwQK223LwQsZOelueyCqxAWm0"
+export SUPABASE_SERVICE_ROLE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZzenh4aXJ5aGJsbGVubnp5Z2ZvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc0MTg0MjkzMywiZXhwIjoyMDU3NDE4OTMzfQ.3FdS2zgZyYpVr3QTms64veD7RellYTf3btRyssq3pIc"
+
+# Run the migration script
+echo "Running blog migration..."
+npx tsx scripts/migrate-blogs.ts
+
+echo "Migration completed!" 

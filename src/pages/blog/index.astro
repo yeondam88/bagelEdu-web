@@ -1,89 +1,150 @@
 ---
-import { getCollection } from 'astro:content'
-import { Image } from 'astro:assets'
-import Layout from '@layouts/Layout.astro'
+import Layout from '../../layouts/Layout.astro';
+import { supabase } from '../../lib/supabase/client';
+import BlogList from '../../components/blog/BlogList';
+import type { BlogPostWithAuthor } from '../../services/BlogService';
 
-const posts = await getCollection('blog')
-posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+// Get query parameters
+const url = Astro.url;
+const category = url.searchParams.get('category');
+const tag = url.searchParams.get('tag');
+const page = url.searchParams.get('page') || '1';
+const limit = url.searchParams.get('limit') || '10';
+
+// Fetch initial blog posts server-side
+const pageNum = parseInt(page);
+const limitNum = parseInt(limit);
+const offset = (pageNum - 1) * limitNum;
+
+// Build the query
+let query = supabase
+  .from('blog_posts')
+  .select(`
+    *,
+    author:author_id (
+      id,
+      email
+    )
+  `)
+  .eq('status', 'published')
+  .order('published_at', { ascending: false });
+
+// Apply filters if provided
+if (category) {
+  query = query.eq('category', category);
+}
+
+if (tag) {
+  query = query.contains('tags', [tag]);
+}
+
+// Get the posts with pagination
+const { data: posts, error } = await query
+  .range(offset, offset + limitNum - 1);
+
+// Get total count for pagination
+const { count } = await supabase
+  .from('blog_posts')
+  .select('id', { count: 'exact', head: true })
+  .eq('status', 'published')
+  .eq(category ? 'category' : 'id', category || 'id') // Conditional filter
+  .contains(tag ? 'tags' : 'id', tag ? [tag] : 'id'); // Conditional filter
+
+// Calculate pagination metadata
+const totalPages = Math.ceil((count || 0) / limitNum);
+const hasNextPage = pageNum < totalPages;
+const hasPrevPage = pageNum > 1;
+
+// Get the preferred language from the user's browser or default to English
+const preferredLanguage = Astro.request.headers.get('accept-language')?.split(',')[0]?.split('-')[0] || 'en';
+
+// Prepare page title and description
+let pageTitle = { en: 'Blog', ko: '블로그' };
+let pageDescription = { en: 'Read our latest articles and updates', ko: '최신 기사 및 업데이트 읽기' };
+
+if (category) {
+  pageTitle = { 
+    en: `${category} - Blog`, 
+    ko: `${category} - 블로그` 
+  };
+  pageDescription = { 
+    en: `Articles in the ${category} category`, 
+    ko: `${category} 카테고리의 기사` 
+  };
+}
+
+if (tag) {
+  pageTitle = { 
+    en: `#${tag} - Blog`, 
+    ko: `#${tag} - 블로그` 
+  };
+  pageDescription = { 
+    en: `Articles tagged with #${tag}`, 
+    ko: `#${tag} 태그가 있는 기사` 
+  };
+}
 ---
 
-<Layout 
-  title={{ en: "Blog", ko: "블로그" }}
-  description={{ en: "Latest insights and updates", ko: "최신 인사이트 및 업데이트" }}
->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-    <h1 class="text-[2.5rem] font-semibold text-gray-900 mb-4 py-12">
-      <span x-data x-text="$store.language === 'ko' ? '최신 인사이트' : 'Latest Insights'"></span>
-    </h1>
-    
-    <div class="space-y-16">
-      {
-        posts.length > 0 
-          ? posts.map((post) => {
-              const { slug, data } = post;
-              return (
-                <article>
-                  <a href={`/blog/${slug}`} class="grid md:grid-cols-2 gap-8 items-start group">
-                    <div class="relative aspect-[4/3] rounded-lg overflow-hidden">
-                      <Image 
-                        src={data.image.src} 
-                        alt={data.image.alt}
-                        class="w-full h-full object-cover"
-                        width={800}
-                        height={600}
-                      />
-                    </div>
-                    <div class="flex flex-col h-full">
-                      <div class="flex items-center space-x-4 text-sm text-gray-600 mb-4">
-                        <time datetime={data.date}>
-                          <span x-data x-init={`
-                            $el.textContent = new Date('${data.date}').toLocaleDateString(
-                              $store.language === 'ko' ? 'ko-KR' : 'en-US',
-                              { year: 'numeric', month: 'long', day: 'numeric' }
-                            )
-                          `}></span>
-                        </time>
-                        <span>•</span>
-                        <span>{data.category}</span>
-                      </div>
-                      <h2 class="text-2xl font-semibold text-gray-900 mb-4 group-hover:text-gray-600 transition-colors">
-                        <span 
-                          x-data={`{ title: ${JSON.stringify(data.title)} }`}
-                          x-text="$store.language === 'ko' ? title.ko : title.en"
-                        >
-                          {data.title?.en}
-                        </span>
-                      </h2>
-                      <p class="text-gray-600 mb-6 line-clamp-2">
-                        <span 
-                          x-data={`{ excerpt: ${JSON.stringify(data.excerpt)} }`}
-                          x-text="$store.language === 'ko' ? excerpt.ko : excerpt.en"
-                        >
-                          {data.excerpt?.en}
-                        </span>
-                      </p>
-                      <div class="flex items-center mt-auto">
-                        <img 
-                          src={data.authorImage} 
-                          alt={data.author}
-                          class="w-10 h-10 rounded-full mr-3"
-                        />
-                        <div>
-                          <div class="font-medium text-gray-900">{data.author}</div>
-                          <div class="text-sm text-gray-600">
-                            <span x-data x-text="$store.language === 'ko' ? 'CEO / 설립자' : 'CEO / Founder'">
-                              CEO / Founder
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </a>
-                </article>
-              );
-            })
-          : <p>No insights found.</p>
-      }
+<Layout title={pageTitle} description={pageDescription}>
+  <div class="blog-container">
+    <header class="blog-header">
+      <h1>
+        <span x-data x-text="$store.language === 'ko' ? '블로그' : 'Blog'"></span>
+      </h1>
+      {category && <p>
+        <span x-data x-text="$store.language === 'ko' ? '카테고리: ' : 'Category: '"></span>
+        {category}
+      </p>}
+      {tag && <p>
+        <span x-data x-text="$store.language === 'ko' ? '태그: #' : 'Tag: #'"></span>
+        {tag}
+      </p>}
+    </header>
+
+    <div class="blog-filters">
+      <!-- Add filter UI here if needed -->
     </div>
+
+    <BlogList 
+      initialPosts={posts as BlogPostWithAuthor[]} 
+      category={category || undefined} 
+      tag={tag || undefined}
+      limit={limitNum}
+      preferredLanguage={preferredLanguage}
+      client:load
+    />
   </div>
 </Layout>
+
+<style>
+  .blog-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .blog-header {
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  .blog-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .blog-filters {
+    margin-bottom: 2rem;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .blog-container {
+      padding: 1rem;
+    }
+
+    .blog-header h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

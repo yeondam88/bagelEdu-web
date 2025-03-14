@@ -1,8 +1,9 @@
 ---
 import { supabase } from '../../../../lib/supabase/client';
-import { Button } from '../../../../components/components/ui/button';
-import { Input } from '../../../../components/components/ui/input';
+import ContentLayout from '../../../../layouts/ContentLayout.astro';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../../../components/components/ui/card';
+import { Input } from '../../../../components/components/ui/input';
+import { Button } from '../../../../components/components/ui/button';
 import { 
   Table, 
   TableBody, 
@@ -19,356 +20,321 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../../../../components/components/ui/dropdown-menu';
+import { BlogActionMenu } from '../../../../components/components/ui/blog-action-menu';
+import { BlogService } from '../../../../lib/services/blog-service';
+import type { BlogPost, MultilangText } from '../../../../types/blog';
 
-// Check if user is authenticated
-const { data: { session } } = await supabase.auth.getSession();
-const isAuthenticated = !!session;
+// Fetch blog posts using the BlogService
+let blogPosts: BlogPost[] = [];
+let error = null;
 
-// Redirect to login if not authenticated
-if (!isAuthenticated) {
-  return Astro.redirect('/admin/login');
+try {
+  // Fetch blog posts from Supabase through our service
+  blogPosts = await BlogService.getAllPosts();
+  
+  // Parse any potential multilingual content
+  blogPosts = blogPosts.map(post => BlogService.parsePost(post));
+} catch (e) {
+  console.error('Error fetching blog posts:', e);
+  error = e;
 }
 
-// Fetch blog posts
-const { data: blogPosts, error } = await supabase
-  .from('blog_posts')
-  .select('*')
-  .order('created_at', { ascending: false });
+// Get the display title based on language (defaulting to English)
+function getDisplayTitle(title: string | MultilangText): string {
+  if (typeof title === 'string') {
+    return title;
+  }
+  // Return English title or first available language
+  return title.en || Object.values(title)[0] || 'Untitled';
+}
 
-if (error) {
-  console.error('Error fetching blog posts:', error);
+// Get the status badge CSS class
+function getStatusBadgeClass(status?: string): string {
+  switch(status) {
+    case 'published':
+      return 'bg-green-100 text-green-800';
+    case 'archived':
+      return 'bg-gray-100 text-gray-800';
+    default:
+      return 'bg-yellow-100 text-yellow-800';
+  }
 }
 ---
 
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog Posts | Admin Dashboard | Bagel Education</title>
-  <link rel="stylesheet" href="/styles/globals.css">
-</head>
-<body class="min-h-screen bg-background">
-  <div class="flex min-h-screen">
-    <!-- Sidebar -->
-    <aside class="hidden md:flex w-64 flex-col bg-card border-r border-border h-screen sticky top-0">
-      <div class="p-6 border-b border-border">
-        <h1 class="text-xl font-bold">Bagel Admin</h1>
-      </div>
-      
-      <nav class="flex-1 p-4">
-        <ul class="space-y-1">
-          <li>
-            <a href="/admin" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="7" height="7"></rect>
-                <rect x="14" y="3" width="7" height="7"></rect>
-                <rect x="14" y="14" width="7" height="7"></rect>
-                <rect x="3" y="14" width="7" height="7"></rect>
-              </svg>
-              Dashboard
-            </a>
-          </li>
-          <li>
-            <a href="/admin/content/blog" class="flex items-center py-2 px-3 rounded-md bg-accent">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-              </svg>
-              Blog Posts
-            </a>
-          </li>
-          <li>
-            <a href="/admin/content/programs" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
-              </svg>
-              Programs
-            </a>
-          </li>
-          <li>
-            <a href="/admin/content/testimonials" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-              </svg>
-              Testimonials
-            </a>
-          </li>
-          <li>
-            <a href="/admin/content/faqs" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                <line x1="12" y1="17" x2="12.01" y2="17"></line>
-              </svg>
-              FAQs
-            </a>
-          </li>
-          <li>
-            <a href="/admin/media" class="flex items-center py-2 px-3 rounded-md hover:bg-accent/50 transition">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                <polyline points="21 15 16 10 5 21"></polyline>
-              </svg>
-              Media Library
-            </a>
-          </li>
-        </ul>
-      </nav>
-      
-      <div class="p-4 border-t border-border">
-        <Button id="logout-button" variant="ghost" className="w-full justify-start">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-            <polyline points="16 17 21 12 16 7"></polyline>
-            <line x1="21" y1="12" x2="9" y2="12"></line>
-          </svg>
-          Log out
-        </Button>
-      </div>
-    </aside>
-    
-    <!-- Main content -->
-    <main class="flex-1 p-6">
-      <header class="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+<ContentLayout 
+  title="Blog Posts" 
+  description="Manage your blog content" 
+  createLink="/admin/content/blog/new"
+>
+  <!-- Search and filter section -->
+  <Card class="mb-6">
+    <CardHeader>
+      <CardTitle>Search & Filter</CardTitle>
+      <CardDescription>Find specific blog posts or filter by category</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex-1">
+          <Input 
+            type="text" 
+            placeholder="Search blog posts..." 
+            id="search-input"
+          />
+        </div>
         <div>
-          <h1 class="text-3xl font-bold">Blog Posts</h1>
-          <p class="text-muted-foreground">Manage your blog content</p>
+          <Button variant="outline" id="filter-button">
+            Filter by Category
+          </Button>
         </div>
-        <div class="flex items-center gap-2">
-          <a href="/admin/content/blog/new">
-            <Button className="flex items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
-              New Post
-            </Button>
-          </a>
-        </div>
-      </header>
+      </div>
+    </CardContent>
+  </Card>
 
-      <!-- Search and filter -->
-      <Card className="mb-6">
-        <CardContent className="pt-6">
-          <div class="flex flex-col sm:flex-row gap-4">
-            <div class="relative flex-1">
-              <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-              </svg>
-              <Input 
-                id="search-posts"
-                type="search" 
-                placeholder="Search posts..." 
-                className="pl-8 w-full"
-              />
-            </div>
-            <div class="flex gap-2">
-              <select id="category-filter" class="px-3 py-2 border rounded-md text-sm">
-                <option value="">All Categories</option>
-                <option value="tutorial">Tutorials</option>
-                <option value="news">News</option>
-                <option value="feature">Features</option>
-              </select>
-              <select id="status-filter" class="px-3 py-2 border rounded-md text-sm">
-                <option value="">All Status</option>
-                <option value="published">Published</option>
-                <option value="draft">Draft</option>
-              </select>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+  <!-- Blog posts table -->
+  <Card>
+    <CardHeader>
+      <CardTitle>All Blog Posts</CardTitle>
+      <CardDescription>Showing {blogPosts.length} posts</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div class="rounded-md border">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Title</TableHead>
+              <TableHead>Category</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead class="text-right">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {blogPosts.map((post) => (
+              <TableRow data-post-id={post.id}>
+                <TableCell class="font-medium">{getDisplayTitle(post.title.en.en)}</TableCell>
+                <TableCell>{post.category || 'Uncategorized'}</TableCell>
+                <TableCell>
+                  <span class={`px-2 py-1 rounded-full text-xs ${getStatusBadgeClass(post.status)}`}>
+                    {post.status || 'draft'}
+                  </span>
+                </TableCell>
+                <TableCell>{new Date(post.published_at || post.created_at).toLocaleDateString()}</TableCell>
+                <TableCell class="text-right">
+                  <BlogActionMenu client:only="react" post={post} />
+                </TableCell>
+              </TableRow>
+            ))}
+            
+            {blogPosts.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={5} class="text-center py-6 text-muted-foreground">
+                  No blog posts found. <a href="/admin/content/blog/new" class="text-primary">Create your first post</a>.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
+    </CardContent>
+  </Card>
+</ContentLayout>
 
-      <!-- Blog posts table -->
-      <Card>
-        <CardHeader>
-          <CardTitle>All Posts</CardTitle>
-          <CardDescription>
-            {blogPosts?.length 
-              ? `Showing ${blogPosts.length} posts`
-              : 'No posts found'}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {blogPosts && blogPosts.length > 0 ? (
-            <Table className="border">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Title</TableHead>
-                  <TableHead className="hidden md:table-cell">Category</TableHead>
-                  <TableHead className="hidden md:table-cell">Status</TableHead>
-                  <TableHead className="hidden md:table-cell">Date</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {blogPosts.map((post) => (
-                  <TableRow key={post.id}>
-                    <TableCell className="font-medium">
-                      <div>
-                        <div>{post.title}</div>
-                        <div class="text-xs text-muted-foreground md:hidden">
-                          {post.category} • {post.status}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell">{post.category}</TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      <span class={`px-2 py-1 text-xs rounded-full ${
-                        post.status === 'published' 
-                          ? 'bg-green-100 text-green-800' 
-                          : 'bg-yellow-100 text-yellow-800'
-                      }`}>
-                        {post.status}
-                      </span>
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      {new Date(post.created_at).toLocaleDateString()}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 p-0">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                              <circle cx="12" cy="12" r="1"></circle>
-                              <circle cx="12" cy="5" r="1"></circle>
-                              <circle cx="12" cy="19" r="1"></circle>
-                            </svg>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem 
-                            class="cursor-pointer"
-                            onclick={`window.location.href='/admin/content/blog/${post.id}'`}
-                          >
-                            View
-                          </DropdownMenuItem>
-                          <DropdownMenuItem 
-                            class="cursor-pointer"
-                            onclick={`window.location.href='/admin/content/blog/${post.id}/edit'`}
-                          >
-                            Edit
-                          </DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem 
-                            class="cursor-pointer text-red-600"
-                            data-post-id={post.id}
-                            data-post-title={post.title}
-                            onclick="confirmDeletePost(this.dataset.postId, this.dataset.postTitle)"
-                          >
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          ) : (
-            <div class="text-center py-10 text-muted-foreground">
-              {error ? (
-                <div>
-                  <p>Error loading blog posts.</p>
-                  <p class="text-sm">{error.message}</p>
-                </div>
-              ) : (
-                <div>
-                  <p>No blog posts found.</p>
-                  <p class="text-sm mt-2">Get started by creating your first blog post.</p>
-                  <div class="mt-4">
-                    <a href="/admin/content/blog/new">
-                      <Button variant="outline">Create Post</Button>
-                    </a>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </main>
-  </div>
+<script>
+  // Define types for TypeScript
+  interface HTMLElementWithStyle extends HTMLElement {
+    style: CSSStyleDeclaration;
+  }
+
+  // Preview function
+  function previewPost(postId: string): void {
+    // Open preview in new tab
+    window.open(`/blog/preview/${postId}`, '_blank');
+  }
   
-  <script>
-    // Initialize Supabase client
-    import { createClient } from '@supabase/supabase-js';
-    
-    window.supabase = createClient(
-      import.meta.env.PUBLIC_SUPABASE_URL,
-      import.meta.env.PUBLIC_SUPABASE_ANON_KEY
-    );
-    
-    // Search functionality
-    const searchInput = document.getElementById('search-posts');
-    const categoryFilter = document.getElementById('category-filter');
-    const statusFilter = document.getElementById('status-filter');
-    
-    function filterPosts() {
-      const searchTerm = searchInput.value.toLowerCase();
-      const category = categoryFilter.value;
-      const status = statusFilter.value;
+  // Confirmation dialog for post deletion
+  function confirmDeletePost(postId: string, postTitle: string): void {
+    if (confirm(`Are you sure you want to delete "${postTitle}"? This action cannot be undone.`)) {
+      deletePost(postId);
+    }
+  }
+  
+  // Delete post function
+  async function deletePost(postId: string): Promise<void> {
+    try {
+      // Show loading state
+      const deleteButtons = document.querySelectorAll(`.delete-btn[data-post-id="${postId}"]`);
       
-      const rows = document.querySelectorAll('tbody tr');
+      deleteButtons.forEach(btn => {
+        if (btn instanceof HTMLElement) {
+          // Find the span element inside the button and update it
+          const textSpan = btn.querySelector('.delete-text');
+          if (textSpan) {
+            textSpan.textContent = 'Deleting...';
+          }
+          
+          // Find the icon and replace it with a loading spinner
+          const icon = btn.querySelector('.delete-icon');
+          if (icon) {
+            icon.outerHTML = '<svg class="animate-spin mr-2 delete-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>';
+          }
+          
+          btn.disabled = true;
+          btn.style.opacity = '0.5';
+        }
+      });
       
-      rows.forEach(row => {
-        const title = row.querySelector('td:first-child').textContent.toLowerCase();
-        const rowCategory = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
-        const rowStatus = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
-        
-        const matchesSearch = title.includes(searchTerm);
-        const matchesCategory = category === '' || rowCategory === category;
-        const matchesStatus = status === '' || rowStatus === status;
-        
-        if (matchesSearch && matchesCategory && matchesStatus) {
-          row.style.display = '';
-        } else {
-          row.style.display = 'none';
+      console.log('Deleting post with ID:', postId);
+      
+      // Call API to delete post
+      const response = await fetch(`/api/blog/delete`, {
+        method: 'POST', // Using POST instead of DELETE for better compatibility
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: postId }),
+      });
+      
+      const result = await response.json();
+      console.log('Delete response:', result);
+      
+      if (response.ok) {
+        // Remove row from table
+        const row = document.querySelector(`tr[data-post-id="${postId}"]`);
+        if (row instanceof HTMLElementWithStyle) {
+          row.style.backgroundColor = '#FFEDED';
+          setTimeout(() => {
+            row.remove();
+            
+            // Update count in description
+            const countEl = document.querySelector('CardDescription');
+            if (countEl) {
+              const currentText = countEl.textContent || '';
+              const match = currentText.match(/Showing (\d+) posts/);
+              if (match && match[1]) {
+                const currentCount = parseInt(match[1]) - 1;
+                countEl.textContent = currentText.replace(/Showing \d+ posts/, `Showing ${currentCount} posts`);
+              }
+            }
+            
+            // Show success message
+            alert('Post deleted successfully');
+          }, 500);
+        }
+      } else {
+        throw new Error(result.message || 'Failed to delete post');
+      }
+    } catch (error) {
+      console.error('Error deleting post:', error);
+      alert('An error occurred while deleting the post. Please try again.');
+      
+      // Reset delete button
+      const deleteButtons = document.querySelectorAll(`.delete-btn[data-post-id="${postId}"]`);
+      deleteButtons.forEach(btn => {
+        if (btn instanceof HTMLElement) {
+          // Find the span element and restore its text
+          const textSpan = btn.querySelector('.delete-text');
+          if (textSpan) {
+            textSpan.textContent = 'Delete';
+          }
+          
+          // Find the icon and restore it
+          const icon = btn.querySelector('.delete-icon');
+          if (icon) {
+            icon.outerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 delete-icon"><path d="M3 6h18"></path><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>';
+          }
+          
+          btn.disabled = false;
+          btn.style.opacity = '1';
         }
       });
     }
-    
-    searchInput?.addEventListener('input', filterPosts);
-    categoryFilter?.addEventListener('change', filterPosts);
-    statusFilter?.addEventListener('change', filterPosts);
-    
-    // Delete post confirmation
-    window.confirmDeletePost = (postId, postTitle) => {
-      if (confirm(`Are you sure you want to delete "${postTitle}"? This action cannot be undone.`)) {
-        deletePost(postId);
-      }
-    };
-    
-    async function deletePost(postId) {
-      try {
-        const { error } = await window.supabase
-          .from('blog_posts')
-          .delete()
-          .eq('id', postId);
-          
-        if (error) throw error;
+  }
+  
+  // Function to set up event delegation for React components
+  function setupEventDelegation() {
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      
+      // Find the closest button or element with our action data attributes
+      const actionElement = target.closest('[data-action]');
+      
+      if (actionElement instanceof HTMLElement) {
+        const action = actionElement.dataset.action;
+        const postId = actionElement.dataset.postId;
+        const postTitle = actionElement.dataset.postTitle;
         
-        // Refresh the page to show updated list
-        window.location.reload();
-      } catch (error) {
-        console.error('Error deleting post:', error);
-        alert('Failed to delete post. Please try again.');
-      }
-    }
-    
-    // Handle logout
-    document.getElementById('logout-button')?.addEventListener('click', async () => {
-      try {
-        const { error } = await window.supabase.auth.signOut();
-        if (error) throw error;
-        window.location.href = '/admin/login';
-      } catch (error) {
-        console.error('Error signing out:', error);
+        if (!postId) return;
+        
+        if (action === 'edit') {
+          window.location.href = `/admin/content/blog/edit/${postId}`;
+        } else if (action === 'preview') {
+          e.preventDefault();
+          previewPost(postId);
+        } else if (action === 'delete' && postTitle) {
+          e.preventDefault();
+          confirmDeletePost(postId, postTitle);
+        }
       }
     });
-  </script>
-</body>
-</html> 
+  }
+  
+  // Set up search functionality
+  function setupSearch() {
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const target = e.target as HTMLInputElement;
+        const value = target.value.toLowerCase();
+        const rows = document.querySelectorAll('tbody tr');
+        
+        rows.forEach(row => {
+          // Skip the "no posts found" row
+          if (row.querySelector('td[colSpan]')) return;
+          
+          const titleEl = row.querySelector('td:first-child');
+          const categoryEl = row.querySelector('td:nth-child(2)');
+          
+          const title = titleEl?.textContent?.toLowerCase() || '';
+          const category = categoryEl?.textContent?.toLowerCase() || '';
+          
+          if (row instanceof HTMLElementWithStyle) {
+            if (title.includes(value) || category.includes(value)) {
+              row.style.display = '';
+            } else {
+              row.style.display = 'none';
+            }
+          }
+        });
+      });
+    }
+  }
+  
+  // Initialize when DOM is loaded
+  document.addEventListener('DOMContentLoaded', () => {
+    setupEventDelegation();
+    setupSearch();
+    
+    // Also handle direct button clicks for backward compatibility
+    document.querySelectorAll('.preview-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = e.currentTarget as HTMLElement;
+        const postId = target.dataset.postId;
+        if (postId) previewPost(postId);
+      });
+    });
+    
+    document.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = e.currentTarget as HTMLElement;
+        const postId = target.dataset.postId;
+        const postTitle = target.dataset.postTitle;
+        if (postId && postTitle) confirmDeletePost(postId, postTitle);
+      });
+    });
+    
+    // Log to confirm script is running
+    console.log('Blog post action handlers initialized');
+  });
+</script> 
