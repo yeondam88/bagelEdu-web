@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content'
 import Layout from '@layouts/Layout.astro'
 import { formatDate } from '../../utils/date'
 import { Image } from 'astro:assets'
-import { isRemoteImage, getImageSource } from '../../utils/images'
+import { isRemoteImage, getImageSource, getImageSrcString } from '../../utils/images'
 
 export const prerender = true
 
@@ -105,7 +105,7 @@ const isRemote = isRemoteImage(imageSrc)
           <div class="relative w-full">
             {isRemote && (
               <img 
-                src={imageSrc}
+                src={getImageSrcString(imageSrc)}
                 alt={entry.data.image.alt}
                 width={600}
                 height={400}

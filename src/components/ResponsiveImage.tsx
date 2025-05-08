@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Image } from 'astro:assets';
+import { getImageSrcString } from '../utils/images';
 
 interface ResponsiveImageProps {
   src: any;
@@ -25,24 +25,12 @@ export default function ResponsiveImage({
     }
   }, [src]);
 
-  if (isRemote) {
-    return (
-      <img 
-        src={src} 
-        alt={alt} 
-        width={width} 
-        height={height} 
-        className={className}
-      />
-    );
-  }
+  // For all images, we use the utility function to get the appropriate string src
+  const imageSrc = getImageSrcString(src);
 
-  // For local images, we need to render Astro's Image component
-  // But we can't use Astro components directly in React
-  // So we'll need a workaround
   return (
     <img 
-      src={src} 
+      src={imageSrc} 
       alt={alt} 
       width={width} 
       height={height} 
