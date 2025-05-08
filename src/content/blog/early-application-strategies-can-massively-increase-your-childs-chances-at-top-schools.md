@@ -3,7 +3,7 @@ title:
   en: 'Early Application Strategies Can Massively Increase Your Child’s Chances at Top Schools'
   ko: '조기 지원 전략으로 자녀의 명문대 합격 확률을 대폭 높이세요'
 date: '2025-05-08'
-author: 'Admin'
+author: 'Jenny'
 image:
   src: 'https://bageledu.sfo3.digitaloceanspaces.com/cab059c2-0b73-4de6-821e-0f44a71f69f3.png'
   alt: 'Early Application Strategies Can Massively Increase Your Child’s Chances at Top Schools'
@@ -11,7 +11,7 @@ excerpt:
   en: 'Discover how early application strategies can significantly improve your child''s chances of getting into top universities.'
   ko: '조기 지원 전략이 어떻게 자녀의 명문대 합격 가능성을 크게 향상시킬 수 있는지 알아보세요.'
 category: 'Education'
-authorImage: ''
+authorImage: 'https://bageledu.sfo3.cdn.digitaloceanspaces.com/hyejeong.jpg'
 tags:
   ['Education', 'Learning']
 ---
