@@ -169,7 +169,10 @@ const blogCollection = defineCollection({
     date: z.string(),
     author: z.string(),
     image: z.object({
-      src: image(),
+      src: z.union([
+        image(),
+        z.string().url()
+      ]),
       alt: z.string(),
     }),
     excerpt: z.object({

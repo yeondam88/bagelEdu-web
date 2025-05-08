@@ -67,7 +67,7 @@ Tailwind CSS and its dependencies were installed using [Astro's official Tailwin
 
 You can find the `tailwind.config.js` file at the root of the directory.
 
-You'll find the primary CSS file at `src/styles/tailwind.css`, which includes the `@tailwind` directives. The stylsheet also includes a handful of custom typography classes for headings which use Tailwind’s @apply directive to extract repeated patterns.
+You'll find the primary CSS file at `src/styles/tailwind.css`, which includes the `@tailwind` directives. The stylsheet also includes a handful of custom typography classes for headings which use Tailwind's @apply directive to extract repeated patterns.
 
 We have made an effort to streamline our CSS by primarily using Tailwind's utility classes, supplementing with just a few custom classes that are defined within the `tailwind.config.js` file. Our project includes a unique color palette and a custom typography theme, designed for both light and dark prose content. Furthermore, we have integrated three official Tailwind plugins: `@tailwindcss/forms`, `@tailwindcss/aspect-ratio`, and `@tailwindcss/typography`.
 
@@ -212,3 +212,29 @@ To learn more about Astro, take a look at the following resources you can check 
 ## Additional Help
 
 If you need additional help setting up the template or have any questions, feel free to contact me at <rodrigo@tailwindawesome.com>.
+
+## Blog Images
+
+The blog system supports two different ways to specify images:
+
+### 1. Local Files (using the `@images` alias)
+
+```yaml
+image:
+  src: '@images/bageledu/beyond-grades.png'
+  alt: 'Image description'
+```
+
+This uses a local file from the project's image directory.
+
+### 2. Remote URLs
+
+```yaml
+image:
+  src: 'https://bageledu.sfo3.cdn.digitaloceanspaces.com/image.jpg'
+  alt: 'Image description'
+```
+
+This loads an image directly from a remote URL (like DigitalOcean Spaces).
+
+Both approaches work throughout the site, giving you flexibility to use either locally managed images or remotely hosted ones.
