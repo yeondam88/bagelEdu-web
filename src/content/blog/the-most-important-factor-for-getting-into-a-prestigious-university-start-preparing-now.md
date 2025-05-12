@@ -17,8 +17,6 @@ tags:
 ---
 
 <div class="en-content" x-show="$store.language !== 'ko'">
-
-
 <p>
   College admissions are influenced by numerous variables. For instance, there are factors beyond the applicant's control such as unfair evaluation criteria, personal biases of admissions officers, and demographic factors. However, there is one critical element that you can completely control: the time you have left until you submit your college applications.
 </p>
@@ -53,13 +51,9 @@ tags:
 <p>
   👉 Book your free consultation now! The time to start preparing for prestigious university admission is now!
 </p>
-
-
 </div>
 
 <div class="ko-content" x-show="$store.language === 'ko'">
-
-
 <p>
   대학 입시는 수많은 변수에 의해 결정됩니다. 예를 들어, 🔹 불공정한 평가 기준 🔹 담당 입학 사정관의 개인적 성향 🔹 지역 및 인구 통계 등 지원자가 통제할 수 없는 요소들이 많습니다. 하지만, 한 가지 요소만큼은 여러분이 완전히 통제할 수 있습니다. 
 </p>
@@ -94,6 +88,4 @@ tags:
 <p>
   👉 무료 상담 예약하기 지금이 바로 명문대 합격을 위한 준비를 시작할 최고의 타이밍입니다.
 </p>
-
-
 </div>
