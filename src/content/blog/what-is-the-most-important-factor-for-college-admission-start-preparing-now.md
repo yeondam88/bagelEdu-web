@@ -1,7 +1,7 @@
 ---
 title:
   en: 'What is the Most Important Factor for College Admission? Start Preparing Now!'
-  ko: '[🎓 명문대 합격을 위한 가장 중요한 요소는? 지금부터 준비하세요!]'
+  ko: '🎓 명문대 합격을 위한 가장 중요한 요소는? 지금부터 준비하세요!'
 date: '2025-05-12'
 author: 'Sohn'
 image:
