@@ -2,8 +2,8 @@
 title:
   en: 'Early Application Strategies Can Massively Increase Your Child’s Chances at Top Schools'
   ko: '조기 지원 전략으로 자녀의 명문대 합격 확률을 대폭 높이세요'
-date: '2025-05-08'
-author: 'Jenny'
+date: '2025-05-13'
+author: 'Sohn'
 image:
   src: 'https://bageledu.sfo3.digitaloceanspaces.com/cab059c2-0b73-4de6-821e-0f44a71f69f3.png'
   alt: 'Early Application Strategies Can Massively Increase Your Child’s Chances at Top Schools'
@@ -17,8 +17,6 @@ tags:
 ---
 
 <div class="en-content" x-show="$store.language !== 'ko'">
-  <h1>Early Application Strategies Can Massively Increase Your Child’s Chances at Top Schools</h1>
-
 <p>
 Understanding the various early application strategies is crucial for parents aiming to give their child a competitive edge in the admissions process to top universities. This guide breaks down the options to help you make an informed decision.
 </p>
@@ -52,8 +50,6 @@ Deciding on an application strategy requires careful consideration of whether yo
 </div>
 
 <div class="ko-content" x-show="$store.language === 'ko'">
-  <h1>조기 지원 전략으로 자녀의 명문대 합격 확률을 대폭 높이세요</h1>
-
 <p>
 명문대 입학 과정에서 자녀에게 경쟁력을 제공하고자 하는 부모에게 다양한 조기 지원 전략을 이해하는 것이 중요합니다. 이 가이드는 옵션을 분석하여 정보에 기반한 결정을 내릴 수 있도록 도와줍니다.
 </p>
