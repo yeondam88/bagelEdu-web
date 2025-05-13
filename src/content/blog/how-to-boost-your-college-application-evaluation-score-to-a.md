@@ -2,8 +2,8 @@
 title:
   en: 'How to Boost Your College Application Evaluation Score to a '
   ko: '대학 지원서 평가 등급을 "2"로 향상시키는 방법'
-date: '2025-05-09'
-author: 'Jenny'
+date: '2025-05-13'
+author: 'Sohn'
 image:
   src: 'https://bageledu.sfo3.digitaloceanspaces.com/a93ad8fd-4bc2-4462-8732-da28aa2efb4d.jpg'
   alt: 'How to Boost Your College Application Evaluation Score to a '
@@ -13,12 +13,10 @@ excerpt:
 category: 'College Planning'
 authorImage: 'https://bageledu.sfo3.cdn.digitaloceanspaces.com/hyejeong.jpg'
 tags:
-  ['College', 'Grade', 'Test']
+  ['College', 'Grade']
 ---
 
 <div class="en-content" x-show="$store.language !== 'ko'">
-
-
 <p>
   Applying to competitive colleges can be a daunting task, especially when it comes to understanding how your application is evaluated. One surprising outcome from recent litigation against prestigious universities like Harvard is the unique insights gained into their admissions processes.
 </p>
@@ -49,13 +47,9 @@ tags:
 <p>
   The journey to achieving a "2" score requires more than just good grades and standard extracurricular activities. It necessitates focused passion, initiative, and tangible accomplishments in your chosen field. Start early, wisely choose your areas of focus, and consistently strive to make a meaningful impact.
 </p>
-
-
 </div>
 
 <div class="ko-content" x-show="$store.language === 'ko'">
-
-
 <p>
   경쟁이 치열한 대학에 지원하는 것은 daunting한 작업일 수 있으며, 특히 지원서 평가가 어떤 식으로 이루어지는지를 이해하는 것은 더욱 어렵습니다. 하버드와 같은 명문 대학에 대한 최근의 소송에서 얻은 예상치 못한 결과 중 하나는 그들의 입학 과정에 대한 독특한 통찰력을 얻었다는 점입니다.
 </p>
@@ -86,6 +80,4 @@ tags:
 <p>
   “2” 등급을 받기 위한 여정은 단순히 좋은 성적과 표준적인 과외 활동 이상을 요구합니다. 집중된 열정, 주도성, 그리고 선택한 분야에서의 실질적인 성과가 필요합니다. 일찍 시작하고, 집중할 분야를 현명하게 선택하며, 의미 있는 영향을 미치기 위해 꾸준히 노력하세요.
 </p>
-
-
 </div>
