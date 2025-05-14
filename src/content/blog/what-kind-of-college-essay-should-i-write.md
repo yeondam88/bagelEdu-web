@@ -2,7 +2,7 @@
 title:
   en: 'What kind of college essay should I write?'
   ko: '어떤 대학 에세이를 써야 할까요?'
-date: '2025-04-30'
+date: '2025-05-14'
 author: 'Sohn'
 image:
   src: 'https://bageledu.sfo3.digitaloceanspaces.com/5cb33357-e857-4a9f-aa76-4f002440a1b1.png'
@@ -16,11 +16,7 @@ tags:
   ['College', 'Admission', '미국 유학', '대학지원']
 ---
 
-{/* English Content */}
-
 <div class="en-content" x-show="$store.language !== 'ko'">
-  <h1>What kind of college essay should I write?</h1>
-
 <p>
   Writing a college essay can be a daunting task, but understanding the nuances of what admissions officers are looking for can make all the difference. In this post, we’ll explore various aspects of essay writing, including the use of humor, illustrated essays, and the inclusion of political topics.
 
@@ -51,14 +47,9 @@ tags:
 </p>
 
 <hr />
-
 </div>
 
-{/* Korean Content */}
-
 <div class="ko-content" x-show="$store.language === 'ko'">
-  <h1>어떤 대학 에세이를 써야 할까요?</h1>
-
 <p>
   대학 에세이를 쓰는 것은 어려운 작업일 수 있지만, 입학 사정관이 원하는 것의 뉘앙스를 이해하면 큰 차이를 만들 수 있습니다. 이 글에서는 유머 사용, 삽화 에세이, 정치적 주제 포함에 대한 다양한 측면을 탐구해 보겠습니다.
 
@@ -89,5 +80,4 @@ tags:
 </p>
 
 <hr />
-
 </div>
