@@ -2,7 +2,7 @@
 title:
   en: '“My School Doesn’t Help Me!” — How to Build a Pre-Med Portfolio'
   ko: '“내 학교는 나를 도와주지 않아!” — 의대 준비 포트폴리오 만드는 법'
-date: '2025-05-14'
+date: '2025-05-16'
 author: 'Sohn'
 image:
   src: 'https://bageledu.sfo3.digitaloceanspaces.com/6b705bd3-72d9-4473-8ebb-cf75607165ff.png'
