@@ -2,7 +2,7 @@
 title:
   en: '5 Common Mistakes to Avoid on Your College Application: Are You Unknowingly Leaving “Red Flags”?'
   ko: '🎓 대학 입학 지원서에서 피해야 할 5가지 흔한 실수! 당신도 모르게 ‘레드 플래그’를 남기고 있나요?'
-date: '2025-05-14'
+date: '2025-05-15'
 author: 'Sohn'
 image:
   src: 'https://bageledu.sfo3.digitaloceanspaces.com/c7fe85f8-32d3-4ea3-bcee-c41b54c45735.jpeg'
