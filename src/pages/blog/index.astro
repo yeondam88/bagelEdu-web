@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content'
 import { Image } from 'astro:assets'
 import Layout from '@layouts/Layout.astro'
 import { isRemoteImage, getImageSource, getImageSrcString } from '../../utils/images'
-
+import Badge from '@components/shared/Badge.astro'
 const posts = await getCollection('blog')
 posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
 ---
@@ -76,6 +76,13 @@ posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).get
                           {data.excerpt?.en}
                         </span>
                       </p>
+                      <div class="flex flex-wrap gap-2">
+                        {data.tags && data.tags.map((tag) => (
+                          <Badge variant="default" class="bg-gray-100 text-gray-700 hover:bg-gray-200">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
                       <div class="flex items-center mt-auto">
                         <img 
                           src={data.authorImage} 
@@ -85,8 +92,8 @@ posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).get
                         <div>
                           <div class="font-medium text-gray-900">{data.author}</div>
                           <div class="text-sm text-gray-600">
-                            <span x-data x-text="$store.language === 'ko' ? 'CEO / 설립자' : 'CEO / Founder'">
-                              CEO / Founder
+                            <span x-data x-text="$store.language === 'ko' ? '공동대표 / 대표원장' : 'Co-Founder / Director'">
+                              Co-Founder / Director
                             </span>
                           </div>
                         </div>

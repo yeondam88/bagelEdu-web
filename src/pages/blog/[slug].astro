@@ -4,7 +4,7 @@ import Layout from '@layouts/Layout.astro'
 import { formatDate } from '../../utils/date'
 import { Image } from 'astro:assets'
 import { isRemoteImage, getImageSource, getImageSrcString } from '../../utils/images'
-
+import Badge from '@components/shared/Badge.astro'
 export const prerender = true
 
 export async function getStaticPaths() {
@@ -95,6 +95,18 @@ const isRemote = isRemoteImage(imageSrc)
                       )
                     `}></span>
                   </time>
+                )
+              }
+
+              {
+                entry.data.tags && (
+                  <div class="flex flex-wrap gap-2">
+                    {entry.data.tags.map((tag) => (
+                      <Badge variant="default" class="bg-black text-white hover:bg-black/80">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
                 )
               }
             </div>
